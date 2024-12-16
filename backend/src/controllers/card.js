@@ -1,75 +1,91 @@
 const Card = require('../data/Schema/card');
 
-const getCards = (req, res) => {
-    res.json(cards)
-}
+const getCards = async (req, res) => {
+    try{
+        const { page = 1, limit = 10, rarity, type, attribute } = req.query;
 
-const createCard = (req, res) => {
-    const { name, image, attribute, type, description, rarity } = req.body;
+        const filters = {};
+        if (rarity) filters.rarity = rarity;
+        if (type) filters.type = type
+        if (attribute) filters.attribute = attribute;
 
-    const newCard = {
-    id,
-    name,
-    image,
-    attribute,
-    type,
-    description,
-    rarity
+        const cards = await Card.find(filters)
+        .skip((page - 1) * limit)
+        .limit(Number(limit));
+
+        const totalCards = await Card.countDocuments(filters);
+
+        res.status(200).json({
+            data: cards,
+            total: totalCards,
+            page: Number(page),
+            totalPages: Math.ceil(totalCards / limit),
+        });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
 };
 
-    cards.push(newCard);
-    res.status(201).json(newCard);
+const createCard = async (req, res) => {
+    try{
+        const { name, image, attribute, type, description, rarity } = req.body;
+        const newCard = new Card({
+        id,
+        name,
+        image,
+        attribute,
+        type,
+        description,
+        rarity
+});
+    const savedCard = await newCard.save();
+    res.status(201).json(savedCard);
+    } catch (error) {
+        res.status(400).json({error: error.message});
+    }
 };
 
-const getCardById = (req, res) => {
-    const CardId = Number(req.params.id);
-    const existingCard =  cards.find((card)=> card.id === cardId);
-
-    if (existingCard === undefined) {
+const getCardById = async (req, res) => {
+    try{
+    const card = await Card.findById(req.params.id);
+    if (!card) {
         return res.status(404).json({ error: 'Card not found' });
     }
-
-    res.status(200).json(existingCard)
+    res.status(200).json(card);
+    } catch (error) {
+        res.status(400).json({error: 'Invalid ID format'});
+    }
 }
 
-const updateCard = (req, res) => {
+const updateCard = async (req, res) => {
 
-    const CardId = Number(req.params.id);
+    try{
     const { name, image, attribute, type, description, rarity } = req.body;
-    const existingCard = cards.find((card) => card.id === cardId);
-
-    if (!existingCard) {
+    const updatedCard = await Card.findByIdAndUpdate(
+        req.params.id,
+        { name, image, attribute, type, description, rarity },
+        { new: true, runValidators:true }
+    );
+    if (!updatedCard) {
         return res.status(404).json({ error: "Card not found" });
     }
-
-    const updatedCard = {
-        id: existingCard.id,
-        name: name || existingCard.name,
-        image: image || existingCard.image,
-        attribute: attribute || existingCard.attribute,
-        type: type || existingCard.type,
-        description: description || existingCard.description,
-        rarity: rarity || existingCard.rarity
-    };
-
-    const existingCardIndex = cards.findIndex((card) => card.id === cardId);
-    cards.splice(existingCardIndex, 1, updatedCard);
-
     res.status(200).json(updatedCard);
-}
+    } catch (error) {
+        res.status(400).json({error:error.message})
+    }
+};
 
-const deleteCard = (req, res) => {
-    const idToDelete = Number(req.params.id);
-    const existingCardIndex = cards.findIndex((card) => card.id === idToDelete);
-
-    if (existingCardIndex === -1) {
+const deleteCard = async (req, res) => {
+    try{
+    const deletedCard = await Card.findByIdAndDelete(req.params.id);
+    if (!deleteCard) {
         return res.status(404).json({ error: "Card not found" });
     }
-
-    todos.splice(existingCardIndex, 1);
-
-    res.status(204).json({ status: "success" });
-}
+    res.status(204).json({ message: "Card deleted successfully" });
+    } catch (error) {
+        res.status(400).json({error: 'Invalid ID format'});
+    }
+};
 
 module.exports = {
     getCards,
