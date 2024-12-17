@@ -2,7 +2,7 @@ const express = require('express');
 const { connectDB } = require('./mongo/connection');
 const cors = require('cors');
 const app = express();
-const router = require('./routers/router');
+const router = require('./routers/index');
 
 app.use(cors());
 app.use(express.json());
