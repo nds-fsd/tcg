@@ -1,8 +1,13 @@
 const Card = require('../data/Schema/card');
 
 const getCards = async (req, res) => {
-    res.json(cards)
-}
+  try {
+    const cards = await Card.find().populate('attribute').populate('type');
+    res.status(200).json(cards);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 //   try {
 //     const { page = 1, limit = 10, rarity, type, attribute } = req.query;
 
@@ -32,7 +37,6 @@ const createCard = async (req, res) => {
   try {
     const { name, image, attribute, type, description, rarity } = req.body;
     const newCard = new Card({
-      id,
       name,
       image,
       attribute,
@@ -79,7 +83,7 @@ const updateCard = async (req, res) => {
 const deleteCard = async (req, res) => {
   try {
     const deletedCard = await Card.findByIdAndDelete(req.params.id);
-    if (!deleteCard) {
+    if (!deletedCard) {
       return res.status(404).json({ error: 'Card not found' });
     }
     res.status(204).json({ message: 'Card deleted successfully' });
