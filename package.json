@@ -8,11 +8,11 @@
   "scripts": {
     "start:frontend": "dotenv -- turbo run dev --scope='frontend'",
     "start:backend": "dotenv -- turbo run dev --scope='backend'",
-    "dev": "dotenv -- turbo run dev "
+    "dev": "dotenv -- turbo run dev ",
+    "format": "prettier . --write"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.0.0",
+    "dotenv-cli": "^7.4.4",
     "turbo": "^1.13.3"
-  },
-  "dependencies": {}
+  }
 }
