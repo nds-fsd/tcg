@@ -12,4 +12,4 @@ const cardSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
-module.exports = mongoose.model('Card', cardSchema);
+module.exports = model('Card', cardSchema);
