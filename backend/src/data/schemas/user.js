@@ -23,6 +23,10 @@ const userSchema = new Schema({
         type: Number,
         default: 1
     },
+    type: {
+        type: String,
+        default: User
+    },
     birthDate: {
         type: Date
     },
