@@ -1,8 +1,8 @@
-const Card = require('../data/Schema/card');
+const {Card} = require('../data/Schema/card');
 
 const getCards = async (req, res) => {
   try {
-    const cards = await Card.find().populate('attribute').populate('type');
+    const cards = await Card.find().populate("attribute").populate("type")
     res.status(200).json(cards);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -43,21 +43,30 @@ const createCard = async (req, res) => {
       type,
       description,
       rarity,
-    });
-    const savedCard = await newCard.save();
-    res.status(201).json(savedCard);
+    })
+    const savedCard = await newCard.save()
+    const id = savedCard._id
+
+    const cardToReturn = await Card.findById(id).populate('attribute').populate('type')
+    console.log(cardToReturn)
+
+    res.status(201).json(cardToReturn);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
 const getCardById = async (req, res) => {
+  const id = req.params.id
+  console.log(id)
+  
   try {
-    const card = await Card.findById(req.params.id);
-    if (!card) {
+    const cardFound = await Card.findById(id).populate('attribute').populate('type')
+    console.log(cardFound)
+    if (!cardFound) {
       return res.status(404).json({ error: 'Card not found' });
     }
-    res.status(200).json(card);
+    return res.status(200).json(cardFound);
   } catch (error) {
     res.status(400).json({ error: 'Invalid ID format' });
   }
