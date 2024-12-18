@@ -3,7 +3,7 @@ const { createAttribute, getAttributes } = require ("../controllers/attribute")
 
 const attributeRouter = Router();
 
-router.get("/", getAttributes)
-router.post("/", createAttribute)
+attributeRouter.get("/", getAttributes)
+attributeRouter.post("/", createAttribute)
 
 module.exports = {attributeRouter};

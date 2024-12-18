@@ -6,6 +6,4 @@ const attributeSchema = new Schema({
 });
 
 const Attribute = model('Attribute', attributeSchema);
-module.exports = {
-  Attribute
-};
+module.exports = {Attribute};
