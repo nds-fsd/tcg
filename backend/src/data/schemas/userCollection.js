@@ -13,5 +13,6 @@ const userCollectionSchema = new Schema({
 
 const UserCollection = model('user', userCollectionSchema);
 
-
-module.exports = UserCollection;
+module.exports = {
+    UserCollection
+};
