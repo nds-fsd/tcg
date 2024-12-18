@@ -17,6 +17,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
+        required: true,
         required: true
     },
     level: {
@@ -33,6 +34,17 @@ const userSchema = new Schema({
     creationDate: {
         type: Date,
         default: Date.now
+    },
+    isActive: {
+        type: Boolean,
+        default: false
+    },
+    roles: {
+        type: String,
+        default: "user"
+    },
+    profilePicture: {
+        type: String
     },
 });
 
