@@ -1,4 +1,4 @@
-const Type = require('../data/Schema/type');
+const {Type} = require('../data/Schema/type');
 
 const getTypes = async (req, res) => {
     try {
