@@ -9,6 +9,4 @@ cardRouter.get("/:id", getCardById)
 cardRouter.put("/:id", updateCard)
 cardRouter.delete("/:id", deleteCard)
 
-module.exports = {
-    cardRouter
-    };
+module.exports = {cardRouter};

@@ -24,7 +24,40 @@ try {
     }
 };
 
+const updateType = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name } = req.body;
+        const updatedType = await Type.findByIdAndUpdate(
+            id,
+            { name },
+            { new:true }
+        );
+        if (!updatedType) {
+            return res.status(404).json({ error: 'Type not found' });
+        }
+        res.status(200).json(updatedType);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const deleteType = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedType = await Type.findByIdAndDelete(id);
+        if (!deletedType) {
+            return res.status(404).json({ error: 'Type not found' });
+        }
+        res.status(200).json({ message: 'Type deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    } 
+};
+
 module.exports = { 
     getTypes,
-    createType
+    createType,
+    updateType,
+    deleteType
 };

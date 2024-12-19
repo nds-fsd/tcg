@@ -22,9 +22,42 @@ const createAttribute = async (req, res) => {
         } catch (error) {
             res.status(500).json({ error: error.message });
         }
-    };
+};
+
+const updateAttribute = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { name } = req.body;
+        const updatedAttribute = await Attribute.findByIdAndUpdate(
+            id,
+            { name },
+            { new:true }
+        );
+        if (!updatedAttribute) {
+            return res.status(404).json({ error: 'Attribute not found' });
+        }
+        res.status(200).json(updatedAttribute);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+const deleteAttribute = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedAttribute = await Attribute.findByIdAndDelete(id);
+        if (!deletedAttribute) {
+            return res.status(404).json({ error: 'Attribute not found' });
+        }
+        res.status(200).json({ message: 'Attribute deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    } 
+};
 
 module.exports = { 
     getAttributes,
-    createAttribute
+    createAttribute,
+    updateAttribute,
+    deleteAttribute
 };
