@@ -1,8 +1,8 @@
-const {Card} = require('../data/Schema/card');
+const { Card } = require('../data/Schema/card');
 
 const getCards = async (req, res) => {
   try {
-    const cards = await Card.find().populate("attribute").populate("type")
+    const cards = await Card.find().populate('attribute').populate('type');
     res.status(200).json(cards);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -43,11 +43,11 @@ const createCard = async (req, res) => {
       type,
       description,
       rarity,
-    })
-    const savedCard = await newCard.save()
-    const id = savedCard._id
+    });
+    const savedCard = await newCard.save();
+    const id = savedCard._id;
 
-    const cardToReturn = await Card.findById(id).populate('attribute').populate('type')
+    const cardToReturn = await Card.findById(id).populate('attribute').populate('type');
 
     res.status(201).json(cardToReturn);
   } catch (error) {
@@ -56,10 +56,10 @@ const createCard = async (req, res) => {
 };
 
 const getCardById = async (req, res) => {
-  const id = req.params.id
-  
+  const id = req.params.id;
+
   try {
-    const cardFound = await Card.findById(id).populate('attribute').populate('type')
+    const cardFound = await Card.findById(id).populate('attribute').populate('type');
     if (!cardFound) {
       return res.status(404).json({ error: 'Card not found' });
     }
@@ -87,7 +87,7 @@ const updateCard = async (req, res) => {
 };
 
 const deleteCard = async (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
 
   try {
     const deletedCard = await Card.findByIdAndDelete(id);
