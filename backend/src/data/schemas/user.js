@@ -5,7 +5,7 @@ const userSchema = new Schema({
         type: String,
         required: true,
         unique: true,
-        trim: true
+        trim: true,
     },
     email: {
         type: String,
@@ -13,38 +13,38 @@ const userSchema = new Schema({
         unique: true,
         lowercase: true,
         trim: true,
-        match: [/\S+@\S+\.\S+/, 'El email no es válido']
+        match: [/\S+@\S+\.\S+/, 'El email no es válido'],
     },
     password: {
         type: String,
         required: true,
-        required: true
     },
     level: {
         type: Number,
-        default: 1
+        default: 1,
     },
     birthDate: {
-        type: Date
+        type: Date,
     },
     lastActivity: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     creationDate: {
         type: Date,
-        default: Date.now
+        default: Date.now,
     },
     isActive: {
         type: Boolean,
-        default: false
+        default: false,
     },
     roles: {
         type: String,
-        default: "user"
+        default: 'user',
+        enum: ['admin', 'user'],
     },
     profilePicture: {
-        type: String
+        type: String,
     },
 });
 
@@ -57,8 +57,6 @@ userSchema.pre('save', async function (next) {
     next();
 });
 
-const User = model('user', userSchema);
+const User = model('User', userSchema);
 
-module.exports = {
-    User
-};
+module.exports = { User };
