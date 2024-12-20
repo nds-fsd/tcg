@@ -10,10 +10,13 @@ const userCollectionSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'card',
     },
+    cantidad: {
+      type: String,
+    },
   },
   { timestamps: true },
 );
 
-const UserCollection = model('user', userCollectionSchema);
+const UserCollection = model('UserCollection', userCollectionSchema);
 
 module.exports = { UserCollection };
