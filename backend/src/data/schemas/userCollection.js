@@ -4,14 +4,15 @@ const userCollectionSchema = new Schema(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: 'user',
+      ref: 'User',
     },
     cardId: {
       type: Schema.Types.ObjectId,
-      ref: 'card',
+      ref: 'Card',
     },
-    cantidad: {
+    amount: {
       type: String,
+      default: 1
     },
   },
   { timestamps: true },

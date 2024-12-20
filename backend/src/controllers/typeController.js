@@ -5,7 +5,7 @@ const getTypes = async (req, res) => {
     const types = await Type.find();
     res.status(200).json(types);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la optención de tipos" }]);
   }
 };
 
@@ -20,7 +20,7 @@ const createType = async (req, res) => {
     await newType.save();
     res.status(201).json(newType);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la creación del tipo" }]);
   }
 };
 
@@ -34,7 +34,7 @@ const updateTypeById = async (req, res) => {
     }
     res.status(200).json(updatedType);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la actualización del tipo" }]);
   }
 };
 
@@ -47,7 +47,7 @@ const deleteTypeById = async (req, res) => {
     }
     res.status(200).json({ message: 'Type deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Invalid request or ID format' });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error, no sa ha podido eliminar el tipo" }]);
   }
 };
 

@@ -49,13 +49,13 @@ const userSchema = new Schema(
 );
 
 // Middleware: Hashear la contraseña antes de guardar
-userSchema.pre('save', async function (next) {
-  if (this.isModified('password')) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-  }
-  next();
-});
+//userSchema.pre('save', async function (next) {
+  //if (this.isModified('password')) {
+    //const salt = await bcrypt.genSalt(10);
+    //this.password = await bcrypt.hash(this.password, salt);
+  //}
+  //next();
+//});
 
 const User = model('User', userSchema);
 

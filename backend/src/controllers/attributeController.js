@@ -5,7 +5,7 @@ const getAttributes = async (req, res) => {
     const attributes = await Attribute.find();
     res.status(200).json(attributes);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la obtención de atributos" }]);
   }
 };
 
@@ -20,7 +20,7 @@ const createAttribute = async (req, res) => {
     await newAttribute.save();
     res.status(201).json(newAttribute);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error al crear atributo" }]);
   }
 };
 
@@ -34,7 +34,7 @@ const updateAttributeById = async (req, res) => {
     }
     res.status(200).json(updatedAttribute);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error al actualizar atributo" }]);
   }
 };
 
@@ -47,7 +47,7 @@ const deleteAttributeById = async (req, res) => {
     }
     res.status(200).json({ message: 'Attribute deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Invalid request or ID format' });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error al eliminar atributo" }]);
   }
 };
 

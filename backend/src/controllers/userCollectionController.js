@@ -4,11 +4,11 @@ const getUserCollection = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const userCollections = await UserCollection.find({ userId: id }).populate('user').populate('card');
+    const userCollections = await UserCollection.find({ userId: id }).populate('userId').populate('cardId');
 
     res.status(200).json(userCollections);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la recoleccion de la colección del usuario" }]);
   }
 };
 
@@ -18,8 +18,6 @@ const createUserCollection = async (req, res) => {
     const newUserCardAssigned = new UserCollection({
       userId,
       cardId,
-      password,
-      birthDate,
     });
     const savedNewUserCar = await newUserCardAssigned.save();
     const id = savedNewUserCar._id;
@@ -28,7 +26,7 @@ const createUserCollection = async (req, res) => {
 
     res.status(201).json(userCardToReturn);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al crear las coleciones del usuario" }]);
   }
 };
 
@@ -46,7 +44,7 @@ const userCollectionDeleteById = async (req, res) => {
 
     res.status(200).json({ message: 'Entry deleted successfully' });
   } catch (error) {
-    res.status(400).json({ error: 'Invalid request or ID format' });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error en la eliminación de una de tus cartas" }]);
   }
 };
 

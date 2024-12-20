@@ -5,7 +5,7 @@ const getUser = async (req, res) => {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error al cargar la lista de Usuarios" }]);
   }
 };
 
@@ -21,7 +21,7 @@ const getUserById = async (req, res) => {
 
     return res.status(200).json(userFound);
   } catch (error) {
-    res.status(400).json({ error: 'Invalid ID format' });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al cargar el Usuario especificado" }]);
   }
 };
 
@@ -41,7 +41,7 @@ const createUser = async (req, res) => {
 
     res.status(201).json(userToReturn);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al crear usuario" }]);
   }
 };
 
@@ -58,7 +58,7 @@ const updateUserById = async (req, res) => {
     }
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error en la modificacion del usuario" }]);
   }
 };
 
@@ -72,7 +72,7 @@ const userDeleteById = async (req, res) => {
     }
     res.status(200).json({ message: 'User deleted successfully' });
   } catch (error) {
-    res.status(400).json({ error: 'Invalid request or ID format' });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error en la eliminación del usuario del Usuario" }]);
   }
 };
 

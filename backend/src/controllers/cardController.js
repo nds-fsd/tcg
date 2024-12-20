@@ -5,7 +5,7 @@ const getCards = async (req, res) => {
     const cards = await Card.find().populate('attribute').populate('type');
     res.status(200).json(cards);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error al obtener cartas" }]);
   }
 };
 //   try {
@@ -45,7 +45,7 @@ const getCardById = async (req, res) => {
 
     return res.status(200).json(cardFound);
   } catch (error) {
-    res.status(400).json({ error: 'Invalid ID format' });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al encontrar cartas" }]);
   }
 };
 
@@ -67,7 +67,7 @@ const createCard = async (req, res) => {
 
     res.status(201).json(cardToReturn);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al crear una carta" }]);
   }
 };
 
@@ -84,7 +84,7 @@ const updateCardById = async (req, res) => {
     }
     res.status(200).json(updatedCard);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al actualizar la carta" }]);
   }
 };
 
@@ -98,7 +98,7 @@ const deleteCardById = async (req, res) => {
     }
     res.status(200).json({ message: 'Card deleted successfully' });
   } catch (error) {
-    res.status(400).json({ error: 'Invalid request or ID format' });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al eliminar carton" }]);
   }
 };
 
