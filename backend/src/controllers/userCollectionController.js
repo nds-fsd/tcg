@@ -4,12 +4,9 @@ const getUserCollection = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const userCollections = await UserCollection.find({ userId: id })
-      .populate('user')
-      .populate('card');
+    const userCollections = await UserCollection.find({ userId: id }).populate('user').populate('card');
 
     res.status(200).json(userCollections);
-
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -22,7 +19,7 @@ const createUserCollection = async (req, res) => {
       userId,
       cardId,
       password,
-      birthDate
+      birthDate,
     });
     const savedNewUserCar = await newUserCardAssigned.save();
     const id = savedNewUserCar._id;
@@ -46,7 +43,6 @@ const userCollectionDelete = async (req, res) => {
     }
 
     res.status(200).json({ message: 'Entry deleted successfully' });
-
   } catch (error) {
     res.status(400).json({ error: 'Invalid request or ID format' });
   }

@@ -4,7 +4,6 @@ const getUser = async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
-
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -21,7 +20,6 @@ const getUserById = async (req, res) => {
     }
 
     return res.status(200).json(userFound);
-    
   } catch (error) {
     res.status(400).json({ error: 'Invalid ID format' });
   }
@@ -34,7 +32,7 @@ const createUser = async (req, res) => {
       nickName,
       email,
       password,
-      birthDate
+      birthDate,
     });
     const savedUser = await newUser.save();
     const id = savedUser._id;

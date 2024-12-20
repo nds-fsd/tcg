@@ -1,16 +1,17 @@
 const { Schema, model } = require('mongoose');
 
-const userCollectionSchema = new Schema({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: 'user',
+const userCollectionSchema = new Schema(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+    },
+    cardId: {
+      type: Schema.Types.ObjectId,
+      ref: 'card',
+    },
   },
-  cardId: {
-    type: Schema.Types.ObjectId,
-    ref: 'card',
-  },
-},
-  { timestamps: true }
+  { timestamps: true },
 );
 
 const UserCollection = model('user', userCollectionSchema);
