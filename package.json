@@ -16,6 +16,8 @@
     "turbo": "^1.13.3"
   },
   "dependencies": {
+    "call-bind-apply-helpers": "^1.0.1",
+    "call-bound": "^1.0.3",
     "prettier": "^3.4.2"
   }
 }
