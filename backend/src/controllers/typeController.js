@@ -24,7 +24,7 @@ const createType = async (req, res) => {
   }
 };
 
-const updateType = async (req, res) => {
+const updateTypeById = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
@@ -54,6 +54,6 @@ const deleteType = async (req, res) => {
 module.exports = {
   getTypes,
   createType,
-  updateType,
+  updateTypeById,
   deleteType,
 };

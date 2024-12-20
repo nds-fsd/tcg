@@ -24,7 +24,7 @@ const createAttribute = async (req, res) => {
   }
 };
 
-const updateAttribute = async (req, res) => {
+const updateAttributeById = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
@@ -54,6 +54,6 @@ const deleteAttribute = async (req, res) => {
 module.exports = {
   getAttributes,
   createAttribute,
-  updateAttribute,
+  updateAttributeById,
   deleteAttribute,
 };

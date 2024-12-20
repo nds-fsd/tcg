@@ -1,80 +1,81 @@
-const { User } = require('../data/test/userTest');
+const { User } = require('../data/schemas/user');
 
 const getUser = async (req, res) => {
   try {
     const users = await User.find();
-    res.json(users);
+    res.status(200).json(users);
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const getUserById = (req, res) => {
-  const idToFind = Number(req.params.id);
-  const existingUser = users.find((user) => user.id === idToFind);
+const getUserById = async (req, res) => {
+  const id = req.params.id;
 
-  if (!existingUser) {
-    return res.status(404).json({ error: 'User not found' });
+  try {
+    const userFound = await User.findById(id);
+
+    if (!userFound) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    return res.status(200).json(userFound);
+    
+  } catch (error) {
+    res.status(400).json({ error: 'Invalid ID format' });
   }
-
-  res.json(existingUser);
 };
 
-const createUser = (req, res) => {
-  id++;
-
-  const newUser = {
-    id: id,
-    nickName: req.body.nickName,
-    email: req.body.email,
-    password: req.body.password,
-  };
-
-  users.push(newUser);
-  res.status(201).json(newUser);
-};
-
-const updateUserById = (req, res) => {
-  const idToFind = Number(req.params.id);
-  const existingUser = users.find((user) => user.id === idToFind);
-
-  if (!existingUser) {
-    return res.status(404).json({ error: 'User not found' });
-  }
-
-  const updateUser = {
-    id: existingUser.id,
-    nickName: req.body.nickName || existingUser.nickName,
-    email: req.body.email || existingUser.email,
-    password: req.body.password || existingUser.password,
-    level: req.body.level || existingUser.level,
-    birthDate: req.body.birthDate || existingUser.birthDate,
-    roles: req.body.roles || existingUser.roles,
-    profilePicture: req.body.profilePicture || existingUser.profilePicture,
-  };
-
-  const existingUserIndex = users.findIndex((user) => user.id === idToFind);
-  todos.splice(existingUserIndex, 1, updateUser);
-
-  res.json(updateUser);
-};
-
-const userDelete = (req, res) => {
-  const idToDelete = Number(req.params.id);
-  const existingUser = users.find((todos) => todos.id === idToDelete);
-
-  if (!existingUser) {
-    return res.status(404).json({
-      error: 'Item not found',
+const createUser = async (req, res) => {
+  try {
+    const { nickName, email, password, birthDate } = req.body;
+    const newUser = new User({
+      nickName,
+      email,
+      password,
+      birthDate
     });
+    const savedUser = await newUser.save();
+    const id = savedUser._id;
+
+    const userToReturn = await User.findById(id);
+
+    res.status(201).json(userToReturn);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
+};
 
-  const existingUserIndex = users.findIndex((todos) => todos.id === idToDelete);
-  users.splice(existingUserIndex, 1);
+const updateUserById = async (req, res) => {
+  try {
+    const { nickName, email, password, roles, profilePicture } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { nickName, email, password, roles, profilePicture },
+      { new: true, runValidators: true },
+    );
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
-  res.json({
-    status: 'success',
-  });
+const userDelete = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const deletedUser = await User.findByIdAndDelete(id);
+    if (!deletedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(400).json({ error: 'Invalid request or ID format' });
+  }
 };
 
 module.exports = {

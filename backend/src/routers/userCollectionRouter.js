@@ -7,8 +7,8 @@ const {
 
 const userCollectionRouter = Router();
 
-userCollectionRouter.get('/', getUserCollection);
+userCollectionRouter.get('/:id', getUserCollection);
 userCollectionRouter.post('/', createUserCollection);
-userCollectionRouter.delete('/:id', userCollectionDelete);
+userCollectionRouter.delete('/:id/:id', userCollectionDelete);
 
 module.exports = { userCollectionRouter };

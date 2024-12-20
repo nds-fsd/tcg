@@ -9,10 +9,10 @@ const userCollectionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'card',
   },
-});
+},
+  { timestamps: true }
+);
 
 const UserCollection = model('user', userCollectionSchema);
 
-module.exports = {
-  UserCollection,
-};
+module.exports = { UserCollection };

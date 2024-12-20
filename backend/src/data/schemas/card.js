@@ -29,7 +29,7 @@ const cardSchema = new Schema({
     enum: ['common', 'rare', 'epic', 'legendary'],
   },
 },
-  { timestamps: true },
+  { timestamps: true }
 );
 
 const Card = model('Card', cardSchema);

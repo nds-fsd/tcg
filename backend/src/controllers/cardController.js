@@ -33,6 +33,22 @@ const getCards = async (req, res) => {
 //   }
 // };
 
+const getCardById = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const cardFound = await Card.findById(id).populate('attribute').populate('type');
+    
+    if (!cardFound) {
+      return res.status(404).json({ error: 'Card not found' });
+    }
+
+    return res.status(200).json(cardFound);
+  } catch (error) {
+    res.status(400).json({ error: 'Invalid ID format' });
+  }
+};
+
 const createCard = async (req, res) => {
   try {
     const { name, image, attribute, type, description, rarity } = req.body;
@@ -55,21 +71,7 @@ const createCard = async (req, res) => {
   }
 };
 
-const getCardById = async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const cardFound = await Card.findById(id).populate('attribute').populate('type');
-    if (!cardFound) {
-      return res.status(404).json({ error: 'Card not found' });
-    }
-    return res.status(200).json(cardFound);
-  } catch (error) {
-    res.status(400).json({ error: 'Invalid ID format' });
-  }
-};
-
-const updateCard = async (req, res) => {
+const updateCardById = async (req, res) => {
   try {
     const { name, image, attribute, type, description, rarity } = req.body;
     const updatedCard = await Card.findByIdAndUpdate(
@@ -96,7 +98,7 @@ const deleteCard = async (req, res) => {
     }
     res.status(200).json({ message: 'Card deleted successfully' });
   } catch (error) {
-    res.status(400).json({ error: 'Invalid ID format' });
+    res.status(400).json({ error: 'Invalid request or ID format' });
   }
 };
 
@@ -104,6 +106,6 @@ module.exports = {
   getCards,
   createCard,
   getCardById,
-  updateCard,
+  updateCardById,
   deleteCard,
 };

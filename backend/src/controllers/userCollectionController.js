@@ -1,43 +1,55 @@
-const { userCollections } = require('../data/test/userCollectionTest');
+const { UserCollection } = require('../data/schemas/userCollection');
 
 const getUserCollection = async (req, res) => {
+  const id = req.params.id;
+
   try {
-    const userC = await Card.find().populate('attribute').populate('type');
-    res.json(userCollections);
+    const userCollections = await UserCollection.find({ userId: id })
+      .populate('user')
+      .populate('card');
+
+    res.status(200).json(userCollections);
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-const createUserCollection = (req, res) => {
-  id++;
+const createUserCollection = async (req, res) => {
+  try {
+    const { userId, cardId } = req.body;
+    const newUserCardAssigned = new UserCollection({
+      userId,
+      cardId,
+      password,
+      birthDate
+    });
+    const savedNewUserCar = await newUserCardAssigned.save();
+    const id = savedNewUserCar._id;
 
-  const newUserCollection = {
-    id: id,
-    userId: req.body.userId,
-    cardId: req.body.cardId,
-  };
+    const userCardToReturn = await UserCollection.findById(id);
 
-  userCollections.push(newUserCollection);
-  res.status(201).json(userCollections);
+    res.status(201).json(userCardToReturn);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
-const userCollectionDelete = (req, res) => {
-  const idToDelete = Number(req.params.id);
-  const existingUserCollection = userCollections.find((userCollection) => userCollection.id === idToDelete);
+const userCollectionDelete = async (req, res) => {
+  const { userId, cardId } = req.params;
 
-  if (!existingUserCollection) {
-    return res.status(404).json({
-      error: 'Item not found',
-    });
+  try {
+    const deletedEntry = await UserCollection.findOneAndDelete({ user: userId, card: cardId });
+
+    if (!deletedEntry) {
+      return res.status(404).json({ error: 'No entry found for the specified user and card' });
+    }
+
+    res.status(200).json({ message: 'Entry deleted successfully' });
+
+  } catch (error) {
+    res.status(400).json({ error: 'Invalid request or ID format' });
   }
-
-  const existingUserCollectionIndex = userCollections.findIndex((userCollection) => userCollection.id === idToDelete);
-  userCollections.splice(existingUserCollectionIndex, 1);
-
-  res.json({
-    status: 'success',
-  });
 };
 
 module.exports = {
