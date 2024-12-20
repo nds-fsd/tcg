@@ -38,7 +38,7 @@ const updateTypeById = async (req, res) => {
   }
 };
 
-const deleteType = async (req, res) => {
+const deleteTypeById = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedType = await Type.findByIdAndDelete(id);
@@ -47,7 +47,7 @@ const deleteType = async (req, res) => {
     }
     res.status(200).json({ message: 'Type deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Invalid request or ID format' });
   }
 };
 
@@ -55,5 +55,5 @@ module.exports = {
   getTypes,
   createType,
   updateTypeById,
-  deleteType,
+  deleteTypeById,
 };

@@ -38,7 +38,7 @@ const updateAttributeById = async (req, res) => {
   }
 };
 
-const deleteAttribute = async (req, res) => {
+const deleteAttributeById = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedAttribute = await Attribute.findByIdAndDelete(id);
@@ -47,7 +47,7 @@ const deleteAttribute = async (req, res) => {
     }
     res.status(200).json({ message: 'Attribute deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Invalid request or ID format' });
   }
 };
 
@@ -55,5 +55,5 @@ module.exports = {
   getAttributes,
   createAttribute,
   updateAttributeById,
-  deleteAttribute,
+  deleteAttributeById,
 };

@@ -2,13 +2,13 @@ const { Router } = require('express');
 const {
   getUserCollection,
   createUserCollection,
-  userCollectionDelete,
+  userCollectionDeleteById,
 } = require('../controllers/userCollectionController');
 
 const userCollectionRouter = Router();
 
 userCollectionRouter.get('/:id', getUserCollection);
 userCollectionRouter.post('/', createUserCollection);
-userCollectionRouter.delete('/:id/:id', userCollectionDelete);
+userCollectionRouter.delete('/:id/:id', userCollectionDeleteById);
 
 module.exports = { userCollectionRouter };

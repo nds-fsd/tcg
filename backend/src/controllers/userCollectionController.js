@@ -32,7 +32,9 @@ const createUserCollection = async (req, res) => {
   }
 };
 
-const userCollectionDelete = async (req, res) => {
+// update??
+
+const userCollectionDeleteById = async (req, res) => {
   const { userId, cardId } = req.params;
 
   try {
@@ -51,5 +53,5 @@ const userCollectionDelete = async (req, res) => {
 module.exports = {
   getUserCollection,
   createUserCollection,
-  userCollectionDelete,
+  userCollectionDeleteById,
 };

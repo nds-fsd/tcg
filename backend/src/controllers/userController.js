@@ -62,7 +62,7 @@ const updateUserById = async (req, res) => {
   }
 };
 
-const userDelete = async (req, res) => {
+const userDeleteById = async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -81,5 +81,5 @@ module.exports = {
   getUserById,
   createUser,
   updateUserById,
-  userDelete,
+  userDeleteById,
 };

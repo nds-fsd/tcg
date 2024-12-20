@@ -88,7 +88,7 @@ const updateCardById = async (req, res) => {
   }
 };
 
-const deleteCard = async (req, res) => {
+const deleteCardById = async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -107,5 +107,5 @@ module.exports = {
   createCard,
   getCardById,
   updateCardById,
-  deleteCard,
+  deleteCardById,
 };
