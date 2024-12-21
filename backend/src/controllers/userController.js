@@ -27,9 +27,9 @@ const getUserById = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { nickName, email, password, birthDate } = req.body;
+    const { userName, email, password, birthDate } = req.body;
     const newUser = new User({
-      nickName,
+      userName,
       email,
       password,
       birthDate,
@@ -47,10 +47,10 @@ const createUser = async (req, res) => {
 
 const updateUserById = async (req, res) => {
   try {
-    const { nickName, email, password, roles, profilePicture } = req.body;
+    const { userName, email, password, roles, profilePicture } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      { nickName, email, password, roles, profilePicture },
+      { userName, email, password, roles, profilePicture },
       { new: true, runValidators: true },
     );
     if (!updatedUser) {
