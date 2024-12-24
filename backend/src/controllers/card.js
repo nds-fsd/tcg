@@ -35,7 +35,7 @@ const getCards = async (req, res) => {
 
 const createCard = async (req, res) => {
   try {
-    const { name, image, attribute, type, description, rarity } = req.body;
+    const { name, image, attribute, type, description, rarity, category } = req.body;
     const newCard = new Card({
       name,
       image,
@@ -43,6 +43,7 @@ const createCard = async (req, res) => {
       type,
       description,
       rarity,
+      category,
     });
     const savedCard = await newCard.save();
     const id = savedCard._id;
@@ -71,10 +72,10 @@ const getCardById = async (req, res) => {
 
 const updateCard = async (req, res) => {
   try {
-    const { name, image, attribute, type, description, rarity } = req.body;
+    const { name, image, attribute, type, description, rarity, category } = req.body;
     const updatedCard = await Card.findByIdAndUpdate(
       req.params.id,
-      { name, image, attribute, type, description, rarity },
+      { name, image, attribute, type, description, rarity, category },
       { new: true, runValidators: true },
     );
     if (!updatedCard) {

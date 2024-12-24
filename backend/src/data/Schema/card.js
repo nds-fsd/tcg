@@ -8,6 +8,7 @@ const cardSchema = new Schema(
     type: { type: Schema.Types.ObjectId, ref: 'Type', required: true },
     description: { type: String, required: true },
     rarity: { type: String, required: true, enum: ['common', 'rare', 'epic', 'legendary'] },
+    category: { type: String, required: true, enum: ['monster', 'support'] },
   },
   { timestamps: true },
 );
