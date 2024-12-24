@@ -1,11 +1,11 @@
-const { Card } = require('../data/schemas/card');
+const { Card } = require('../data/Schema/card');
 
 const getCards = async (req, res) => {
   try {
     const cards = await Card.find().populate('attribute').populate('type');
     res.status(200).json(cards);
   } catch (error) {
-    res.status(500).json([{ error: error.message }, { "Error manual": "Error al obtener cartas" }]);
+    res.status(500).json({ error: error.message });
   }
 };
 //   try {
@@ -15,6 +15,7 @@ const getCards = async (req, res) => {
 //     if (rarity) filters.rarity = rarity;
 //     if (type) filters.type = type;
 //     if (attribute) filters.attribute = attribute;
+//     if (category) filters.category = category;
 
 //     const cards = await Card.find(filters)
 //       .skip((page - 1) * limit)
@@ -33,25 +34,9 @@ const getCards = async (req, res) => {
 //   }
 // };
 
-const getCardById = async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const cardFound = await Card.findById(id).populate('attribute').populate('type');
-
-    if (!cardFound) {
-      return res.status(404).json({ error: 'Card not found' });
-    }
-
-    return res.status(200).json(cardFound);
-  } catch (error) {
-    res.status(400).json([{ error: error.message }, { "Error manual": "Error al encontrar cartas" }]);
-  }
-};
-
 const createCard = async (req, res) => {
   try {
-    const { name, image, attribute, type, description, rarity } = req.body;
+    const { name, image, attribute, type, description, rarity, category } = req.body;
     const newCard = new Card({
       name,
       image,
@@ -59,6 +44,7 @@ const createCard = async (req, res) => {
       type,
       description,
       rarity,
+      category,
     });
     const savedCard = await newCard.save();
     const id = savedCard._id;
@@ -67,16 +53,30 @@ const createCard = async (req, res) => {
 
     res.status(201).json(cardToReturn);
   } catch (error) {
-    res.status(400).json([{ error: error.message }, { "Error manual": "Error al crear una carta" }]);
+    res.status(400).json({ error: error.message });
   }
 };
 
-const updateCardById = async (req, res) => {
+const getCardById = async (req, res) => {
+  const id = req.params.id;
+
   try {
-    const { name, image, attribute, type, description, rarity } = req.body;
+    const cardFound = await Card.findById(id).populate('attribute').populate('type');
+    if (!cardFound) {
+      return res.status(404).json({ error: 'Card not found' });
+    }
+    return res.status(200).json(cardFound);
+  } catch (error) {
+    res.status(400).json({ error: 'Invalid ID format' });
+  }
+};
+
+const updateCard = async (req, res) => {
+  try {
+    const { name, image, attribute, type, description, rarity, category } = req.body;
     const updatedCard = await Card.findByIdAndUpdate(
       req.params.id,
-      { name, image, attribute, type, description, rarity },
+      { name, image, attribute, type, description, rarity, category },
       { new: true, runValidators: true },
     );
     if (!updatedCard) {
@@ -84,11 +84,11 @@ const updateCardById = async (req, res) => {
     }
     res.status(200).json(updatedCard);
   } catch (error) {
-    res.status(400).json([{ error: error.message }, { "Error manual": "Error al actualizar la carta" }]);
+    res.status(400).json({ error: error.message });
   }
 };
 
-const deleteCardById = async (req, res) => {
+const deleteCard = async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -98,7 +98,7 @@ const deleteCardById = async (req, res) => {
     }
     res.status(200).json({ message: 'Card deleted successfully' });
   } catch (error) {
-    res.status(400).json([{ error: error.message }, { "Error manual": "Error al eliminar carton" }]);
+    res.status(400).json({ error: 'Invalid ID format' });
   }
 };
 
@@ -106,6 +106,6 @@ module.exports = {
   getCards,
   createCard,
   getCardById,
-  updateCardById,
-  deleteCardById,
+  updateCard,
+  deleteCard,
 };

@@ -29,12 +29,6 @@ const cardSchema = new Schema(
       required: true,
       enum: ['common', 'rare', 'epic', 'legendary'],
     },
-
-    category: {
-      type: String,
-      required: true,
-      enum: ['monster', 'support'],
-    },
   },
   { timestamps: true },
 );
