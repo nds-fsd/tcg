@@ -1,11 +1,11 @@
-const { Attribute } = require('../data/Schema/attribute');
+const { Attribute } = require('../data/schemas/attribute');
 
 const getAttributes = async (req, res) => {
   try {
     const attributes = await Attribute.find();
     res.status(200).json(attributes);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la obtención de atributos" }]);
   }
 };
 
@@ -20,11 +20,11 @@ const createAttribute = async (req, res) => {
     await newAttribute.save();
     res.status(201).json(newAttribute);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error al crear atributo" }]);
   }
 };
 
-const updateAttribute = async (req, res) => {
+const updateAttributeById = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
@@ -34,11 +34,11 @@ const updateAttribute = async (req, res) => {
     }
     res.status(200).json(updatedAttribute);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error al actualizar atributo" }]);
   }
 };
 
-const deleteAttribute = async (req, res) => {
+const deleteAttributeById = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedAttribute = await Attribute.findByIdAndDelete(id);
@@ -47,13 +47,13 @@ const deleteAttribute = async (req, res) => {
     }
     res.status(200).json({ message: 'Attribute deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error al eliminar atributo" }]);
   }
 };
 
 module.exports = {
   getAttributes,
   createAttribute,
-  updateAttribute,
-  deleteAttribute,
+  updateAttributeById,
+  deleteAttributeById,
 };

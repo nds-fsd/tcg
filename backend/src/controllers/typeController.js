@@ -1,11 +1,11 @@
-const { Type } = require('../data/Schema/type');
+const { Type } = require('../data/schemas/type');
 
 const getTypes = async (req, res) => {
   try {
     const types = await Type.find();
     res.status(200).json(types);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la optención de tipos" }]);
   }
 };
 
@@ -20,11 +20,11 @@ const createType = async (req, res) => {
     await newType.save();
     res.status(201).json(newType);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la creación del tipo" }]);
   }
 };
 
-const updateType = async (req, res) => {
+const updateTypeById = async (req, res) => {
   try {
     const { id } = req.params;
     const { name } = req.body;
@@ -34,11 +34,11 @@ const updateType = async (req, res) => {
     }
     res.status(200).json(updatedType);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la actualización del tipo" }]);
   }
 };
 
-const deleteType = async (req, res) => {
+const deleteTypeById = async (req, res) => {
   try {
     const { id } = req.params;
     const deletedType = await Type.findByIdAndDelete(id);
@@ -47,13 +47,13 @@ const deleteType = async (req, res) => {
     }
     res.status(200).json({ message: 'Type deleted successfully' });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error, no sa ha podido eliminar el tipo" }]);
   }
 };
 
 module.exports = {
   getTypes,
   createType,
-  updateType,
-  deleteType,
+  updateTypeById,
+  deleteTypeById,
 };

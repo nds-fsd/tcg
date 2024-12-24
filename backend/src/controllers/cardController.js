@@ -1,11 +1,11 @@
-const { Card } = require('../data/Schema/card');
+const { Card } = require('../data/schemas/card');
 
 const getCards = async (req, res) => {
   try {
     const cards = await Card.find().populate('attribute').populate('type');
     res.status(200).json(cards);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json([{ error: error.message }, { "Error manual": "Error al obtener cartas" }]);
   }
 };
 //   try {
@@ -33,6 +33,22 @@ const getCards = async (req, res) => {
 //   }
 // };
 
+const getCardById = async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const cardFound = await Card.findById(id).populate('attribute').populate('type');
+
+    if (!cardFound) {
+      return res.status(404).json({ error: 'Card not found' });
+    }
+
+    return res.status(200).json(cardFound);
+  } catch (error) {
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al encontrar cartas" }]);
+  }
+};
+
 const createCard = async (req, res) => {
   try {
     const { name, image, attribute, type, description, rarity, category } = req.body;
@@ -56,26 +72,12 @@ const createCard = async (req, res) => {
   }
 };
 
-const getCardById = async (req, res) => {
-  const id = req.params.id;
-
+const updateCardById = async (req, res) => {
   try {
-    const cardFound = await Card.findById(id).populate('attribute').populate('type');
-    if (!cardFound) {
-      return res.status(404).json({ error: 'Card not found' });
-    }
-    return res.status(200).json(cardFound);
-  } catch (error) {
-    res.status(400).json({ error: 'Invalid ID format' });
-  }
-};
-
-const updateCard = async (req, res) => {
-  try {
-    const { name, image, attribute, type, description, rarity, category } = req.body;
+    const { name, image, attribute, type, description, rarity } = req.body;
     const updatedCard = await Card.findByIdAndUpdate(
       req.params.id,
-      { name, image, attribute, type, description, rarity, category },
+      { name, image, attribute, type, description, rarity },
       { new: true, runValidators: true },
     );
     if (!updatedCard) {
@@ -83,11 +85,11 @@ const updateCard = async (req, res) => {
     }
     res.status(200).json(updatedCard);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al actualizar la carta" }]);
   }
 };
 
-const deleteCard = async (req, res) => {
+const deleteCardById = async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -97,7 +99,7 @@ const deleteCard = async (req, res) => {
     }
     res.status(200).json({ message: 'Card deleted successfully' });
   } catch (error) {
-    res.status(400).json({ error: 'Invalid ID format' });
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al eliminar carton" }]);
   }
 };
 
@@ -105,6 +107,6 @@ module.exports = {
   getCards,
   createCard,
   getCardById,
-  updateCard,
-  deleteCard,
+  updateCardById,
+  deleteCardById,
 };

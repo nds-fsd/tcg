@@ -1,16 +1,15 @@
 const express = require('express');
-const { connectDB } = require('./mongo/connection');
 const cors = require('cors');
+const { connectDB } = require('./mongo/connection');
 const app = express();
-const router = require('./routers/index');
-
+const routers = require('./routers/index');
 const dotenv = require('dotenv');
-dotenv.config();
 
+dotenv.config();
 app.use(cors());
 app.use(express.json());
 
-app.use('/', router);
+app.use('/', routers);
 
 connectDB().then(() => console.log('Connected to database!'));
 
