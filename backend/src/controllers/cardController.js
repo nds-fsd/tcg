@@ -98,7 +98,7 @@ const deleteCardById = async (req, res) => {
     }
     res.status(200).json({ message: 'Card deleted successfully' });
   } catch (error) {
-    res.status(400).json([{ error: error.message }, { "Error manual": "Error al eliminar carton" }]);
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al eliminar la carta" }]);
   }
 };
 
