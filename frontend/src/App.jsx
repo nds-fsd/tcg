@@ -1,5 +1,13 @@
+import React from 'react';
+import AuthPage from './components/AuthPage/';
+import './app.css';
+
 function App() {
-  return <div>Your app here</div>;
+  return (
+    <div>
+      <AuthPage />
+    </div>
+  );
 }
 
 export default App;
