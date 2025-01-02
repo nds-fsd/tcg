@@ -1,0 +1,98 @@
+.filterMenu {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: #29293a;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 100%;
+    max-width: 400px;
+    z-index: 100;
+}
+
+.filterMenu h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #e8e8d8;
+    font-family: 'Pixelify Sans', sans-serif;
+    border-bottom: 1px solid #7006a1;
+    padding-bottom: 0.5rem;
+}
+
+.filterMenu label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #e8e8d8;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+.filterMenu input[type="checkbox"],
+.filterMenu input[type="text"] {
+    margin-left: 0.5rem;
+    padding: 0.4rem;
+    font-size: 0.9rem;
+    background-color: #1e1e2b;
+    border: 1px solid #3a3a4d;
+    border-radius: 4px;
+    color: #e8e8d8;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.filterMenu input[type="checkbox"]:hover,
+.filterMenu input[type="text"]:hover {
+    border-color: #7006a1;
+}
+
+.filterMenu input[type="checkbox"]:checked {
+    accent-color: #7006a1;
+}
+
+.filterMenu .clearButton {
+    align-self: flex-end;
+    background-color: #7006a1;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+.filterMenu .clearButton:hover {
+    background-color: #50057e;
+}
+
+.icon {
+    margin-right: 0.5rem;
+    font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+    .filterMenu {
+        max-width: 100%;
+        padding: 0.8rem;
+    }
+
+    .filterMenu h4 {
+        font-size: 1rem;
+    }
+
+    .filterMenu label {
+        font-size: 0.85rem;
+    }
+
+    .filterMenu input[type="checkbox"],
+    .filterMenu input[type="text"] {
+        font-size: 0.85rem;
+    }
+
+    .filterMenu .clearButton {
+        font-size: 0.8rem;
+    }
+}

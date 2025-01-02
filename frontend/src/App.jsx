@@ -1,11 +1,11 @@
 import React from 'react';
-import AuthPage from './components/AuthPage/';
+import CreateNewDeck from './components/CreateNewDeck/';
 import './app.css';
 
 function App() {
   return (
     <div>
-      <AuthPage />
+      <CreateNewDeck />
     </div>
   );
 }
