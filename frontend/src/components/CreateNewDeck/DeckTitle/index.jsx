@@ -8,8 +8,8 @@ function DeckTitle({ onTitleChange }) {
 
     const handleTextChange = (event) => {
         const newTitle = event.target.value;
-        if (newTitle.length > 30) {
-            setError('El título no puede superar los 30 caracteres.');
+        if (newTitle.length > 20) {
+            setError('El título no puede superar los 20 caracteres.');
         } else {
             setError('');
             setTitle(newTitle);

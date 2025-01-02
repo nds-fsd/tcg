@@ -25,6 +25,7 @@
     cursor: grab;
     transition: transform 0.3s ease;
     border: 5px solid;
+    height: 45rem;
 }
 
 .monster {
