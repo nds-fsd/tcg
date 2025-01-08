@@ -1,23 +1,28 @@
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
-}
-
-:root {
-  line-height: 1.5;
-  font-weight: 400;
+  position: relative;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  font-family: sans-serif;
-  margin: 0;
-  width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: #664631;
 }
 
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
+h1,
+h2,
+h3,
+h4 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
 }
