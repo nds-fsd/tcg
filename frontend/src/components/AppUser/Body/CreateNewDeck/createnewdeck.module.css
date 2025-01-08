@@ -27,7 +27,7 @@
     flex: 2;
 }
 
-button {
+.createNewDeck button {
     align-self: flex-end;
     background-color: #7006a1;
     color: white;
@@ -39,11 +39,11 @@ button {
     transition: all 0.3s ease-in-out;
 }
 
-button:hover {
+.createNewDeck button:hover {
     background-color: #4a046e;
 }
 
-button:disabled {
+.createNewDeck button:disabled {
     background-color: #3a3a4d;
     cursor: not-allowed;
 }
