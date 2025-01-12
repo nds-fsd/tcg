@@ -12,7 +12,7 @@ const userCollectionSchema = new Schema(
     },
     amount: {
       type: String,
-      default: 1
+      default: 1,
     },
   },
   { timestamps: true },

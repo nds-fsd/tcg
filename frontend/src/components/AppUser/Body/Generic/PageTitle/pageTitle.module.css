@@ -1,94 +1,96 @@
 /* Todo el primer baner de usuarios */
 /* Titulo */
 .userPageTitleContainer {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
 
-    width: 86%;
-    min-height: 3vh;
-    margin: 30px auto 10px auto;
-    padding: 10px 30px;
+  width: 86%;
+  min-height: 3vh;
+  margin: 30px auto 10px auto;
+  padding: 10px 30px;
 
-    border-radius: 20px;
-    background-color: #f8edd3;
+  border-radius: 20px;
+  background-color: #f8edd3;
 }
 
 .userPageTitle {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
-    align-content: center;
-    gap: 1vw;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  gap: 1vw;
 
-    font-family: 'Metamorphous', sans-serif;
-    font-size: 14px;
+  font-family: 'Metamorphous', sans-serif;
+  font-size: 14px;
 }
 
 /* Añadir */
 .plus {
-    margin-left: 10px;
+  margin-left: 10px;
 
-    font-size: 36px;
-    color: #A87304;
-    cursor: pointer;
+  font-size: 36px;
+  color: #a87304;
+  cursor: pointer;
 
-    transition: transform 0.3s ease, color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease;
 }
 
 .plus:hover {
-    color: #dab971;
+  color: #dab971;
 
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 
 .plus:active {
-    color: #A87304;
+  color: #a87304;
 
-    transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 /* Buscador */
 .userPageSercherContainer {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    width: 100%;
-    max-width: 18vw;
+  width: 100%;
+  max-width: 18vw;
 }
 
 .userPageSercher {
-    width: 100%;
-    padding: 5px 10px;
+  width: 100%;
+  padding: 5px 10px;
 
-    border: none;
-    border-bottom: 2px solid #A87304;
-    background-color: transparent;
+  border: none;
+  border-bottom: 2px solid #a87304;
+  background-color: transparent;
 
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease;
-    font-family: 'Metamorphous', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .userPageSercher::placeholder {
-    color: #999;
-    font-style: italic;
+  color: #999;
+  font-style: italic;
 }
 
 .userPageSercher:focus {
-    border-color: #dab971;
-    box-shadow: none;
+  border-color: #dab971;
+  box-shadow: none;
 }
 
 .searchIcon {
-    margin-left: 10px;
+  margin-left: 10px;
 
-    font-size: 20px;
-    color: #A87304;
+  font-size: 20px;
+  color: #a87304;
 
-    cursor: pointer;
+  cursor: pointer;
 }

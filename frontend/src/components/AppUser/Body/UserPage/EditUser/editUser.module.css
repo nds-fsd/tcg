@@ -1,112 +1,112 @@
 /* Estilo del formulario de edición */
 /* Cubre toda la pantalla */
 .modalOverlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    position: fixed;
-    top: 0;
-    left: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
 
-    width: 100vw;
-    height: 100vh;
+  width: 100vw;
+  height: 100vh;
 
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(4px);
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
 
-    font-family: 'Metamorphous', sans-serif;
+  font-family: 'Metamorphous', sans-serif;
 
-    z-index: 1000;
+  z-index: 1000;
 }
 
 /* Estilo del contenido del modal */
 .modalContent {
-    padding: 25px 20px;
-    width: 90%;
-    max-width: 450px;
+  padding: 25px 20px;
+  width: 90%;
+  max-width: 450px;
 
-    background-color: #664631;
-    border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  background-color: #664631;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
 
-    animation: fadeIn 0.3s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 /* Animación de entrada */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.9);
-    }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 h2 {
-    padding-bottom: 2vh;
-    color: #ffffff;
-    text-align: center;
+  padding-bottom: 2vh;
+  color: #ffffff;
+  text-align: center;
 }
 
 /* Estilos de etiquetas y entradas */
 .modalContent label {
-    display: block;
+  display: block;
 
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 
-    color: #ffffff;
-    font-weight: bold;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 .modalContent input,
 .modalContent select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
 }
 
 /* Botones de acción */
 .buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 /* Botón de envío */
-button[type="submit"] {
-    background-color: transparent;
+button[type='submit'] {
+  background-color: transparent;
 
-    color: #9fb033;
-    font-family: 'Metamorphous', sans-serif;
+  color: #9fb033;
+  font-family: 'Metamorphous', sans-serif;
 }
 
-button[type="submit"]:hover {
-    transform: translateY(-4px);
+button[type='submit']:hover {
+  transform: translateY(-4px);
 }
 
-button[type="submit"]:active {
-    transform: translateY(0);
+button[type='submit']:active {
+  transform: translateY(0);
 }
 
 /* Botón de cancelar */
 .cancelButton {
-    background-color: transparent;
+  background-color: transparent;
 
-    color: #f09e41;
-    font-family: 'Metamorphous', sans-serif;
+  color: #f09e41;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .cancelButton:hover {
-    transform: translateY(-4px);
+  transform: translateY(-4px);
 }
 
 .cancelButton:active {
-    transform: translateY(0);
+  transform: translateY(0);
 }

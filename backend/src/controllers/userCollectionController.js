@@ -8,7 +8,9 @@ const getUserCollection = async (req, res) => {
 
     res.status(200).json(userCollections);
   } catch (error) {
-    res.status(500).json([{ error: error.message }, { "Error manual": "Error en la recoleccion de la colección del usuario" }]);
+    res
+      .status(500)
+      .json([{ error: error.message }, { 'Error manual': 'Error en la recoleccion de la colección del usuario' }]);
   }
 };
 
@@ -26,7 +28,7 @@ const createUserCollection = async (req, res) => {
 
     res.status(201).json(userCardToReturn);
   } catch (error) {
-    res.status(400).json([{ error: error.message }, { "Error manual": "Error al crear las colecciones del usuario" }]);
+    res.status(400).json([{ error: error.message }, { 'Error manual': 'Error al crear las colecciones del usuario' }]);
   }
 };
 
@@ -42,7 +44,9 @@ const userCollectionDeleteById = async (req, res) => {
 
     res.status(200).json({ message: 'Entry deleted successfully' });
   } catch (error) {
-    res.status(400).json([{ error: error.message }, { "Error manual": "Error en la eliminación de una de tus cartas" }]);
+    res
+      .status(400)
+      .json([{ error: error.message }, { 'Error manual': 'Error en la eliminación de una de tus cartas' }]);
   }
 };
 

@@ -6,7 +6,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      trim: true
+      trim: true,
     },
     email: {
       type: String,
@@ -14,36 +14,36 @@ const userSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      match: [/\S+@\S+\.\S+/, 'El email no es válido']
+      match: [/\S+@\S+\.\S+/, 'El email no es válido'],
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
     img: {
       type: String,
-      default: '/assets/UserImg/userimage1.svg'
+      default: '/assets/UserImg/userimage1.svg',
     },
     level: {
       type: Number,
-      default: 1
+      default: 1,
     },
     birthDate: {
-      type: Date
+      type: Date,
     },
     lastActivity: {
       type: Date,
-      default: Date.now
+      default: Date.now,
     },
     isActive: {
       type: Boolean,
-      default: false
+      default: false,
     },
     roles: {
       type: String,
       default: 'user',
-      enum: ['admin', 'user']
-    }
+      enum: ['admin', 'user'],
+    },
   },
   { timestamps: true },
 );
