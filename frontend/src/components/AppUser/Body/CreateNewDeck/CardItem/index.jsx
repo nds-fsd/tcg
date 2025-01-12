@@ -25,10 +25,10 @@ const CardItem = ({ card, onAction, actionLabel }) => {
 
   const { name, image, category, rarity, attribute, type } = card;
 
-  const normalizedAttribute = attribute.toLowerCase();
-  const normalizedRarity = rarity.toLowerCase();
+  const normalizedAttribute = attribute.toLowerCase() || "fire";
+  const normalizedRarity = rarity.toLowerCase() || "common";
 
-  const AttributeIcon = attributeIcons[normalizedAttribute];
+  const AttributeIcon = attributeIcons[normalizedAttribute] || FaFireAlt;
 
   const handleCardClick = () => {
     setIsModalOpen(true);
