@@ -9,21 +9,19 @@ const AuthPage = () => {
 
     const handleLogin = async (data) => {
         try {
-            console.log('Datos del login:', data);
             alert('Inicio de sesión exitoso');
         } catch (error) {
-            console.error('Error en el inicio de sesión:', error);
+            alert('Error en el inicio de sesión:', error);
         }
     };
 
     const handleRegister = async (data) => {
         try {
-            console.log('Datos del registro:', data);
             alert(
                 'Registro exitoso. Por favor, verifica tu correo electrónico para validar tu cuenta (revisa la carpeta de spam si no lo encuentras).',
             );
         } catch (error) {
-            console.error('Error en el registro:', error);
+            alert('Error en el registro:', error);
         }
     };
 

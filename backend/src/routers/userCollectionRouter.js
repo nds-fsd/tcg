@@ -9,6 +9,6 @@ const userCollectionRouter = Router();
 
 userCollectionRouter.get('/:id', getUserCollection);
 userCollectionRouter.post('/', createUserCollection);
-userCollectionRouter.delete('/:id/:id', userCollectionDeleteById);
+userCollectionRouter.delete('/:userId/cards/:cardId', userCollectionDeleteById);
 
 module.exports = { userCollectionRouter };

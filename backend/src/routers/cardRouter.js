@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getCards, getCardById, createCard, updateCard, deleteCard } = require('../controllers/card.js');
+const { getCards, getCardById, createCard, updateCard, deleteCard } = require('../controllers/cardController');
 
 const cardRouter = Router();
 

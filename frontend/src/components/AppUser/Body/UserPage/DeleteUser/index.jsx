@@ -13,7 +13,7 @@ const DeleteUser = ({ userId, handleDelete }) => {
                 <IoTrashBin className={styles.svg} />
             </button>
 
-            {/* Modal para estas seguro de eliminar esto */}
+            {/* Modal para estar seguro de eliminar esto */}
 
         </>
     );

@@ -26,10 +26,10 @@ const CardItem = ({ card, onAction, actionLabel }) => {
 
     const { name, image, category, rarity, attribute, type } = card;
 
-    const normalizedAttribute = attribute?.toLowerCase() || "fire";
-    const normalizedRarity = rarity?.toLowerCase() || "common";
+    const normalizedAttribute = attribute.toLowerCase();
+    const normalizedRarity = rarity.toLowerCase();
 
-    const AttributeIcon = attributeIcons[normalizedAttribute] || FaFireAlt;
+    const AttributeIcon = attributeIcons[normalizedAttribute];
 
     const handleCardClick = () => {
         setIsModalOpen(true);
@@ -39,10 +39,15 @@ const CardItem = ({ card, onAction, actionLabel }) => {
         setIsModalOpen(false);
     };
 
+    const CARD_CATEGORIES = {
+        monster: 'Monster',
+        support: 'Support',
+    }
+
     return (
         <>
             <motion.div
-                className={`${styles.card} ${category === "Support" ? styles.support : styles.monster}`}
+                className={`${styles.card} ${category === CARD_CATEGORIES.support ? styles.support : styles.monster}`}
                 whileHover={{ scale: 1.05 }}
                 onClick={handleCardClick}
             >

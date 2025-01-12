@@ -6,7 +6,7 @@ const Sort = ({ onSortChange }) => {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
 
     const togglePopup = () => {
-        setIsPopupOpen(!isPopupOpen);
+        setIsPopupOpen((prev) => !prev);
     };
 
     const handleSortChange = (field, order) => {

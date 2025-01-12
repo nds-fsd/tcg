@@ -56,9 +56,9 @@ const createCard = async (req, res) => {
 };
 
 const getCardById = async (req, res) => {
-  const id = req.params.id;
-
+  
   try {
+    const id = req.params.id;
     const cardFound = await Card.findById(id).populate('attribute').populate('type');
     if (!cardFound) {
       return res.status(404).json({ error: 'Card not found' });

@@ -1,7 +1,7 @@
 const { UserCollection } = require('../data/Schema/userCollection');
 
 const getUserCollection = async (req, res) => {
-  const id = req.params.id;
+  const { id: userId } = req.params;
 
   try {
     const userCollections = await UserCollection.find({ userId: id }).populate('userId').populate('cardId');
@@ -26,11 +26,9 @@ const createUserCollection = async (req, res) => {
 
     res.status(201).json(userCardToReturn);
   } catch (error) {
-    res.status(400).json([{ error: error.message }, { "Error manual": "Error al crear las coleciones del usuario" }]);
+    res.status(400).json([{ error: error.message }, { "Error manual": "Error al crear las colecciones del usuario" }]);
   }
 };
-
-// update??
 
 const userCollectionDeleteById = async (req, res) => {
   const { userId, cardId } = req.params;

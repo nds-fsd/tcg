@@ -1,7 +1,7 @@
 {
   "name": "@monorepo/backend",
   "version": "0.0.0",
-  "description": "> TCG: Another game to collect cool cards",
+  "description": "TCG: Another game to collect cool cards",
   "author": "Amaia Bordas & Edgar Chiquillo <abordasc@gmail.com>",
   "homepage": "",
   "license": "ISC",

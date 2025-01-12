@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createType, getTypes, updateType, deleteType } = require('../controllers/type');
+const { createType, getTypes, updateType, deleteType } = require('../controllers/typeController');
 
 const typeRouter = Router();
 

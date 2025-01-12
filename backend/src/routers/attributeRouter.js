@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { createAttribute, getAttributes, updateAttribute, deleteAttribute } = require('../controllers/attribute');
+const { createAttribute, getAttributes, updateAttribute, deleteAttribute } = require('../controllers/attributeController');
 
 const attributeRouter = Router();
 

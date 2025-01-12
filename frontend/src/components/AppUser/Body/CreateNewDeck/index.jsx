@@ -254,7 +254,6 @@ const CreateNewDeck = () => {
 
     const handleTitleChange = (newTitle) => {
         setDeckTitle(newTitle);
-        console.log('Título actualizado:', newTitle);
     };
 
     const handleAddCard = (card) => {
