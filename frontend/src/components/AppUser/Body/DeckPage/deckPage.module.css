@@ -1,0 +1,77 @@
+.deckPageContainer {
+  height: 90vh;
+}
+
+.deckPageTitle {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+
+  width: 86%;
+  min-height: 3vh;
+  margin: 30px auto 10px auto;
+  padding: 10px 30px;
+
+  font-family: 'Metamorphous', sans-serif;
+
+  border-radius: 20px;
+  background-color: #f8edd3;
+}
+
+.deckPageDeck {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: left;
+  align-items: center;
+  align-content: center;
+  gap: 2vw;
+
+  width: 86%;
+  min-height: 3vh;
+  margin: 30px auto 10px auto;
+  padding: 10px 30px;
+
+  border-radius: 20px;
+  background-color: #f8edd3;
+}
+
+.deckPlusContainer {
+  width: 18%;
+  display: flex;
+  justify-content: center;
+}
+
+.plus {
+  font-size: 10rem;
+  color: #a87304;
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    color 0.3s ease;
+}
+
+.plus:hover {
+  color: #dab971;
+
+  transform: scale(1.1);
+}
+
+.plus:active {
+  color: #a87304;
+
+  transform: scale(1.1);
+}
+
+.deckContainer {
+  width: 18%;
+  display: flex;
+  justify-content: center;
+}
+
+.deckContainer img {
+  height: 16rem;
+  width: 20rem;
+}
