@@ -1,0 +1,57 @@
+/**/
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  min-height: 10vh;
+  padding: 10px 20px;
+
+  background-color: #521e00;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  color: white;
+  font-family: 'Metamorphous', sans-serif;
+}
+
+/**/
+.gameIcon {
+  font-size: 50px;
+  margin-right: 10px;
+}
+
+.gameIcon:hover {
+  transform: scale(1.2);
+}
+
+/**/
+.nav {
+  display: flex;
+  gap: 40px;
+}
+
+.navLink {
+  padding-bottom: 5px;
+
+  border: 2px solid transparent;
+
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  border-bottom: 2px solid #a87304;
+  transform: translateY(-4px);
+}
+
+/**/
+.userIconImage {
+  font-size: 50px;
+  margin-right: 10px;
+}
+
+.userIconImage:hover {
+  transform: scale(1.2);
+}

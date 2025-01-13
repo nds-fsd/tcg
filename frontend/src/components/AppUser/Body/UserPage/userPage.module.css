@@ -1,0 +1,15 @@
+/* Estilo para el cuerpo de usuario */
+.bodyUserPageContainer {
+  height: 90vh;
+}
+
+/* Estilo si no se encuentran usuarios */
+.emptyMessage {
+  padding: 20px;
+  margin: 10px;
+
+  text-align: center;
+  font-family: 'Metamorphous', sans-serif;
+  font-size: 14px;
+  color: #666;
+}

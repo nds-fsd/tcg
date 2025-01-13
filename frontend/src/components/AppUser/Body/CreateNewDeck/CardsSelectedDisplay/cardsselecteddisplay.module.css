@@ -1,0 +1,55 @@
+.cardsSelected {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  position: relative;
+}
+
+.cardsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 16px;
+  overflow-y: auto;
+  justify-content: start;
+}
+
+.cardWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.cardCounter {
+  position: absolute;
+  bottom: 8px;
+  right: 3rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #7006a1;
+  font-family: 'Pixelify Sans', sans-serif;
+}
+
+.trashIcon {
+  font-size: 1.5rem;
+  color: white;
+  border-radius: 50%;
+  padding: 0.3rem;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.trashIcon:hover {
+  background-color: #4a046e;
+  transform: scale(1.1);
+}
