@@ -4,7 +4,7 @@ const getUserCollection = async (req, res) => {
   const { id: userId } = req.params;
 
   try {
-    const userCollections = await UserCollection.find({ userId: id }).populate('userId').populate('cardId');
+    const userCollections = await UserCollection.find({ userId }).populate('userId').populate('cardId');
 
     res.status(200).json(userCollections);
   } catch (error) {

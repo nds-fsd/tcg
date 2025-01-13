@@ -59,7 +59,7 @@ const LoginForm = ({ onLogin }) => {
       <div className={styles.actions}>
         <Button type='submit' text={loading ? 'Cargando...' : 'Iniciar Sesión'} disabled={loading} />
       </div>
-      <p>By continuing, you agree to our Terms of Service and Privacy Policy.</p>
+      <p>Si continuas, estás aceptando nuestros Términos de Servicio y Políticas de Privacidad.</p>
     </form>
   );
 };

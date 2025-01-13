@@ -27,8 +27,8 @@ const CardItem = ({ card, onAction, actionLabel }) => {
 
   //Cambiar y quitar valores por defecto
 
-  const normalizedAttribute = attribute?.toLowerCase() || "fire";
-  const normalizedRarity = rarity?.toLowerCase() || "common";
+  const normalizedAttribute = attribute?.toLowerCase() || 'fire';
+  const normalizedRarity = rarity?.toLowerCase() || 'common';
 
   const AttributeIcon = attributeIcons[normalizedAttribute] || FaFireAlt;
 

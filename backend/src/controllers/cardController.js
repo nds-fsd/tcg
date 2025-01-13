@@ -8,30 +8,6 @@ const getCards = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-//   try {
-//     const { page = 1, limit = 10, rarity, type, attribute } = req.query;
-
-//     const filters = {};
-//     if (rarity) filters.rarity = rarity;
-//     if (type) filters.type = type;
-//     if (attribute) filters.attribute = attribute;
-
-//     const cards = await Card.find(filters)
-//       .skip((page - 1) * limit)
-//       .limit(Number(limit));
-
-//     const totalCards = await Card.countDocuments(filters);
-
-//     res.status(200).json({
-//       data: cards,
-//       total: totalCards,
-//       page: Number(page),
-//       totalPages: Math.ceil(totalCards / limit),
-//     });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
 
 const createCard = async (req, res) => {
   try {

@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+// const API = axios.create({
+//   baseURL: import.meta.env.VITE_BACKEND_API_URL,
+// });
+
 const API = axios.create({
-  baseURL: "http://localhost:3001/",
+  baseURL: 'http://localhost:3001/',
 });
 
 export const fetchUsers = () => API.get('/user');
