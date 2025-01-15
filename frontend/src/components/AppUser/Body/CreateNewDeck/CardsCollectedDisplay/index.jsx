@@ -51,6 +51,11 @@ const CardsCollectedDisplay = ({ cards, onAddCard }) => {
   };
 
   const applySort = (option) => {
+    const acceptedValues = ['alphabetical', 'rarity'];
+    if (!acceptedValues.includes(option)) {
+      throw new Error(`Sort option not valid: ${option}`);
+    }
+
     setSortOption(option);
     setSortVisible(false);
   };
