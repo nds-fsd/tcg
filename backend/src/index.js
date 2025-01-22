@@ -2,7 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const { connectDB } = require('./mongo/connection');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
 const app = express();
 const router = require('./routers');
 

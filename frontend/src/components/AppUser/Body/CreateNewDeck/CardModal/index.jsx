@@ -20,7 +20,7 @@ const rarityClasses = {
 };
 
 const CardModal = ({ card, onClose }) => {
-  const { name, image, type, rarity, attribute, description, category } = card;
+  const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect } = card;
 
   const normalizedAttribute = attribute?.toLowerCase() || 'fire';
   const normalizedRarity = rarity?.toLowerCase() || 'common';
