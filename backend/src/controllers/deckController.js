@@ -12,10 +12,12 @@ const getDecksUser = async (req, res) => {
 
 const createDeck = async (req, res) => {
   try {
-    const { name, owner } = req.body;
+    const { jwtPayload } = req;
+    const { name } = req.body;
+    
     const newDeck = new Deck({
       name,
-      owner,
+      owner: jwtPayload.userId,
     });
     const savedDeck = await newDeck.save();
     const id = savedDeck._id;

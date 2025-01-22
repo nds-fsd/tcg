@@ -11,7 +11,9 @@ const getCards = async (req, res) => {
 
 const createCard = async (req, res) => {
   try {
+    const { jwtPayload } = req;
     const { name, image, attribute, type, description, rarity } = req.body;
+    
     const newCard = new Card({
       name,
       image,
@@ -46,6 +48,7 @@ const getCardById = async (req, res) => {
 
 const updateCard = async (req, res) => {
   try {
+    const { jwtPayload } = req;
     const { name, image, attribute, type, description, rarity } = req.body;
     const updatedCard = await Card.findByIdAndUpdate(
       req.params.id,
@@ -65,6 +68,8 @@ const deleteCard = async (req, res) => {
   const id = req.params.id;
 
   try {
+    const { jwtPayload } = req;
+
     const deletedCard = await Card.findByIdAndDelete(id);
     if (!deletedCard) {
       return res.status(404).json({ error: 'Card not found' });
