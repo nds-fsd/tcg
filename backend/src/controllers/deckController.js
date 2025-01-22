@@ -14,7 +14,7 @@ const createDeck = async (req, res) => {
   try {
     const { jwtPayload } = req;
     const { name } = req.body;
-    
+
     const newDeck = new Deck({
       name,
       owner: jwtPayload.userId,

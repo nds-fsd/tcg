@@ -11,10 +11,8 @@ const jwtMiddleware = (req, res, next) => {
   const token = authHeader.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'Unauthorized: missing token' });
 
-//   let tokenPayload;
-
   try {
-    const = tokenPayload = jwt.verify(token, jwtSecret);
+    const tokenPayload = jwt.verify(token, jwtSecret);
     req.jwtPayload = tokenPayload;
   } catch (error) {
     return res.status(401).json({ error: 'Unauthorized: invalid token' });
