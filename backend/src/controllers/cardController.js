@@ -12,7 +12,7 @@ const getCards = async (req, res) => {
 const createCard = async (req, res) => {
   try {
     const { jwtPayload } = req;
-    const { name, image, attribute, type, description, rarity } = req.body;
+    const { name, image, attribute, type, description, rarity, category, expansion, atk, def, effect } = req.body;
 
     const newCard = new Card({
       name,
@@ -21,6 +21,11 @@ const createCard = async (req, res) => {
       type,
       description,
       rarity,
+      category,
+      expansion,
+      atk,
+      def,
+      effect,
     });
     const savedCard = await newCard.save();
     const id = savedCard._id;
@@ -49,10 +54,10 @@ const getCardById = async (req, res) => {
 const updateCard = async (req, res) => {
   try {
     const { jwtPayload } = req;
-    const { name, image, attribute, type, description, rarity } = req.body;
+    const { name, image, attribute, type, description, rarity, category, expansion, atk, def, effect } = req.body;
     const updatedCard = await Card.findByIdAndUpdate(
       req.params.id,
-      { name, image, attribute, type, description, rarity },
+      { name, image, attribute, type, description, rarity, category, expansion, atk, def, effect },
       { new: true, runValidators: true },
     );
     if (!updatedCard) {
