@@ -3,7 +3,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import styles from './filtermenu.module.css';
 
 const FilterMenu = ({ filters, onFilterChange, onClearFilters }) => {
-  const categories = ['Monster', 'Support'];
+  const categories = ['Monster', 'Support', 'Fusion'];
   const types = ['Beast', 'Warrior', 'Demon', 'Fairy', 'Zombie', 'Plant'];
   const attributes = ['Water', 'Fire', 'Darkness', 'Light', 'Earth', 'Wind'];
   const rarities = ['Common', 'Rare', 'Epic', 'Legendary'];
