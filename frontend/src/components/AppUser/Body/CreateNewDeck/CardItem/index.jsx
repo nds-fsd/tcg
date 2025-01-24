@@ -23,7 +23,7 @@ const rarityColors = {
 const CardItem = ({ card, onAction, actionLabel }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { name, image, category, rarity, attribute, type, expansion,  atk, def, effect } = card;
+  const { name, image, category, rarity, attribute, type, expansion, atk, def, effect, level } = card;
 
   //Cambiar y quitar valores por defecto
 

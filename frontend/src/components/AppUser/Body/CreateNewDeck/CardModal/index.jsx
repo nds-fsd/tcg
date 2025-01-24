@@ -9,7 +9,7 @@ const attributeIcons = {
   earth: FaMountain,
   darkness: FaMoon,
   plant: FaLeaf,
-  ligth: FaSun,
+  light: FaSun,
 };
 
 const rarityClasses = {

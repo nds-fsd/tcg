@@ -4,8 +4,8 @@ const cardSchema = new Schema(
   {
     name: { type: String, required: true },
     image: { type: String, required: true },
-    attribute: { type: Schema.Types.ObjectId, ref: 'Attribute', required: true },
-    type: { type: Schema.Types.ObjectId, ref: 'Type', required: true },
+    attribute: { type: String, required: true, enum: ['darkness', 'light', 'earth', 'fire', 'wind', 'water'] },
+    type: { type: String, required: true, enum: ['zombie', 'beast', 'warrior', 'fairy', 'demon', 'plant'] },
     description: { type: String, required: true },
     rarity: { type: String, required: true, enum: ['common', 'rare', 'epic', 'legendary'] },
     category: { type: String, required: true, enum: ['monster', 'support', 'fusion'] },
@@ -13,6 +13,7 @@ const cardSchema = new Schema(
     atk: { type: Number, required: true },
     def: { type: Number, required: true },
     effect: { type: String, required: true },
+    level: { type: Number, required: true },
   },
   { timestamps: true },
 );
