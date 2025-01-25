@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaFireAlt, FaWater, FaLeaf, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
 import CardModal from '../CardModal';
 import styles from './carditem.module.css';
 
@@ -9,7 +9,6 @@ const attributeIcons = {
   water: FaWater,
   earth: FaMountain,
   darkness: FaMoon,
-  plant: FaLeaf,
   light: FaSun,
 };
 
@@ -27,10 +26,12 @@ const CardItem = ({ card, onAction, actionLabel }) => {
 
   //Cambiar y quitar valores por defecto
 
-  const normalizedAttribute = attribute?.toLowerCase() || 'fire';
-  const normalizedRarity = rarity?.toLowerCase() || 'common';
+  const validAttributes = ['fire', 'water', 'earth', 'darkness', 'light'];
+  const normalizedAttribute =
+    category === 'Apoyo' ? null : validAttributes.includes(attribute?.toLowerCase()) ? attribute.toLowerCase() : 'fire';
+  const AttributeIcon = normalizedAttribute ? attributeIcons[normalizedAttribute] : null;
 
-  const AttributeIcon = attributeIcons[normalizedAttribute] || FaFireAlt;
+  const normalizedRarity = rarity?.toLowerCase() || 'common';
 
   const handleCardClick = () => {
     setIsModalOpen(true);
@@ -65,7 +66,7 @@ const CardItem = ({ card, onAction, actionLabel }) => {
           <h3 className={styles.cardName}>{name}</h3>
           <div className={styles.cardFooter}>
             <p className={styles.cardType}>{type}</p>
-            <AttributeIcon className={styles.attributeIcon} />
+            {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
           </div>
         </div>
 

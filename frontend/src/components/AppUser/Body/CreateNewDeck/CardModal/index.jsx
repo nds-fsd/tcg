@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { FaFireAlt, FaWater, FaLeaf, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
 import styles from './cardmodal.module.css';
 
 const attributeIcons = {
@@ -8,7 +8,6 @@ const attributeIcons = {
   water: FaWater,
   earth: FaMountain,
   darkness: FaMoon,
-  plant: FaLeaf,
   light: FaSun,
 };
 
@@ -20,12 +19,14 @@ const rarityClasses = {
 };
 
 const CardModal = ({ card, onClose }) => {
-  const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect } = card;
+  const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
 
-  const normalizedAttribute = attribute?.toLowerCase() || 'fire';
+  const validAttributes = ['fire', 'water', 'earth', 'darkness', 'light'];
+  const normalizedAttribute =
+    category === 'Apoyo' ? null : validAttributes.includes(attribute?.toLowerCase()) ? attribute.toLowerCase() : 'fire';
+  const AttributeIcon = normalizedAttribute ? attributeIcons[normalizedAttribute] : null;
+
   const normalizedRarity = rarity?.toLowerCase() || 'common';
-
-  const AttributeIcon = attributeIcons[normalizedAttribute] || FaFireAlt;
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -68,7 +69,7 @@ const CardModal = ({ card, onClose }) => {
         <div className={styles.cardDetails}>
           <div className={styles.cardHeader}>
             <h2 className={styles.cardName}>{name}</h2>
-            <AttributeIcon className={styles.attributeIcon} />
+            {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
           </div>
           <p className={styles.cardType}>{type}</p>
           <p className={styles.cardDescription}>{description}</p>
