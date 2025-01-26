@@ -34,8 +34,8 @@
   right: 3rem;
   font-size: 1rem;
   font-weight: bold;
-  color: #7006a1;
-  font-family: 'Pixelify Sans', sans-serif;
+  color: #664631;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .trashIcon {
@@ -50,6 +50,5 @@
 }
 
 .trashIcon:hover {
-  background-color: #4a046e;
   transform: scale(1.1);
 }
