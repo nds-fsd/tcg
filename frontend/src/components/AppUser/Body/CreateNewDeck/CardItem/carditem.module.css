@@ -19,6 +19,10 @@
   border-color: #8b4513;
 }
 
+.card.fusion {
+  border-color: #7006a1;
+}
+
 .rarity {
   position: absolute;
   top: 1px;
@@ -51,7 +55,6 @@
   position: absolute;
   bottom: 8px;
   right: 8px;
-  background-color: #7006a1;
   color: white;
   padding: 6px 10px;
   border: none;
@@ -61,6 +64,7 @@
   cursor: pointer;
   display: none;
   transition: opacity 0.3s ease-in-out;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .card:hover .addButton {
