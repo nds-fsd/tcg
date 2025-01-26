@@ -5,15 +5,20 @@ const userCollectionSchema = new Schema(
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
+      required: true,
     },
-    cardId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Card',
-    },
-    amount: {
-      type: String,
-      default: 1,
-    },
+
+    cards: [
+      {
+        cardId: {
+          type: Schema.Types.ObjectId,
+          ref: 'Card',
+        },
+        amount: {
+          type: Number,
+        },
+      },
+    ],
   },
   { timestamps: true },
 );
