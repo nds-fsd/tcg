@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const deckSchema = new Schema(
   {
-    name: {
+    deckTitle: {
       type: String,
       required: true,
       trim: true,
