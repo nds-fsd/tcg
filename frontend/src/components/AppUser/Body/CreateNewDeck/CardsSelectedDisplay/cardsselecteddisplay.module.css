@@ -13,7 +13,7 @@
 .cardsList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 16px;
+  gap: 8px;
   overflow-y: auto;
   justify-content: start;
 }

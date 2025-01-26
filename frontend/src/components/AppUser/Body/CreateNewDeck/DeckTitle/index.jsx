@@ -46,7 +46,7 @@ function DeckTitle({ onTitleChange }) {
         />
       ) : (
         <h1 className={styles.titleText} onClick={() => setIsEditing(true)}>
-          {title || 'Haz clic para añadir un título'}
+          {title || 'Haz click para añadir un título'}
         </h1>
       )}
       {error && <p className={styles.error}>{error}</p>}

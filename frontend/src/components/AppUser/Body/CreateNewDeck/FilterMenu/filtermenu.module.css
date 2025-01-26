@@ -1,33 +1,21 @@
 .filterMenu {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 1rem;
   background-color: #f8edd3;
   border-radius: 8px;
   padding: 1rem;
   width: 100%;
-  max-width: 600px;
   z-index: 100;
 }
 
-.filterMenu h4 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #664631;
-  font-family: 'Metamorphous', sans-serif;
-  border-bottom: 1px solid #664631;
-  padding-bottom: 0.5rem;
-}
-
 .filterMenu .filterSection {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
 }
 
 .filterMenu .filterSection h5 {
-  grid-column: span 2;
   font-size: 1rem;
   font-weight: bold;
   color: #664631;
@@ -35,21 +23,25 @@
   font-family: 'Metamorphous', sans-serif;
 }
 
-.filterMenu label {
-  display: flex;
-  align-items: center;
+.select {
   font-size: 0.9rem;
+  padding: 0.5rem;
+  border: 1px solid #664631;
+  border-radius: 4px;
+  background-color: #fff;
   color: #664631;
   font-family: 'Metamorphous', sans-serif;
+  cursor: pointer;
 }
 
-.filterMenu input[type='checkbox'] {
-  margin-right: 0.5rem;
-  accent-color: #54612b;
+.select:focus {
+  outline: none;
+  border-color: #54612b;
+  box-shadow: 0 0 5px rgba(84, 97, 43, 0.5);
 }
 
-.filterMenu .clearButton {
-  align-self: flex-end;
+.clearButton {
+  align-self: flex-start;
   background-color: #54612b;
   color: #fff;
   border: none;
@@ -58,9 +50,8 @@
   font-size: 0.9rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-family: 'Metamorphous', sans-serif;
 }
 
-.filterMenu .clearButton:hover {
+.clearButton:hover {
   background-color: #373f1c;
 }
