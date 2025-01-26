@@ -3,6 +3,7 @@ import DeckTitle from './DeckTitle';
 import CardsCollectedDisplay from './CardsCollectedDisplay';
 import CardsSelectedDisplay from './CardsSelectedDisplay';
 import { fetchCards } from '../../../../lib/utils/apiCard';
+import { createDeck } from '../../../../lib/utils/apiDeck';
 import styles from './createnewdeck.module.css';
 
 const MAX_CARDS = 40;
@@ -61,7 +62,7 @@ const CreateNewDeck = () => {
     setSelectedCards(updatedCards);
   };
 
-  const handleSaveDeck = () => {
+  const handleSaveDeck = async () => {
     if (selectedCards.length < MIN_CARDS) {
       setErrorMessage(`⚠️ El mazo debe tener al menos ${MIN_CARDS} cartas.`);
       return;
@@ -72,7 +73,31 @@ const CreateNewDeck = () => {
       return;
     }
 
-    alert('Mazo guardado');
+    const formattedCards = selectedCards.reduce((acc, card) => {
+      const existingCard = acc.find((c) => c.cardId === card.id);
+      if (existingCard) {
+        existingCard.amount += 1;
+      } else {
+        acc.push({ cardId: card.id, amount: 1 });
+      }
+      return acc;
+    }, []);
+
+    const payload = {
+      deckTitle: deckTitle.trim(),
+      cards: formattedCards,
+    };
+
+    try {
+      const token = localStorage.getItem('token');
+      const savedDeck = await createDeck(payload, token);
+
+      alert(`Mazo "${savedDeck.deckTitle}" guardado con éxito.`);
+      setDeckTitle('');
+      setSelectedCards([]);
+    } catch (error) {
+      setErrorMessage(error.message || 'Error al guardar el mazo. Inténtalo de nuevo.');
+    }
   };
 
   return (

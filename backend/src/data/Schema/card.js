@@ -3,7 +3,11 @@ const { Schema, model } = require('mongoose');
 const cardSchema = new Schema(
   {
     name: { type: String, required: true },
-    image: { type: String, required: true, default: '../../../../frontend/public/assets/CardImg/cardplaceholdertcg.png' },
+    image: {
+      type: String,
+      required: true,
+      default: '../../../../frontend/public/assets/CardImg/cardplaceholdertcg.png',
+    },
     attribute: { type: String, enum: ['darkness', 'light', 'earth', 'fire', 'wind', 'water'] },
     type: {
       type: String,
