@@ -2,15 +2,6 @@ import React from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import styles from './filtermenu.module.css';
 
-const attributeTranslations = {
-  water: 'Agua',
-  fire: 'Fuego',
-  darkness: 'Oscuridad',
-  light: 'Luz',
-  earth: 'Tierra',
-  wind: 'Viento',
-};
-
 const FilterMenu = ({ filters, onFilterChange, onClearFilters }) => {
   const categories = ['Monstruo', 'Apoyo', 'Fusión'];
   const types = [
@@ -31,7 +22,14 @@ const FilterMenu = ({ filters, onFilterChange, onClearFilters }) => {
     'Continua',
     'Contraefecto',
   ];
-  const attributes = ['water', 'fire', 'darkness', 'light', 'earth', 'wind'];
+  const attributes = [
+    { key: 'water', value: 'Agua' },
+    { key: 'fire', value: 'Fuego' },
+    { key: 'darkness', value: 'Oscuridad' },
+    { key: 'light', value: 'Luz' },
+    { key: 'earth', value: 'Tierra' },
+    { key: 'wind', value: 'Viento' },
+  ];
   const rarities = ['Común', 'Rara', 'Épica', 'Legendaria'];
 
   return (
@@ -43,7 +41,7 @@ const FilterMenu = ({ filters, onFilterChange, onClearFilters }) => {
           onChange={(e) => onFilterChange('category', e.target.value)}
           className={styles.select}
         >
-          <option value=''>Categorías</option>
+          <option value=''>Todas</option>
           {categories.map((category) => (
             <option key={category} value={category}>
               {category}
@@ -55,7 +53,7 @@ const FilterMenu = ({ filters, onFilterChange, onClearFilters }) => {
       <div className={styles.filterSection}>
         <h5>Tipo</h5>
         <select value={filters.type} onChange={(e) => onFilterChange('type', e.target.value)} className={styles.select}>
-          <option value=''>Tipos</option>
+          <option value=''>Todos</option>
           {types.map((type) => (
             <option key={type} value={type}>
               {type}
@@ -71,8 +69,8 @@ const FilterMenu = ({ filters, onFilterChange, onClearFilters }) => {
           onChange={(e) => onFilterChange('attribute', e.target.value)}
           className={styles.select}
         >
-          <option value=''>Atributos</option>
-          {Object.entries(attributeTranslations).map(([key, value]) => (
+          <option value=''>Todos</option>
+          {attributes.map(({ key, value }) => (
             <option key={key} value={key}>
               {value}
             </option>
@@ -86,7 +84,7 @@ const FilterMenu = ({ filters, onFilterChange, onClearFilters }) => {
           onChange={(e) => onFilterChange('rarity', e.target.value)}
           className={styles.select}
         >
-          <option value=''>Rarezas</option>
+          <option value=''>Todas</option>
           {rarities.map((rarity) => (
             <option key={rarity} value={rarity}>
               {rarity}
@@ -94,10 +92,11 @@ const FilterMenu = ({ filters, onFilterChange, onClearFilters }) => {
           ))}
         </select>
       </div>
-
-      <button className={styles.clearButton} onClick={onClearFilters}>
-        <FaTrashAlt className={styles.icon} /> Limpiar Filtros
-      </button>
+      <div className={styles.filterSection}>
+        <button className={styles.clearButton} onClick={onClearFilters}>
+          <FaTrashAlt className={styles.icon} /> Limpiar Filtros
+        </button>
+      </div>
     </div>
   );
 };
