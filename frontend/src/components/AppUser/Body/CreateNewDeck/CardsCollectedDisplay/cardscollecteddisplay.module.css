@@ -11,20 +11,22 @@
 .cardsCollected {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   height: 100%;
   overflow-y: auto;
+  overflow: hidden;
   background-color: var(--color-light);
   border-radius: 8px;
-  padding: 17px;
+  padding: 16px;
 }
 
 .controls {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 10;
 }
 
 .buttonWrapper {
@@ -116,12 +118,11 @@
 }
 
 .cardsList {
-  margin-top: 12px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 8px;
+  gap: 12px;
   overflow-y: auto;
-  max-height: calc(100% - 80px);
+  max-height: calc(100% - 120px);
   padding-right: 4px;
   justify-content: start;
 }
@@ -143,10 +144,43 @@
   font-weight: bold;
   border-radius: 50%;
   padding: 0.2rem 0.4rem;
-  z-index: 99;
+  z-index: 5;
+  font-family: 'Roboto', sans-serif;
+}
+
+@media (max-width: 829px) and (min-width: 769px) {
+  .controls {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 10;
+  }
+
+  .controlButton {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .controlButton .icon {
+    margin-right: 0;
+  }
+
+  .controlButton span {
+    display: none;
+  }
+
+  .cardsList {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
 }
 
 @media (max-width: 768px) {
+  .controls {
+    gap: 8px;
+  }
+
   .controlButton {
     padding: 0.5rem;
     font-size: 0.8rem;
@@ -172,6 +206,6 @@
 
   .cardsList {
     grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: 4px;
+    gap: 8px;
   }
 }
