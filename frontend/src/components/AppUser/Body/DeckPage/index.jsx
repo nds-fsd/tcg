@@ -6,7 +6,7 @@ const DeckPage = () => {
   return (
     <div className={styles.deckPageContainer}>
       <div className={styles.deckPageTitle}>
-        <h1>Decks</h1>
+        <h1>Mazos</h1>
       </div>
       <div className={styles.deckPageDeck}>
         <div className={styles.deckPlusContainer}>

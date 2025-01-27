@@ -1,74 +1,88 @@
 const { User } = require('../data/Schema/user');
 
-const getUser = async (req, res) => {
+const getUsers = async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json(users);
+    const queryStrings = req.query || {};
+    const allUsers = await User.find(queryStrings);
+    res.status(200).json(allUsers);
   } catch (error) {
-    res.status(500).json([{ error: error.message }, { 'Error manual': 'Error al cargar la lista de Usuarios' }]);
+    res.status(500).json([{ Error: 'Error al cargar la lista de Usuarios' }]);
   }
 };
 
-const createUser = async (req, res) => {
+const getCurrentUser = async (req, res) => {
   try {
-    const { userName, email, password, img, level, birthDate, isActive, roles } = req.body;
-    const newUser = new User({
-      userName,
-      email,
-      password,
-      img,
-      level,
-      birthDate,
-      isActive,
-      roles,
-    });
-    const savedUser = await newUser.save();
-    const id = savedUser._id;
-
-    const userToReturn = await User.findById(id);
-
-    res.status(201).json(userToReturn);
+    const userId = req.jwtPayload.id;
+    const currentUser = await User.findById(userId);
+    res.status(200).json(currentUser);
   } catch (error) {
-    res.status(400).json([{ error: error.message }, { 'Error manual': 'Error al crear usuario' }]);
+    res.status(500).json([{ Error: 'Error al cargar al current Usuario' }]);
+  }
+};
+
+const getUser = async (req, res) => {
+  try {
+    const User = await User.findById(req.params.id);
+    res.status(200).json(User);
+  } catch (error) {
+    res.status(500).json([{ Error: 'Error al cargar al Usuario' }]);
   }
 };
 
 const updateUserById = async (req, res) => {
   try {
-    const { userName, email, password, img, roles, level } = req.body;
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      { userName, email, password, img, roles, level },
-      { new: true, runValidators: true },
-    );
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (!updatedUser) {
-      return res.status(404).json({ error: 'User not found' });
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(400).json([{ error: error.message }, { 'Error manual': 'Error en la modificacion del usuario' }]);
+    res.status(400).json([{ Error: 'Error al interntar modificar al usuario' }]);
   }
 };
 
 const userDeleteById = async (req, res) => {
-  const id = req.params.id;
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    if (!deletedUser) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    res.status(200).json({ message: 'Usuario eliminado' });
+  } catch (error) {
+    res.status(400).json([{ Error: 'Error en la eliminación del usuario' }]);
+  }
+};
+
+const createUser = async (req, res) => {
+  const body = req.body;
+
+  console.log(body);
+
+  const data = {
+    userName: body.userName,
+    email: body.email,
+    password: body.password,
+  };
+
+  const newUser = new User(data);
 
   try {
-    const deletedUser = await User.findByIdAndDelete(id);
-    if (!deletedUser) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-    res.status(200).json({ message: 'User deleted successfully' });
+    console.log('Usuario guardado');
+    await newUser.save();
+    res.status(200).json(newUser);
   } catch (error) {
-    res
-      .status(400)
-      .json([{ error: error.message }, { 'Error manual': 'Error en la eliminación del usuario del Usuario' }]);
+    console.log(error);
+    res.status(500).json([{ Error: 'Error en la creación del usuario' }]);
   }
 };
 
 module.exports = {
+  getUsers,
+  getCurrentUser,
   getUser,
-  createUser,
   updateUserById,
   userDeleteById,
+  createUser,
 };

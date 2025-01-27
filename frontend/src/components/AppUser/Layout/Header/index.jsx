@@ -1,34 +1,56 @@
 import styles from './header.module.css';
 import { FaGamepad, FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
+import { useUser } from '../../../../context/userContext';
+import { removeSession } from '../../../../lib/utils/localStorage.utils';
 
 const Header = () => {
+  const { userData } = useUser();
+  const navigate = useNavigate();
+
   return (
     <div className={styles.header}>
-      {/* Icono del juego a la izquierda */}
-      <div className={styles.logo}>
+      <div>
         <Link to='/'>
           <FaGamepad className={styles.gameIcon} />
         </Link>
       </div>
 
-      {/* Navegación en el centro */}
       <nav className={styles.nav}>
         <Link to='/deck' className={styles.navLink}>
-          Deck Page
+          Mazos
         </Link>
         <Link to='/collection' className={styles.navLink}>
-          Collection
+          Colección
         </Link>
-        <Link to='/user' className={styles.navLink}>
-          Usuarios
+        <Link to='' className={styles.navLink}>
+          Tienda
         </Link>
+
+        {userData?.role && (
+          <>
+            <Link to='/user' className={styles.navLink}>
+              Usuarios
+            </Link>
+            <Link to='/' className={styles.navLink}>
+              Crear Cartas
+            </Link>
+          </>
+        )}
       </nav>
 
-      {/* Icono de usuario a la derecha */}
       <div className={styles.userIcon}>
         <FaUserCircle className={styles.userIconImage} />
       </div>
+      <button
+        onClick={() => {
+          removeSession();
+          navigate('/auth');
+        }}
+      >
+        Salir
+      </button>
     </div>
   );
 };
