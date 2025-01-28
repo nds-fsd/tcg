@@ -16,7 +16,7 @@ function validateEmail(password) {
 const validateUser = (req, res, next) => {
   const user = req.body;
 
-  if (user.userName === undefined || user.userName.length === 0) {
+  if (!user.userName?.trim()) {
     res.status(400).send({ message: 'userName required' });
     return;
   }
@@ -25,12 +25,10 @@ const validateUser = (req, res, next) => {
     return;
   }
   if (!validatePassword(user.password)) {
-    res
-      .status(400)
-      .send({
-        message:
-          'password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter and one number',
-      });
+    res.status(400).send({
+      message:
+        'password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter and one number',
+    });
     return;
   }
   if (user.email === undefined) {
