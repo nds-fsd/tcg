@@ -14,7 +14,7 @@ const jwtMiddleware = (req, res, next) => {
 let tokenPayload;
 
   try {
-    const = tokenPayload = jwt.verify(token, jwtSecret);
+    const tokenPayload = jwt.verify(token, jwtSecret);
     req.jwtPayload = tokenPayload;
   } catch (error) {
     return res.status(401).json({ error: 'Unauthorized: invalid token' });

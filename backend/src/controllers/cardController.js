@@ -13,7 +13,7 @@ const createCard = async (req, res) => {
   try {
     const { jwtPayload } = req;
     const { name, image, attribute, type, description, rarity } = req.body;
-    
+
     const newCard = new Card({
       name,
       image,
