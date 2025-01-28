@@ -79,41 +79,6 @@
   animation: fadeIn 0.5s ease-in-out;
 }
 
-.errorMessage {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  color: #a83232;
-  background-color: #ffe0e0;
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  font-size: 0.9rem;
-  text-align: center;
-  border: 1px solid #a83232;
-  border-radius: 8px;
-  max-width: 80%;
-  z-index: 1000;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
-  animation: fadeInOut 3s forwards;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-10px);
-  }
-  10%,
-  90% {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-10px);
-  }
-}
-
 @media (max-width: 768px) {
   .deckContent {
     flex-direction: column;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import DeckTitle from './DeckTitle';
 import CardsCollectedDisplay from './CardsCollectedDisplay';
 import CardsSelectedDisplay from './CardsSelectedDisplay';
@@ -14,14 +15,6 @@ const CreateNewDeck = () => {
   const [deckTitle, setDeckTitle] = useState('');
   const [selectedCards, setSelectedCards] = useState([]);
   const [collectedCards, setCollectedCards] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
-
-  useEffect(() => {
-    if (errorMessage) {
-      const timer = setTimeout(() => setErrorMessage(''), 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [errorMessage]);
 
   useEffect(() => {
     const loadCards = async () => {
@@ -29,8 +22,7 @@ const CreateNewDeck = () => {
         const data = await fetchCards();
         setCollectedCards(data);
       } catch (error) {
-        console.error('Error al cargar las cartas:', error);
-        setErrorMessage('No se pudieron cargar las cartas. Inténtalo de nuevo.');
+        toast.error('No se pudieron cargar las cartas. Inténtalo de nuevo.');
       }
     };
 
@@ -45,31 +37,33 @@ const CreateNewDeck = () => {
     const cardCount = selectedCards.filter((c) => c.name === card.name).length;
 
     if (selectedCards.length >= MAX_CARDS) {
-      setErrorMessage(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas al mazo.`);
+      toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas al mazo.`);
       return;
     }
 
     if (cardCount >= MAX_DUPLICATES) {
-      setErrorMessage(`⚠️ No puedes agregar más de ${MAX_DUPLICATES} copias de "${card.name}".`);
+      toast.error(`⚠️ No puedes agregar más de ${MAX_DUPLICATES} copias de "${card.name}".`);
       return;
     }
 
     setSelectedCards([...selectedCards, card]);
+    // toast.success(`✅ "${card.name}" añadida al mazo.`);
   };
 
   const handleRemoveCard = (card) => {
     const updatedCards = selectedCards.filter((c, index) => index !== selectedCards.indexOf(card));
     setSelectedCards(updatedCards);
+    toast.info(`"${card.name}" eliminada del mazo.`);
   };
 
   const handleSaveDeck = async () => {
     if (selectedCards.length < MIN_CARDS) {
-      setErrorMessage(`⚠️ El mazo debe tener al menos ${MIN_CARDS} cartas.`);
+      toast.error(`⚠️ El mazo debe tener al menos ${MIN_CARDS} cartas.`);
       return;
     }
 
     if (selectedCards.length > MAX_CARDS) {
-      setErrorMessage(`⚠️ El mazo no puede tener más de ${MAX_CARDS} cartas.`);
+      toast.error(`⚠️ El mazo no puede tener más de ${MAX_CARDS} cartas.`);
       return;
     }
 
@@ -92,16 +86,17 @@ const CreateNewDeck = () => {
       const token = localStorage.getItem('token');
       const savedDeck = await createDeck(payload, token);
 
-      alert(`Mazo "${savedDeck.deckTitle}" guardado con éxito.`);
+      toast.success(`✅ Mazo "${savedDeck.deckTitle}" guardado con éxito.`);
       setDeckTitle('');
       setSelectedCards([]);
     } catch (error) {
-      setErrorMessage(error.message || 'Error al guardar el mazo. Inténtalo de nuevo.');
+      toast.error(error.message || 'Error al guardar el mazo. Inténtalo de nuevo.');
     }
   };
 
   return (
     <div className={styles.createNewDeck}>
+      <ToastContainer theme='dark' />
       <DeckTitle onTitleChange={handleTitleChange} />
       <div className={styles.deckContent}>
         <div className={styles.cardsCollectedWrapper}>
@@ -114,7 +109,6 @@ const CreateNewDeck = () => {
           <CardsSelectedDisplay cards={selectedCards} onRemoveCard={handleRemoveCard} />
         </div>
       </div>
-      {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
       <button
         disabled={deckTitle.trim() === '' || selectedCards.length < MIN_CARDS || selectedCards.length > MAX_CARDS}
         onClick={handleSaveDeck}
