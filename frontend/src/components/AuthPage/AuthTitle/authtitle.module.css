@@ -2,19 +2,7 @@
   color: rgb(0, 0, 0);
   text-align: center;
   padding: 1rem 0;
-  font-family: sans-serif;
-}
-
-.header h1 {
-  font-family: 'Pixelify Sans', serif;
-  font-size: 2.5rem;
-}
-
-.header h3 {
-  color: #838a8b;
   font-family: 'Metamorphous', sans-serif;
-  font-size: 1rem;
-  margin-top: 0.5rem;
 }
 
 .bg-6 {
@@ -24,8 +12,7 @@
 }
 
 .glitch {
-  color: rgb(0, 0, 0);
-  font-size: 3.5rem;
+  font-size: 1.5rem;
   position: relative;
   margin: 0 auto;
   font-family: 'Pixelify Sans', sans-serif;
@@ -34,27 +21,69 @@
 .glitch:after {
   content: attr(data-text);
   position: absolute;
-  left: 5vw;
-  text-shadow: -1px 0 red;
-  top: 0;
-  color: rgb(0, 0, 0);
+  left: 16vw;
+  text-shadow: -1px 0 #8a2d16;
   background: rgb(255, 255, 255);
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
-  animation: noise-anim 4s infinite linear alternate-reverse;
+  animation: noise-anim 3s infinite linear alternate-reverse;
 }
 
 .glitch:before {
   content: attr(data-text);
   position: absolute;
-  left: 5.1vw;
-  text-shadow: 1px 0 blue;
-  top: 0;
-  color: rgb(0, 0, 0);
+  text-shadow: 1px 0 #53612b;
   background: rgb(255, 255, 255);
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
   animation: noise-anim-2 3s infinite linear alternate-reverse;
+}
+
+.header h3 {
+  color: #838a8b;
+  font-size: 0.6rem;
+  margin-top: 0.4rem;
+}
+
+@media screen and (min-width: 576px) {
+  .glitch {
+    font-size: 2.2rem;
+  }
+
+  .glitch:after {
+    left: 12.5vw;
+  }
+
+  .header h3 {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .glitch {
+    font-size: 2.3rem;
+  }
+
+  .glitch:after {
+    left: 8.5vw;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .glitch {
+    font-size: 2.5rem;
+  }
+
+  .glitch:after {
+    left: 6vw;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .glitch:after {
+    left: 4vw;
+  }
 }
 
 @keyframes noise-anim {
@@ -226,19 +255,5 @@
 
   100% {
     clip: rect(90px, 9999px, 23px, 0);
-  }
-}
-
-@media (max-width: 575.98px) {
-  .header h1 {
-    font-size: 1.8rem;
-  }
-
-  .header h3 {
-    font-size: 0.8rem;
-  }
-
-  .glitch {
-    font-size: 1.8rem;
   }
 }

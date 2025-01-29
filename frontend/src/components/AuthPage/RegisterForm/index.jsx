@@ -1,53 +1,61 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../Button';
 import styles from './registerform.module.css';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router';
+import { registerUser } from '../../../lib/utils/apiUser';
+import { setUserSession } from '../../../lib/utils/localStorage.utils';
+import { useUser } from '../../../context/userContext';
 
-const RegisterForm = ({ onRegister }) => {
+const RegisterForm = ({ forceUpdate }) => {
+  const { setUserData } = useUser();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const registerMutation = useMutation(['registerUser'], registerUser, {
+    onSuccess: (data) => {
+      const { token, user } = data;
+      setUserSession(token);
+      setUserData(user);
+      queryClient.invalidateQueries('users');
+      forceUpdate();
+      navigate('/');
+    },
+    onError: (e) => {
+      alert('Error al registrarse. Revisa la información proporcionada.' + e);
+    },
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (data) => {
-    setLoading(true);
-    try {
-      await onRegister(data);
-      alert(
-        'Registro exitoso. Por favor, verifica tu correo electrónico para validar tu cuenta (revisa la carpeta de spam si no lo encuentras).',
-      );
-    } catch (error) {
-      console.error('Error en el registro:', error);
-    } finally {
-      setLoading(false);
-    }
+  const onSubmit = (data) => {
+    registerMutation.mutate(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.registerForm}>
       <div className={styles.field}>
-        <label htmlFor='name'>Nombre de usuario:</label>
         <input
+          id='userName'
           type='text'
-          id='name'
-          {...register('username', {
+          placeholder='Nombre de Usuario'
+          {...register('userName', {
             required: 'El nombre es obligatorio',
-            minLength: {
-              value: 2,
-              message: 'El nombre debe tener al menos 2 caracteres',
-            },
+            minLength: { value: 2, message: 'Mínimo 2 caracteres' },
+            maxLength: { value: 20, message: 'Máximo 20 caracteres' },
           })}
         />
-        {errors.name && <p className={styles.error}>{errors.name.message}</p>}
+        {errors.userName && <p className={styles.error}>{errors.userName.message}</p>}
       </div>
 
       <div className={styles.field}>
-        <label htmlFor='email'>Correo electrónico:</label>
         <input
-          type='email'
           id='email'
+          type='email'
+          placeholder='Correo electrónico'
           {...register('email', {
             required: 'El correo es obligatorio',
             pattern: {
@@ -60,10 +68,10 @@ const RegisterForm = ({ onRegister }) => {
       </div>
 
       <div className={styles.field}>
-        <label htmlFor='password'>Contraseña:</label>
         <input
-          type='password'
           id='password'
+          type='password'
+          placeholder='Contraseña'
           {...register('password', {
             required: 'La contraseña es obligatoria',
             pattern: {
@@ -76,22 +84,16 @@ const RegisterForm = ({ onRegister }) => {
       </div>
 
       <div className={styles.field}>
-        <label htmlFor='confirmPassword'>Confirma tu contraseña:</label>
-        <input
-          type='password'
-          id='confirmPassword'
-          {...register('confirmPassword', {
-            required: 'La confirmación es obligatoria',
-            validate: (value, allValues) => value === allValues.password || 'Las contraseñas no coinciden',
-          })}
-        />
-        {errors.confirmPassword && <p className={styles.error}>{errors.confirmPassword.message}</p>}
+        <label>
+          <input type='checkbox' {...register('policy', { required: 'Debes aceptar las políticas' })} />
+          <span>Acepto las políticas</span>
+        </label>
+        {errors.policy && <p className={styles.error}>{errors.policy.message}</p>}
       </div>
 
-      <div className={styles.actions}>
-        <Button type='submit' text={loading ? 'Registrando...' : 'Registrarse'} disabled={loading} />
-      </div>
-      <p>Si continuas, estás aceptando nuestros Términos de Servicio y Políticas de Privacidad.</p>
+      <button className={styles.registerButton} type='submit' disabled={registerMutation.isLoading}>
+        {registerMutation.isLoading ? 'Procesando...' : 'Registrarse'}
+      </button>
     </form>
   );
 };

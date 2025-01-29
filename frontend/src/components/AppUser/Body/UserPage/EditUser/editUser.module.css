@@ -1,5 +1,5 @@
-/* Estilo del formulario de edición */
-/* Cubre toda la pantalla */
+/* Estilo del formulario de edición
+/* Cubre toda la pantalla 
 .modalOverlay {
   display: flex;
   justify-content: center;
@@ -20,7 +20,7 @@
   z-index: 1000;
 }
 
-/* Estilo del contenido del modal */
+/* Estilo del contenido del modal 
 .modalContent {
   padding: 25px 20px;
   width: 90%;
@@ -33,7 +33,7 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
-/* Animación de entrada */
+/* Animación de entrada 
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -52,7 +52,7 @@ h2 {
   text-align: center;
 }
 
-/* Estilos de etiquetas y entradas */
+/* Estilos de etiquetas y entradas 
 .modalContent label {
   display: block;
 
@@ -72,14 +72,14 @@ h2 {
   font-size: 14px;
 }
 
-/* Botones de acción */
+/* Botones de acción 
 .buttons {
   display: flex;
   justify-content: space-between;
   gap: 20px;
 }
 
-/* Botón de envío */
+/* Botón de envío 
 button[type='submit'] {
   background-color: transparent;
 
@@ -95,7 +95,7 @@ button[type='submit']:active {
   transform: translateY(0);
 }
 
-/* Botón de cancelar */
+/* Botón de cancelar 
 .cancelButton {
   background-color: transparent;
 
@@ -109,4 +109,4 @@ button[type='submit']:active {
 
 .cancelButton:active {
   transform: translateY(0);
-}
+} */

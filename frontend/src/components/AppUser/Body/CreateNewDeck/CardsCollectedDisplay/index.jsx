@@ -32,7 +32,7 @@ const CardsCollectedDisplay = ({ cards, onAddCard }) => {
   const handleFilterChange = (type, value) => {
     setFilters((prev) => ({
       ...prev,
-      [type]: prev[type].includes(value) ? prev[type].filter((item) => item !== value) : [...prev[type], value],
+      [type]: value,
     }));
   };
 
@@ -88,10 +88,9 @@ const CardsCollectedDisplay = ({ cards, onAddCard }) => {
   return (
     <div className={styles.cardsCollected}>
       <div className={styles.controls}>
-        <SearchBar onSearch={handleSearchChange} />
         <div className={styles.buttonWrapper}>
           <button className={styles.controlButton} onClick={toggleFilter}>
-            <FaFilter className={styles.icon} /> <span>Filtros</span>
+            <FaFilter className={styles.icon} />
           </button>
           {filtersVisible && (
             <div className={styles.filterMenuWrapper} ref={filterMenuRef}>
@@ -101,7 +100,7 @@ const CardsCollectedDisplay = ({ cards, onAddCard }) => {
         </div>
         <div className={styles.buttonWrapper}>
           <button className={styles.controlButton} onClick={toggleSort}>
-            <FaSortAmountDown className={styles.icon} /> <span>Ordenar</span>
+            <FaSortAmountDown className={styles.icon} />
           </button>
           {sortVisible && (
             <div className={styles.sortMenu} ref={sortMenuRef}>
@@ -114,6 +113,7 @@ const CardsCollectedDisplay = ({ cards, onAddCard }) => {
             </div>
           )}
         </div>
+        <SearchBar onSearch={handleSearchChange} />
       </div>
       <div className={styles.cardsList}>
         {Object.values(groupedCards).map((card) => (

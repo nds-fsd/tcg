@@ -1,34 +1,46 @@
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import Button from '../Button';
 import styles from './loginform.module.css';
+import { useForm } from 'react-hook-form';
+import { useMutation, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router';
+import { loginUser } from '../../../lib/utils/apiUser';
+import { setUserSession } from '../../../lib/utils/localStorage.utils';
+import { useUser } from '../../../context/userContext';
 
-const LoginForm = ({ onLogin }) => {
+const LoginForm = ({ forceUpdate }) => {
+  const { setUserData } = useUser();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const loginMutation = useMutation(['loginUser'], loginUser, {
+    onSuccess: (data) => {
+      setUserSession(data);
+      setUserData(data.user);
+      queryClient.invalidateQueries('users');
+      forceUpdate();
+      navigate('/');
+    },
+    onError: (error) => {
+      alert('Error al iniciar sesión. Por favor, revisa tus credenciales.');
+    },
+  });
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [loading, setLoading] = useState(false);
 
-  const onSubmit = async (data) => {
-    setLoading(true);
-    try {
-      await onLogin(data);
-    } catch (error) {
-      console.error('Error en el login:', error);
-    } finally {
-      setLoading(false);
-    }
+  const onSubmit = (data) => {
+    loginMutation.mutate(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
       <div className={styles.field}>
-        <label htmlFor='email'>Correo electrónico:</label>
         <input
           type='email'
           id='email'
+          placeholder='Correo electrónico'
           {...register('email', {
             required: 'El correo es obligatorio',
             pattern: {
@@ -41,10 +53,10 @@ const LoginForm = ({ onLogin }) => {
       </div>
 
       <div className={styles.field}>
-        <label htmlFor='password'>Contraseña:</label>
         <input
           type='password'
           id='password'
+          placeholder='Contraseña'
           {...register('password', {
             required: 'La contraseña es obligatoria',
             minLength: {
@@ -56,10 +68,9 @@ const LoginForm = ({ onLogin }) => {
         {errors.password && <p className={styles.error}>{errors.password.message}</p>}
       </div>
 
-      <div className={styles.actions}>
-        <Button type='submit' text={loading ? 'Cargando...' : 'Iniciar Sesión'} disabled={loading} />
-      </div>
-      <p>Si continuas, estás aceptando nuestros Términos de Servicio y Políticas de Privacidad.</p>
+      <button className={styles.loginButton} type='submit' disabled={loginMutation.isLoading}>
+        {loginMutation.isLoading ? 'Cargando...' : 'Logear'}
+      </button>
     </form>
   );
 };
