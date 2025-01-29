@@ -1,18 +1,20 @@
 :root {
-  --color-primary: #7006a1;
-  --color-primary-hover: #4a046e;
+  --color-primary: #54612b;
+  --color-primary-hover: #373f1c;
   --color-light: #ffffff;
-  --color-dark: #29293a;
+  --color-dark: #664631;
   --color-text-light: #f5f5f5;
-  --font-family: 'Pixelify Sans', sans-serif;
+  --color-button-bg: #f8edd3;
+  --font-family: 'Metamorphous', sans-serif;
 }
 
 .cardsCollected {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
   height: 100%;
   overflow-y: auto;
+  overflow: hidden;
   background-color: var(--color-light);
   border-radius: 8px;
   padding: 16px;
@@ -20,14 +22,16 @@
 
 .controls {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  position: relative;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  z-index: 10;
 }
 
 .buttonWrapper {
   position: relative;
+  height: 100%;
 }
 
 .controlButton {
@@ -47,6 +51,7 @@
     transform 0.2s ease;
   font-family: var(--font-family);
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  height: 100%;
 }
 
 .controlButton:hover {
@@ -62,7 +67,7 @@
 
 .icon {
   margin-right: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1.8rem;
 }
 
 .controlButton.small {
@@ -74,12 +79,12 @@
   margin-right: 0;
 }
 
-.sortMenu,
-.filterMenuWrapper {
+.filterMenuWrapper,
+.sortMenu {
   position: absolute;
-  top: calc(100% + 5px);
+  top: calc(100% + 20px);
   left: 0;
-  background-color: var(--color-dark);
+  background-color: #664631;
   color: var(--color-text-light);
   padding: 0.5rem;
   z-index: 100;
@@ -90,31 +95,36 @@
   overflow: hidden;
 }
 
-.sortOption {
+.filterMenuWrapper {
+  min-width: 40vw;
+}
+
+.controls .sortOption {
   display: block;
-  background-color: transparent;
-  color: var(--color-text-light);
+  background-color: var(--color-button-bg);
+  color: var(--color-dark);
   border: none;
   width: 100%;
   text-align: left;
+  margin-top: 0.2rem;
   padding: 0.5rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
   font-family: var(--font-family);
 }
 
-.sortOption:hover {
-  background-color: var(--color-primary-hover);
+.controls .sortOption:hover {
+  background-color: #cfc4aa;
 }
 
 .cardsList {
-  margin-top: 12px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
   overflow-y: auto;
-  max-height: calc(100% - 80px);
+  max-height: calc(100% - 120px);
   padding-right: 4px;
+  justify-content: start;
 }
 
 .cardWrapper {
@@ -134,9 +144,20 @@
   font-weight: bold;
   border-radius: 50%;
   padding: 0.2rem 0.4rem;
+  z-index: 5;
+  font-family: 'Roboto', sans-serif;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 829px) and (min-width: 769px) {
+  .controls {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 10;
+  }
+
   .controlButton {
     padding: 0.5rem;
     font-size: 0.8rem;
@@ -151,7 +172,30 @@
   }
 
   .cardsList {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .controls {
+    gap: 8px;
+  }
+
+  .controlButton {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .controlButton .icon {
+    margin-right: 0;
+  }
+
+  .controlButton span {
+    display: none;
+  }
+
+  .cardsList {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
   }
 }
 
@@ -161,6 +205,7 @@
   }
 
   .cardsList {
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 8px;
   }
 }

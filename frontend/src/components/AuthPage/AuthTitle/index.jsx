@@ -9,7 +9,6 @@ const AuthTitle = () => {
           PixelQuest
         </div>
       </div>
-
       <h3>El juego de cartas coleccionable que estabas esperando</h3>
     </header>
   );

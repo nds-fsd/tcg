@@ -26,7 +26,7 @@ const CardsSelectedDisplay = ({ cards, onRemoveCard }) => {
           </div>
         ))}
       </div>
-      <div className={styles.cardCounter}>{totalCards}/20 Cartas</div>
+      <div className={styles.cardCounter}>{totalCards}/40 Cartas</div>
       {selectedCard && <CardModal card={selectedCard} onClose={handleCloseModal} />}
     </div>
   );

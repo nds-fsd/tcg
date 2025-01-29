@@ -13,7 +13,7 @@
 .cardsList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 16px;
+  gap: 8px;
   overflow-y: auto;
   justify-content: start;
 }
@@ -34,8 +34,8 @@
   right: 3rem;
   font-size: 1rem;
   font-weight: bold;
-  color: #7006a1;
-  font-family: 'Pixelify Sans', sans-serif;
+  color: #664631;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .trashIcon {
@@ -50,6 +50,5 @@
 }
 
 .trashIcon:hover {
-  background-color: #4a046e;
   transform: scale(1.1);
 }

@@ -1,8 +1,8 @@
 .searchBar {
   display: flex;
   align-items: center;
-  background-color: #29293a;
-  border: 1px solid #3a3a4d;
+  background-color: #f8edd3;
+  border: 1px solid #664631;
   border-radius: 8px;
   padding: 0.5rem 1rem;
   width: 100%;
@@ -16,9 +16,9 @@
   background: none;
   border: none;
   outline: none;
-  color: #e8e8d8;
+  color: #664631;
   font-size: 1rem;
-  font-family: 'Pixelify Sans', sans-serif;
+  font-family: 'Metamorphous', sans-serif;
   padding: 0 0.5rem;
 }
 
@@ -28,17 +28,17 @@
 }
 
 .searchBar .icon {
-  color: #7006a1;
+  color: #54612b;
   font-size: 1.2rem;
   margin-right: 0.5rem;
 }
 
 .searchBar:hover {
-  border-color: #7006a1;
+  border-color: #54612b;
 }
 
 .searchBar input:focus {
-  border-color: #7006a1;
+  border-color: #54612b;
 }
 
 @keyframes fadeIn {
@@ -64,6 +64,17 @@
 
   .searchBar .icon {
     font-size: 1rem;
+  }
+
+  .searchBar input {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .searchBar {
+    max-width: 100%;
+    padding: 0.5rem;
   }
 
   .searchBar input {

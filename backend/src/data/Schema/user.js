@@ -1,4 +1,9 @@
 const { Schema, model } = require('mongoose');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
+require('dotenv').config();
+
+const secret = process.env.JWT_SECRET_KEY;
 
 const userSchema = new Schema(
   {
@@ -6,7 +11,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      trim: true,
     },
     email: {
       type: String,
@@ -22,7 +26,7 @@ const userSchema = new Schema(
     },
     img: {
       type: String,
-      default: '/assets/UserImg/userimage1.svg',
+      default: '/assets/UserImg/userimage3.svg',
     },
     level: {
       type: Number,
@@ -39,14 +43,42 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    roles: {
-      type: String,
-      default: 'user',
-      enum: ['admin', 'user'],
+    role: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true },
 );
+
+userSchema.pre('save', async function (next) {
+  if (this.isModified('password')) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+  next();
+});
+
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
+
+userSchema.methods.generateJWT = function () {
+  const today = new Date();
+  const expirationDate = new Date();
+
+  expirationDate.setDate(today.getDate());
+
+  let payload = {
+    id: this._id,
+    name: this.userName,
+    email: this.email,
+  };
+
+  return jwt.sign(payload, secret, {
+    expiresIn: parseInt(expirationDate.getTime() / 1000, 10),
+  });
+};
 
 const User = model('User', userSchema);
 

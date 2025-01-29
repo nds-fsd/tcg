@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaFireAlt, FaWater, FaLeaf, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
 import CardModal from '../CardModal';
 import styles from './carditem.module.css';
 
@@ -9,28 +9,53 @@ const attributeIcons = {
   water: FaWater,
   earth: FaMountain,
   darkness: FaMoon,
-  plant: FaLeaf,
   light: FaSun,
 };
 
 const rarityColors = {
-  legendary: 'gold',
+  legendary: '#ae8d0b',
   epic: 'purple',
-  rare: 'green',
-  common: 'gray',
+  rare: '#B0B0B0',
+  common: 'black',
+};
+
+const categoryColors = {
+  monster: '#5c330a',
+  support: '#8892c6',
+  fusion: '#543c5a',
+};
+
+const rarityTranslations = {
+  Legendaria: 'legendary',
+  Épica: 'epic',
+  Rara: 'rare',
+  Común: 'common',
+};
+
+const categoryTranslations = {
+  Monstruo: 'monster',
+  Apoyo: 'support',
+  Fusión: 'fusion',
+};
+
+const normalizeValue = (value, translations) => {
+  return translations[value] || value.toLowerCase();
 };
 
 const CardItem = ({ card, onAction, actionLabel }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const { name, image, category, rarity, attribute, type } = card;
 
   //Cambiar y quitar valores por defecto
 
-  const normalizedAttribute = attribute?.toLowerCase() || 'fire';
-  const normalizedRarity = rarity?.toLowerCase() || 'common';
+  const normalizedRarity = normalizeValue(rarity, rarityTranslations);
+  const normalizedCategory = normalizeValue(category, categoryTranslations);
 
-  const AttributeIcon = attributeIcons[normalizedAttribute] || FaFireAlt;
+  const AttributeIcon = attributeIcons[attribute?.toLowerCase()];
+  const rarityColor = rarityColors[normalizedRarity] || 'gray';
+  const categoryColor = categoryColors[normalizedCategory] || '#1a1a1a';
 
   const handleCardClick = () => {
     setIsModalOpen(true);
@@ -40,15 +65,23 @@ const CardItem = ({ card, onAction, actionLabel }) => {
     setIsModalOpen(false);
   };
 
-  const CARD_CATEGORIES = {
-    monster: 'Monster',
-    support: 'Support',
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 820);
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   return (
     <>
       <motion.div
-        className={`${styles.card} ${category === CARD_CATEGORIES.support ? styles.support : styles.monster}`}
+        className={`${styles.card}`}
+        style={{ borderColor: rarityColor, backgroundColor: categoryColor }}
         whileHover={{ scale: 1.05 }}
         onClick={handleCardClick}
       >
@@ -57,14 +90,18 @@ const CardItem = ({ card, onAction, actionLabel }) => {
         </div>
 
         <div className={styles.cardImageContainer}>
-          <img src={image || '/images/placeholder.png'} alt={name} className={styles.cardImage} />
+          <img
+            src={image || '../../../../../../public/assets/CardImg/cardplaceholdertcg.png'}
+            alt={name}
+            className={styles.cardImage}
+          />
         </div>
 
         <div className={styles.cardDetails}>
           <h3 className={styles.cardName}>{name}</h3>
           <div className={styles.cardFooter}>
             <p className={styles.cardType}>{type}</p>
-            <AttributeIcon className={styles.attributeIcon} />
+            {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
           </div>
         </div>
 
@@ -76,7 +113,7 @@ const CardItem = ({ card, onAction, actionLabel }) => {
           }}
           whileHover={{ scale: 1.1 }}
         >
-          {actionLabel || '+ Añadir'}
+          {isSmallScreen ? '+' : actionLabel}
         </motion.button>
       </motion.div>
 

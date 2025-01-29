@@ -1,66 +1,101 @@
 .filterMenu {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 1rem;
-  background-color: #29293a;
+  background-color: #f8edd3;
   border-radius: 8px;
   padding: 1rem;
   width: 100%;
-  max-width: 600px;
   z-index: 100;
-}
-
-.filterMenu h4 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #e8e8d8;
-  font-family: 'Pixelify Sans', sans-serif;
-  border-bottom: 1px solid #7006a1;
-  padding-bottom: 0.5rem;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .filterMenu .filterSection {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 0.5rem;
+  flex: 1;
+  min-width: 150px;
 }
 
 .filterMenu .filterSection h5 {
-  grid-column: span 2;
   font-size: 1rem;
   font-weight: bold;
-  color: #e8e8d8;
+  color: #664631;
   margin-bottom: 0.5rem;
-  font-family: 'Pixelify Sans', sans-serif;
+  font-family: 'Metamorphous', sans-serif;
 }
 
-.filterMenu label {
-  display: flex;
-  align-items: center;
+.select {
   font-size: 0.9rem;
-  color: #e8e8d8;
-  font-family: 'Pixelify Sans', sans-serif;
+  padding: 0.5rem;
+  border: 1px solid #664631;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #664631;
+  font-family: 'Metamorphous', sans-serif;
+  cursor: pointer;
 }
 
-.filterMenu input[type='checkbox'] {
-  margin-right: 0.5rem;
-  accent-color: #7006a1;
+.select:focus {
+  outline: none;
+  border-color: #54612b;
+  box-shadow: 0 0 5px rgba(84, 97, 43, 0.5);
 }
 
 .filterMenu .clearButton {
-  align-self: flex-end;
-  background-color: #7006a1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #54612b;
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  font-family: 'Pixelify Sans', sans-serif;
+  gap: 0.5rem;
 }
 
 .filterMenu .clearButton:hover {
-  background-color: #50057e;
+  background-color: #373f1c;
+}
+
+@media (max-width: 768px) {
+  .filterMenu {
+    flex-direction: column;
+  }
+
+  .filterMenu .filterSection {
+    gap: 0.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .filterMenu {
+    padding: 0.5rem;
+  }
+
+  .filterMenu h5 {
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1805px) {
+  .filterMenu {
+    justify-content: flex-start;
+  }
+
+  .filterMenu .filterSection {
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .filterMenu .clearButton {
+    margin-top: 1rem;
+    align-self: stretch;
+    word-break: keep-all;
+  }
 }

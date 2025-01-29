@@ -2,9 +2,10 @@ const { Schema, model } = require('mongoose');
 
 const deckSchema = new Schema(
   {
-    name: {
+    deckTitle: {
       type: String,
       required: true,
+      trim: true,
     },
     owner: {
       type: Schema.Types.ObjectId,
@@ -13,8 +14,15 @@ const deckSchema = new Schema(
     },
     cards: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'Card',
+        cardId: {
+          type: Schema.Types.ObjectId,
+          ref: 'Card',
+          required: true,
+        },
+        amount: {
+          type: Number,
+          required: true,
+        },
       },
     ],
   },

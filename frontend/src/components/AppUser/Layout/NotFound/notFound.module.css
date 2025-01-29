@@ -3,14 +3,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  height: 100vh;
   background-color: #664631;
   color: #333;
   font-family: 'Metamorphous', sans-serif;
 }
 
 .title {
-  font-size: 4rem;
+  font-size: 2rem;
   color: #a87304;
   margin-bottom: 1rem;
 }
@@ -19,7 +19,7 @@
   margin: 0 1rem;
   padding: 1rem;
 
-  font-size: 1.5rem;
+  font-size: 0.8rem;
   color: #ffff;
   text-align: center;
 }
@@ -35,4 +35,22 @@
 
 .return:hover {
   text-decoration: underline;
+}
+
+@media screen and (min-width: 576px) {
+  .title {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 992px) {
+}
+
+@media screen and (min-width: 1200px) {
+  .title {
+    font-size: 4rem;
+  }
 }

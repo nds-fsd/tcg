@@ -16,31 +16,30 @@
   background: #1a1a1a;
   border-radius: 16px;
   padding: 20px;
-  width: 90%;
-  max-width: 480px;
+  width: 480px;
+  height: 700px;
   text-align: center;
   color: white;
-  perspective: 1000px;
-  transform-style: preserve-3d;
-  cursor: grab;
-  transition: transform 0.3s ease;
-  border: 5px solid;
-  height: 45rem;
+  border: 8px solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
-.monster {
-  border-color: #8b4513;
+.levelBadge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 60px;
+  height: 60px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
 }
 
-.support {
-  border-color: #1e90ff;
-}
-
-.modalContent:active {
-  cursor: grabbing;
-}
-
-/* Rareza */
 .rarityBadge {
   position: absolute;
   top: -10px;
@@ -48,36 +47,25 @@
   transform: translateX(-50%);
   padding: 6px 12px;
   font-size: 14px;
-  font-weight: bold;
   color: white;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
   z-index: 10;
-}
-
-.rarityLegendary {
-  background-color: gold;
-}
-
-.rarityEpic {
-  background-color: purple;
-}
-
-.rarityRare {
-  background-color: green;
-}
-
-.rarityCommon {
-  background-color: gray;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .cardImageContainer {
   width: 100%;
-  height: 308px;
+  height: 300px;
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modalImage {
@@ -87,21 +75,27 @@
 }
 
 .cardDetails {
-  text-align: left;
+  text-align: justify;
   margin-top: 16px;
+  flex: none;
+  height: 350px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: 'Roboto', sans-serif;
 }
 
 .cardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
 }
 
 .cardName {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  font-family: 'Pixelify Sans', sans-serif;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .attributeIcon {
@@ -110,15 +104,143 @@
 }
 
 .cardType {
-  font-size: 1.2rem;
-  margin-bottom: 8px;
-  font-weight: bold;
+  font-size: 1.1rem;
   color: #ccc;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin: 0;
 }
 
-.cardDescription {
+.cardText {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 8px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Roboto', sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  height: 200px;
+  margin: 8px 0;
+  flex: none;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #54612b rgba(255, 255, 255, 0.1);
+}
+
+.cardText::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cardText::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.cardText::-webkit-scrollbar-thumb {
+  background: #54612b;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.cardText::-webkit-scrollbar-thumb:hover {
+  background: #373f1c;
+}
+
+.typeAndButtonContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.modalContent .switchButton {
+  background-color: #54612b;
+  border: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 10px;
+  text-align: center;
+  width: auto;
+  max-width: 175px;
+  white-space: nowrap;
+  height: auto;
+  max-height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.modalContent .switchButton:hover {
+  background-color: #373f1c;
+}
+
+.cardFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 1rem;
-  line-height: 1.5;
-  color: #aaa;
-  font-family: sans-serif;
+}
+
+.expansion {
+  font-family: 'Georgia', serif;
+  font-style: italic;
+  font-size: 1rem;
+}
+
+.atkDef {
+  font-size: 1rem;
+  color: #fff;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: bold;
+}
+
+@media (max-width: 375px) {
+  .modalContent {
+    width: 90%;
+    height: auto;
+    max-height: 90vh;
+    padding: 12px;
+  }
+
+  .rarityBadge {
+    font-size: 10px;
+    padding: 9px 8px;
+  }
+
+  .cardName {
+    font-size: 1rem;
+  }
+
+  .attributeIcon {
+    font-size: 18px;
+  }
+
+  .cardType {
+    font-size: 0.9rem;
+  }
+
+  .cardText {
+    font-size: 0.8rem;
+  }
+
+  .switchButton {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+  }
+
+  .cardFooter {
+    font-size: 0.8rem;
+  }
+
+  .expansion {
+    font-size: 0.75rem;
+  }
+
+  .atkDef {
+    font-size: 0.8rem;
+  }
 }
