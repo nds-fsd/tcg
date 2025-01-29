@@ -9,9 +9,9 @@ const { jwtMiddleware } = require('../security/jwt.js');
 
 const router = Router();
 
-router.use('/card', jwtMiddleware, cardRouter);
-router.use('/user', jwtMiddleware, addDateMiddleware, userRouter);
-router.use('/userCollection', jwtMiddleware, userCollectionRouter);
+router.use('/card', cardRouter);
+router.use('/user', jwtMiddleware, userRouter);
+router.use('/userCollection', userCollectionRouter);
 router.use('/auth', authRouter);
 
 module.exports = router;

@@ -1,29 +1,39 @@
 const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
-
-dotenv.config();
+require('dotenv').config();
 
 const jwtSecret = process.env.JWT_SECRET_KEY;
 
 const jwtMiddleware = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  if (!authHeader) res.status(401).json({ error: 'Sin autorización: faltan los headers' });
+
+  if (!authHeader) return res.status(401).json({ error: 'Unauthorized: missing header' });
 
   const token = authHeader.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'Sin autorización: falta el token' });
+  if (!token) return res.status(401).json({ error: 'Unauthorized: missing token' });
 
   let tokenPayload;
 
   try {
-    tokenPayload = jwt.verify(token, jwtSecret);
+    const tokenPayload = jwt.verify(token, jwtSecret);
+    req.jwtPayload = tokenPayload;
   } catch (error) {
-    return res.status(401).json({ error: 'Sin autorización' });
+    return res.status(401).json({ error: 'Unauthorized: invalid token' });
   }
 
   req.jwtPayload = tokenPayload;
   next();
 };
 
+const signToken = (payload, expiresIn = '1d') => {
+  return jwt.sign(payload, jwtSecret, { expiresIn });
+};
+
+const verifyToken = (token) => {
+  return jwt.verify(token, jwtSecret);
+};
+
 module.exports = {
   jwtMiddleware,
+  signToken,
+  verifyToken,
 };
