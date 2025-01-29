@@ -44,6 +44,7 @@ const Header = () => {
         <FaUserCircle className={styles.userIconImage} />
       </div>
       <button
+        id='log-out-button'
         onClick={() => {
           removeSession();
           navigate('/auth');
