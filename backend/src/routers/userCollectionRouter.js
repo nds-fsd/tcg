@@ -1,14 +1,15 @@
 const { Router } = require('express');
 const {
   getUserCollection,
-  createUserCollection,
-  userCollectionDeleteById,
+  createCardForUser,
+  cardForUserDeleteById,
 } = require('../controllers/userCollectionController');
+const { jwtMiddleware } = require('../security/jwt.js');
 
 const userCollectionRouter = Router();
 
-userCollectionRouter.get('/:id', getUserCollection);
-userCollectionRouter.post('/', createUserCollection);
-userCollectionRouter.delete('/:userId/cards/:cardId', userCollectionDeleteById);
+userCollectionRouter.get('/', jwtMiddleware, getUserCollection);
+userCollectionRouter.post('/', createCardForUser);
+userCollectionRouter.delete('/:userId/cards/:cardId', cardForUserDeleteById);
 
 module.exports = { userCollectionRouter };

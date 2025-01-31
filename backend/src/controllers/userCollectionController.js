@@ -1,57 +1,81 @@
+const mongoose = require('mongoose');
 const { UserCollection } = require('../data/Schema/userCollection');
 
 const getUserCollection = async (req, res) => {
-  const { id: userId } = req.params;
-
   try {
-    const userCollections = await UserCollection.find({ userId }).populate('userId').populate('cardId');
+    const { id } = req.jwtPayload;
+
+    const userCollections = await UserCollection.find({ userId: id })
+      .populate('userId')
+      .populate('cards.cardId');
+
+    if (!userCollections) {
+      return res.status(404).json({ e: 'Colección no encontrada para el usuario' });
+    }
 
     res.status(200).json(userCollections);
-  } catch (error) {
+  } catch (e) {
+    console.error(e);
     res
       .status(500)
-      .json([{ error: error.message }, { 'Error manual': 'Error en la recoleccion de la colección del usuario' }]);
+      .json([{ e: 'Error en la recoleccion de Cartas del usuario' }]);
   }
 };
 
-const createUserCollection = async (req, res) => {
+const createCardForUser = async (req, res) => {
   try {
     const { userId, cardId } = req.body;
-    const newUserCardAssigned = new UserCollection({
-      userId,
-      cardId,
-    });
-    const savedNewUserCar = await newUserCardAssigned.save();
-    const id = savedNewUserCar._id;
 
-    const userCardToReturn = await UserCollection.findById(id);
+    let userCollection = await UserCollection.findOne({ userId });
 
-    res.status(201).json(userCardToReturn);
-  } catch (error) {
-    res.status(400).json([{ error: error.message }, { 'Error manual': 'Error al crear las colecciones del usuario' }]);
+    if (!userCollection) {
+      userCollection = new UserCollection({
+        userId,
+        cards: [{ cardId, amount: 1 }],
+      });
+    } else {
+      const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId);
+
+      if (existingCard) {
+        existingCard.amount += 1;
+      } else {
+        userCollection.cards.push({ cardId, amount: 1 });
+      }
+    }
+
+    await userCollection.save();
+    res.status(201).json(userCollection);
+  } catch (e) {
+    console.error(e);
+    res.status(400).json([{ e: 'Error al agregar la carta al usuario' }]);
   }
 };
 
-const userCollectionDeleteById = async (req, res) => {
+const cardForUserDeleteById = async (req, res) => {
   const { userId, cardId } = req.params;
 
   try {
-    const deletedEntry = await UserCollection.findOneAndDelete({ user: userId, card: cardId });
+    const userCollection = await UserCollection.findOneAndUpdate(
+      { userId },
+      { $pull: { cards: { cardId } } },
+      { new: true }
+    );
 
-    if (!deletedEntry) {
-      return res.status(404).json({ error: 'No entry found for the specified user and card' });
+    if (!userCollection) {
+      return res.status(404).json({ e: 'No se encontró la carta en la colección del usuario' });
     }
 
-    res.status(200).json({ message: 'Entry deleted successfully' });
-  } catch (error) {
+    res.status(200).json({ message: 'Carta eliminada de la colección', userCollection });
+  } catch (e) {
+    console.error(e);
     res
       .status(400)
-      .json([{ error: error.message }, { 'Error manual': 'Error en la eliminación de una de tus cartas' }]);
+      .json([{ e: 'Error al eliminar la carta del usuario' }]);
   }
 };
 
 module.exports = {
   getUserCollection,
-  createUserCollection,
-  userCollectionDeleteById,
+  createCardForUser,
+  cardForUserDeleteById,
 };

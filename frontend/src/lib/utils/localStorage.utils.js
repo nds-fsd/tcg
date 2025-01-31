@@ -14,7 +14,6 @@ const deleteStorageObject = (key) => {
   localStorage.removeItem(key);
 };
 
-// Optención de token
 export const getUserToken = () => {
   const session = getStorageObject('user-session');
   if (session) {
@@ -23,7 +22,6 @@ export const getUserToken = () => {
   return null;
 };
 
-// Sesión Actions
 export const getUserSession = () => {
   const session = getStorageObject('user-session');
   if (session) {
