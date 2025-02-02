@@ -14,7 +14,7 @@ const MAX_DUPLICATES = 3;
 const CreateNewDeck = () => {
   const [deckTitle, setDeckTitle] = useState('');
   const [selectedCards, setSelectedCards] = useState([]);
-  const [collectedCards, setCollectedCards] = useState([]);
+  const [userCards, setUserCards] = useState([]);
 
   useEffect(() => {
     const getUserCards = async () => {
@@ -34,7 +34,10 @@ const CreateNewDeck = () => {
   };
 
   const handleAddCard = (card) => {
-    const cardCount = selectedCards.filter((c) => c.name === card.name).length;
+    const userCard = userCards.find((c) => c.id === card.id);
+    const userCardQuantity = userCard ? userCard.quantity : 0;
+    
+    const cardCount = selectedCards.reduce((acc, c) => (c.id === card.id ? acc + 1 : acc), 0);
 
     if (selectedCards.length >= MAX_CARDS) {
       toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas al mazo.`);
@@ -46,7 +49,12 @@ const CreateNewDeck = () => {
       return;
     }
 
-    setSelectedCards([...selectedCards, card]);
+    if (cardCount >= userCardQuantity) {
+      toast.error(`⚠️ No puedes añadir más de ${userCardQuantity} copias de "${card.name}" porque solo tienes ${userCardQuantity}.`);
+      return;
+    }
+
+    setSelectedCards((prevCards) => [...prevCards, card]);
     // toast.success(`✅ "${card.name}" añadida al mazo.`);
   };
 

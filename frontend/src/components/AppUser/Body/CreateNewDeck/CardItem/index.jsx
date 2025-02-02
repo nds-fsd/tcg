@@ -47,7 +47,7 @@ const attributeIcons = {
 //   const [isModalOpen, setIsModalOpen] = useState(false);
 //   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-//   const { name, image, category, rarity, attribute, type } = card;
+  const { name, image, category, rarity, attribute, type, quantity } = card;
 
 //   //Cambiar y quitar valores por defecto
 
