@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import DeckTitle from './DeckTitle';
+import { fetchUserCollection } from '../../../../lib/utils/apiUserCollection';
 import CardsCollectedDisplay from './CardsCollectedDisplay';
 import CardsSelectedDisplay from './CardsSelectedDisplay';
-import { fetchCards } from '../../../../lib/utils/apiCard';
 import { createDeck } from '../../../../lib/utils/apiDeck';
 import styles from './createnewdeck.module.css';
 
@@ -14,19 +14,19 @@ const MAX_DUPLICATES = 3;
 const CreateNewDeck = () => {
   const [deckTitle, setDeckTitle] = useState('');
   const [selectedCards, setSelectedCards] = useState([]);
-  const [collectedCards, setCollectedCards] = useState([]);
+  const [userCards, setUserCards] = useState([]);
 
   useEffect(() => {
-    const loadCards = async () => {
+    const getUserCards = async () => {
       try {
-        const data = await fetchCards();
-        setCollectedCards(data);
-      } catch (error) {
-        toast.error('No se pudieron cargar las cartas. Inténtalo de nuevo.');
+        const response = await fetchUserCollection();
+        setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, quantity: amount })));
+      } catch (e) {
+        setError('Error al cargar las cartas');
       }
     };
 
-    loadCards();
+    getUserCards();
   }, []);
 
   const handleTitleChange = (newTitle) => {
@@ -34,7 +34,10 @@ const CreateNewDeck = () => {
   };
 
   const handleAddCard = (card) => {
-    const cardCount = selectedCards.filter((c) => c.name === card.name).length;
+    const userCard = userCards.find((c) => c.id === card.id);
+    const userCardQuantity = userCard ? userCard.quantity : 0;
+    
+    const cardCount = selectedCards.reduce((acc, c) => (c.id === card.id ? acc + 1 : acc), 0);
 
     if (selectedCards.length >= MAX_CARDS) {
       toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas al mazo.`);
@@ -46,7 +49,12 @@ const CreateNewDeck = () => {
       return;
     }
 
-    setSelectedCards([...selectedCards, card]);
+    if (cardCount >= userCardQuantity) {
+      toast.error(`⚠️ No puedes añadir más de ${userCardQuantity} copias de "${card.name}" porque solo tienes ${userCardQuantity}.`);
+      return;
+    }
+
+    setSelectedCards((prevCards) => [...prevCards, card]);
     // toast.success(`✅ "${card.name}" añadida al mazo.`);
   };
 
@@ -101,7 +109,7 @@ const CreateNewDeck = () => {
       <div className={styles.deckContent}>
         <div className={styles.cardsCollectedWrapper}>
           <CardsCollectedDisplay
-            cards={Array.isArray(collectedCards) ? collectedCards : []}
+            cards={Array.isArray(userCards) ? userCards : []}
             onAddCard={handleAddCard}
           />
         </div>
