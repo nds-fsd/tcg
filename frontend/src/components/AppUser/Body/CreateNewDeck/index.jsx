@@ -14,8 +14,7 @@ const MAX_DUPLICATES = 3;
 const CreateNewDeck = () => {
   const [deckTitle, setDeckTitle] = useState('');
   const [selectedCards, setSelectedCards] = useState([]);
-  const [selectedFusionCards, setSelectedFusionCards] = useState([]);
-  const [userCards, setUserCards] = useState([]);
+  const [collectedCards, setCollectedCards] = useState([]);
 
   useEffect(() => {
     const getUserCards = async () => {
@@ -35,26 +34,11 @@ const CreateNewDeck = () => {
   };
 
   const handleAddCard = (card) => {
-    const userCard = userCards.find((c) => c.id === card.id);
-    const userCardQuantity = userCard ? userCard.quantity : 0;
+    const cardCount = selectedCards.filter((c) => c.name === card.name).length;
 
-    const normalizedCategory = card.category.trim().toLowerCase();
-    const isFusionCard = normalizedCategory === 'fusión'; 
-    
-    const cardCount = isFusionCard
-      ? selectedFusionCards.filter((c) => c.id === card.id).length
-      : selectedCards.filter((c) => c.id === card.id).length;
-
-    if (isFusionCard) {
-      if (selectedFusionCards.length >= MAX_FUSION_CARDS) {
-        toast.error(`⚠️ No puedes añadir más de ${MAX_FUSION_CARDS} cartas de fusión.`);
-        return;
-      }
-    } else {
-      if (selectedCards.length >= MAX_CARDS) {
-          toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas.`);
-          return;
-      }
+    if (selectedCards.length >= MAX_CARDS) {
+      toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas al mazo.`);
+      return;
     }
 
     if (cardCount >= MAX_DUPLICATES) {
@@ -62,16 +46,8 @@ const CreateNewDeck = () => {
       return;
     }
 
-    if (cardCount >= userCardQuantity) {
-      toast.error(`⚠️ No puedes añadir más de ${userCardQuantity} copias de "${card.name}" porque solo tienes ${userCardQuantity}.`);
-      return;
-    }
-
-    if (isFusionCard) {
-      setSelectedFusionCards((prevCards) => [...prevCards, card]);
-    } else {
-      setSelectedCards((prevCards) => [...prevCards, card]);
-    }
+    setSelectedCards([...selectedCards, card]);
+    // toast.success(`✅ "${card.name}" añadida al mazo.`);
   };
 
   const handleRemoveCard = (card) => {
