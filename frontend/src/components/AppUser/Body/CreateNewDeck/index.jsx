@@ -14,6 +14,7 @@ const MAX_DUPLICATES = 3;
 const CreateNewDeck = () => {
   const [deckTitle, setDeckTitle] = useState('');
   const [selectedCards, setSelectedCards] = useState([]);
+  const [selectedFusionCards, setSelectedFusionCards] = useState([]);
   const [userCards, setUserCards] = useState([]);
 
   useEffect(() => {
@@ -36,12 +37,23 @@ const CreateNewDeck = () => {
   const handleAddCard = (card) => {
     const userCard = userCards.find((c) => c.id === card.id);
     const userCardQuantity = userCard ? userCard.quantity : 0;
-    
-    const cardCount = selectedCards.reduce((acc, c) => (c.id === card.id ? acc + 1 : acc), 0);
 
-    if (selectedCards.length >= MAX_CARDS) {
-      toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas al mazo.`);
-      return;
+    const isFusionCard = card.category.toLowerCase() === 'fusion';
+    
+    const cardCount = isFusionCard
+      ? selectedFusionCards.filter((c) => c.id === card.id).length
+      : selectedCards.filter((c) => c.id === card.id).length;
+
+    if (isFusionCard) {
+      if (selectedFusionCards.length >= MAX_FUSION_CARDS) {
+        toast.error(`⚠️ No puedes añadir más de ${MAX_FUSION_CARDS} cartas de fusión.`);
+        return;
+      }
+    } else {
+      if (selectedCards.length >= MAX_CARDS) {
+          toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas.`);
+          return;
+      }
     }
 
     if (cardCount >= MAX_DUPLICATES) {
@@ -54,7 +66,11 @@ const CreateNewDeck = () => {
       return;
     }
 
-    setSelectedCards((prevCards) => [...prevCards, card]);
+    if (isFusionCard) {
+      setSelectedFusionCards((prevCards) => [...prevCards, card]);
+    } else {
+      setSelectedCards((prevCards) => [...prevCards, card]);
+    }
     // toast.success(`✅ "${card.name}" añadida al mazo.`);
   };
 
