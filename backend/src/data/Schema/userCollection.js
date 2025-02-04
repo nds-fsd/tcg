@@ -13,9 +13,12 @@ const userCollectionSchema = new Schema(
         cardId: {
           type: Schema.Types.ObjectId,
           ref: 'Card',
+          required: true,
         },
         amount: {
           type: Number,
+          default: 1,
+          min: 1,
         },
       },
     ],

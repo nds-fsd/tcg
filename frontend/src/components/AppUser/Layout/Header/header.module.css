@@ -15,7 +15,8 @@
 
 /* Estilos icono del juego */
 .gameIcon {
-  font-size: 2rem;
+  width: 40px;
+  height: auto;
 }
 
 .gameIcon:hover {

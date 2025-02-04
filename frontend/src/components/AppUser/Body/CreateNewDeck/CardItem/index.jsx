@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-icons/fa';
 import CardModal from '../CardModal';
 import styles from './carditem.module.css';
 
@@ -10,6 +10,7 @@ const attributeIcons = {
   earth: FaMountain,
   darkness: FaMoon,
   light: FaSun,
+  wind: FaWind,
 };
 
 const rarityColors = {
@@ -46,7 +47,7 @@ const CardItem = ({ card, onAction, actionLabel }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const { name, image, category, rarity, attribute, type } = card;
+  const { name, image, category, rarity, attribute, type, quantity } = card;
 
   //Cambiar y quitar valores por defecto
 

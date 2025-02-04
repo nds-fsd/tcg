@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-icons/fa';
 import styles from './cardmodal.module.css';
 
 const attributeIcons = {
@@ -8,6 +8,7 @@ const attributeIcons = {
   earth: FaMountain,
   darkness: FaMoon,
   light: FaSun,
+  wind: FaWind,
 };
 
 const rarityColors = {

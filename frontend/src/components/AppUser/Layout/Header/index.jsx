@@ -13,7 +13,7 @@ const Header = () => {
     <div className={styles.header}>
       <div>
         <Link to='/'>
-          <FaGamepad className={styles.gameIcon} />
+          <img src="./public/assets/GameImg/logopixelquest4.png" alt="Logo del juego" className={styles.gameIcon} />
         </Link>
       </div>
 
@@ -44,6 +44,7 @@ const Header = () => {
         <FaUserCircle className={styles.userIconImage} />
       </div>
       <button
+        id='log-out-button'
         onClick={() => {
           removeSession();
           navigate('/auth');

@@ -5,8 +5,8 @@ const UserList = ({ filteredUsers, handleUpdate, handleDelete }) => {
   return (
     <div className={styles.userPageList}>
       <div className={styles.userListTitle}>
-        <h3>Nombre de Usuario</h3>
-        <h3>Correo Electrónico</h3>
+        <h3>Nombre</h3>
+        <h3>Correo</h3>
         <h3>Nivel</h3>
         <h3>Perfil</h3>
         <h3>Acciones</h3>

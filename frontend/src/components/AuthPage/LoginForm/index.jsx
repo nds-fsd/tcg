@@ -68,7 +68,11 @@ const LoginForm = ({ forceUpdate }) => {
         {errors.password && <p className={styles.error}>{errors.password.message}</p>}
       </div>
 
-      <button className={styles.loginButton} type='submit' disabled={loginMutation.isLoading}>
+      <button
+        id='login-button'
+        className={styles.loginButton}
+        type='submit'
+        disabled={loginMutation.isLoading}>
         {loginMutation.isLoading ? 'Cargando...' : 'Logear'}
       </button>
     </form>

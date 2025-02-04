@@ -10,7 +10,7 @@ const { jwtMiddleware } = require('../security/jwt.js');
 const router = Router();
 
 router.use('/card', cardRouter);
-router.use('/user', jwtMiddleware, userRouter);
+router.use('/user', userRouter);
 router.use('/userCollection', userCollectionRouter);
 router.use('/auth', authRouter);
 
