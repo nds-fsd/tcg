@@ -15,7 +15,7 @@ const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
   return (
 <div className={styles.cardsSelected}>
       <div className={styles.normalCardsContainer}>
-        <h3 className={styles.sectionTitle}>Monstruos y Apoyo ({normalCards.length}/40)</h3>
+        <h3 className={styles.sectionTitle}>Monstruos y Apoyos ({normalCards.length}/40)</h3>
         <div className={styles.cardsList}>
           {normalCards.map((card, index) => (
             <div key={`${card.name}-${index}`} className={styles.cardWrapper}>
@@ -44,7 +44,6 @@ const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
         </div>
       </div>
 
-      {/* Contador total de cartas */}
       <div className={styles.cardCounter}>
         {totalCards}/50 Cartas Totales
       </div>
