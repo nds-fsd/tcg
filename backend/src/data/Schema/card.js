@@ -39,6 +39,7 @@ const cardSchema = new Schema(
     def: { type: Number },
     effect: { type: String, required: true },
     level: { type: Number },
+    estado: {type: Number, required: true},
   },
   { timestamps: true },
 );

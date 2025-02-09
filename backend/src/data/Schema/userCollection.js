@@ -22,10 +22,14 @@ const userCollectionSchema = new Schema(
         },
       },
     ],
+
+    public: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true },
 );
 
 const UserCollection = model('UserCollection', userCollectionSchema);
-
 module.exports = { UserCollection };

@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const StoreProductSchema = new mongoose.Schema({
+const StoreProductSchema = new Schema(
+  {
   name: { type: String, required: true },
   description: { type: String, required: true },
   price: {
@@ -13,6 +14,8 @@ const StoreProductSchema = new mongoose.Schema({
     pixelcoins: { type: Number, default: 0 },
   },
   imageUrl: { type: String, required: true },
-});
+}
+);
 
-module.exports = mongoose.model('StoreProduct', StoreProductSchema);
+const StoreProduct = model('StoreProduct', StoreProductSchema);
+module.exports = { StoreProduct };

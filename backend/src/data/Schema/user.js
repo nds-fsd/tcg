@@ -1,7 +1,8 @@
+require('dotenv').config();
+
 const { Schema, model } = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-require('dotenv').config();
 
 const secret = process.env.JWT_SECRET_KEY;
 
@@ -24,7 +25,7 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    img: {
+    profilePicture: {
       type: String,
       default: '/assets/UserImg/userimage3.svg',
     },
@@ -43,9 +44,17 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    role: {
+    admin: {
       type: Boolean,
       default: false,
+    },
+    pixelcoins: {
+      type: Number,
+      default:0,
+    },
+    pixelgems: {
+      type: Number,
+      default:0,
     },
   },
   { timestamps: true },
@@ -71,8 +80,7 @@ userSchema.methods.generateJWT = function () {
 
   let payload = {
     id: this._id,
-    name: this.userName,
-    email: this.email,
+    admin: this.admin
   };
 
   return jwt.sign(payload, secret, {
