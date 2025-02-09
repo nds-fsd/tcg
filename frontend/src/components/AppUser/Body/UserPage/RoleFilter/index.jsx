@@ -1,4 +1,4 @@
-import styles from './roleFilter.module.css';
+// import styles from './roleFilter.module.css';
 
 const RoleFilter = ({ userArray = [], activeFilter, setActiveFilter }) => {
     console.log('User array - ', userArray);

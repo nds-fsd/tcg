@@ -1,5 +1,5 @@
-import styles from './userList.module.css';
-import UserActions from '../UserActions';
+// import styles from './userList.module.css';
+// import UserActions from '../UserActions';
 
 const UserList = ({ filteredUsers, handleUpdate, handleDelete }) => {
     return (
@@ -56,4 +56,4 @@ const UserList = ({ filteredUsers, handleUpdate, handleDelete }) => {
     );
 };
 
-export default UserList;
+// export default UserList;

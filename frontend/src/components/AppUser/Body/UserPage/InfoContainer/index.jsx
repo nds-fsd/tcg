@@ -1,7 +1,7 @@
-import styles from './infoContainer.module.css';
-import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
-import RoleFilter from '../RoleFilter';
-import Sort from '../../Generic/Sort';
+// import styles from './infoContainer.module.css';
+// import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
+// import RoleFilter from '../RoleFilter';
+// import Sort from '../../Generic/Sort';
 
 const InfoContainer = ({
     userArray,

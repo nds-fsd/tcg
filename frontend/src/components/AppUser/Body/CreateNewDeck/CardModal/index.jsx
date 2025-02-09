@@ -23,31 +23,31 @@ const attributeIcons = {
   wind: FaWind,
 };
 
-const rarityColors = {
-  legendary: '#ae8d0b',
-  epic: 'purple',
-  rare: '#B0B0B0',
-  common: 'black',
-};
+// const rarityColors = {
+//   legendary: '#ae8d0b',
+//   epic: 'purple',
+//   rare: '#B0B0B0',
+//   common: 'black',
+// };
 
-const categoryColors = {
-  monster: '#5c330a',
-  support: '#8892c6',
-  fusion: '#543c5a',
-};
+// const categoryColors = {
+//   monster: '#5c330a',
+//   support: '#8892c6',
+//   fusion: '#543c5a',
+// };
 
-const rarityTranslations = {
-  Legendaria: 'legendary',
-  Épica: 'epic',
-  Rara: 'rare',
-  Común: 'common',
-};
+// const rarityTranslations = {
+//   Legendaria: 'legendary',
+//   Épica: 'epic',
+//   Rara: 'rare',
+//   Común: 'common',
+// };
 
-const categoryTranslations = {
-  Monstruo: 'monster',
-  Apoyo: 'support',
-  Fusión: 'fusion',
-};
+// const categoryTranslations = {
+//   Monstruo: 'monster',
+//   Apoyo: 'support',
+//   Fusión: 'fusion',
+// };
 
 const normalizeValue = (value, translations) => {
   return translations[value] || value.toLowerCase();
@@ -61,14 +61,14 @@ const EffectDisplay = ({ effect }) => {
   return <ReactMarkdown>{formattedEffect}</ReactMarkdown>;
 };
 
-const CardModal = ({ card, onClose }) => {
-  const [showEffect, setShowEffect] = useState(false);
-  const toggleView = () => setShowEffect((prev) => !prev);
+// const CardModal = ({ card, onClose }) => {
+//   const [showEffect, setShowEffect] = useState(false);
+//   const toggleView = () => setShowEffect((prev) => !prev);
 
-  const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
+//   const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
 
-  const normalizedRarity = normalizeValue(rarity, rarityTranslations);
-  const normalizedCategory = normalizeValue(category, categoryTranslations);
+//   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
+//   const normalizedCategory = normalizeValue(category, categoryTranslations);
 
   const AttributeIcon = attributeIcons[attribute?.toLowerCase()];
   const rarityColor = rarityColors[normalizedRarity] || 'gray';
@@ -171,4 +171,4 @@ const CardModal = ({ card, onClose }) => {
   );
 };
 
-export default CardModal;
+// export default CardModal;

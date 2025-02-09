@@ -44,6 +44,7 @@
 }
 
 @media screen and (min-width: 576px) {
+<<<<<<< HEAD
     .tabs {
         min-width: 90%;
     }
@@ -66,6 +67,8 @@
         min-width: 75%;
     }
 
+=======
+>>>>>>> c64dcde (Repaso sprint 2.1)
     .tab {
         font-size: 0.8rem;
     }

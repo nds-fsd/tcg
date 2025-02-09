@@ -1,10 +1,11 @@
 import '@fontsource/metamorphous';
 import styles from './userPage.module.css';
 import { useState, useEffect, useMemo } from 'react';
-import { fetchUsers, createUser, deleteUser } from '../../../../lib/utils/apiUser';
+import { /*fetchUsers,*/ createUser, /*deleteUser*/ } from '../../../../lib/utils/apiUser';
+import { useUser } from '../../../../context/userContext';
 import PageTitle from '../Generic/PageTitle';
-import InfoContainer from './InfoContainer';
-import UserList from './UserList';
+//import InfoContainer from './InfoContainer';
+//import UserList from './UserList';
 import CreateUser from './CreateUser';
 import { useUser } from '../../../../context/userContext';
 

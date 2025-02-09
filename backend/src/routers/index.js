@@ -10,7 +10,7 @@ const { adminRouter } = require('./adminRouter');
 
 const router = Router();
 
-router.use('/card', cardRouter);
+// router.use('/card', cardRouter);
 router.use('/user', userRouter);
 router.use('/userCollection', userCollectionRouter);
 router.use('/store', storeRouter);
