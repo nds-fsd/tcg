@@ -28,9 +28,6 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-
-
-
 @media screen and (min-width: 576px) {
   .authContent {
     width: 70%;
@@ -52,6 +49,12 @@
 @media screen and (min-width: 1200px) {
   .authContent {
     width: 30%;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .authContent {
+    width: 25%;
   }
 }
 

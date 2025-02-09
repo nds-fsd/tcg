@@ -16,7 +16,6 @@ const registerFunction = async (req, res) => {
         const newUser = new User({ userName, email, password });
         const createdUser = await newUser.save();
         const token = createdUser.generateJWT();
-
         return res.status(201).json({
             token
         });
