@@ -5,13 +5,13 @@
   align-items: center;
   align-content: center;
 
-  width: 86%;
-  min-height: 3vh;
+  width: 90%;
   margin: 30px auto 10px auto;
-  padding: 10px 10px;
+  padding: 10px;
 
   border-radius: 20px;
   background-color: #f8edd3;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .userPageTitle {
@@ -22,7 +22,6 @@
   align-content: center;
   gap: 8px;
 
-  font-family: 'Metamorphous', sans-serif;
   font-size: 10px;
 }
 
@@ -43,7 +42,7 @@
 
 .plus:active {
   color: #a87304;
-  transform: scale(1.1);
+  transform: scale(1.2);
 }
 
 .userPageSercherContainer {
@@ -63,9 +62,9 @@
   background-color: transparent;
 
   font-size: 10px;
+  text-overflow: ellipsis;
   outline: none;
   transition: border-color 0.3s ease;
-  font-family: 'Metamorphous', sans-serif;
 }
 
 .userPageSercher::placeholder {

@@ -28,66 +28,12 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.tabs {
-  display: flex;
-  flex-wrap: nowrap;
-  justify-content: center;
-  gap: 0, 2rem;
 
-  margin-bottom: 0.5rem;
-  min-width: 80%;
-  padding: 0.5rem;
 
-  background-color: #f8edd3;
-  border-radius: 20px;
-}
-
-.tab {
-  padding: 0.3rem 1rem;
-
-  background-color: transparent;
-  border: none;
-
-  font-size: 0.6rem;
-  color: #77767e;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-family: 'Metamorphous', sans-serif;
-}
-
-.tab.active {
-  border-radius: 20px 0 0 20px;
-  border-bottom: 2px solid #c6a65f;
-
-  font-size: 0.7rem;
-  color: rgb(0, 0, 0);
-  cursor: pointer;
-}
-
-.tab.active2 {
-  border-radius: 0 20px 20px 0;
-  border-bottom: 2px solid #c6a65f;
-
-  font-size: 0.7rem;
-  color: rgb(0, 0, 0);
-  cursor: pointer;
-}
 
 @media screen and (min-width: 576px) {
   .authContent {
     width: 70%;
-  }
-
-  .tab {
-    font-size: 0.8rem;
-  }
-
-  .tab.active {
-    font-size: 0.9rem;
-  }
-
-  .tab.active2 {
-    font-size: 0.9rem;
   }
 }
 

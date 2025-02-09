@@ -1,24 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Metamorphous&display=swap');
+
 .homeContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 40px;
 
-  min-height: 90vh;
-  padding: 20px;
-
-  background-color: #664631;
+  min-height: 80vh;
+  padding: 30px;
+  font-family: 'Metamorphous', sans-serif;
 }
 
-/* Estilos del Header */
 .homeHeader {
   text-align: center;
-  margin-bottom: 40px;
 }
 
 .homeTitle {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-bottom: 10px;
   color: #ffffff;
 }
@@ -29,7 +28,6 @@
   color: #acacac;
 }
 
-/* Estilos del Contenedor */
 .homeContent {
   display: flex;
   flex-direction: column;
@@ -64,86 +62,10 @@
   background-color: #7f8c8d;
 }
 
-@media screen and (min-width: 576px) {
-}
+@media screen and (min-width: 576px) {}
 
-@media screen and (min-width: 768px) {
-}
+@media screen and (min-width: 768px) {}
 
-@media screen and (min-width: 992px) {
-}
+@media screen and (min-width: 992px) {}
 
-@media screen and (min-width: 1200px) {
-}
-
-/* HomePage.css
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #1e1e2e;
-    color: #fff;
-}
-
-
-
-.home-header {
-    margin-bottom: 40px;
-}
-
-.home-title {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #ffcc00;
-}
-
-.home-description {
-    font-size: 1.2rem;
-    margin-top: 10px;
-    color: #cfcfcf;
-}
-
-.home-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.home-illustration {
-    width: 100%;
-    max-width: 600px;
-    border: 4px solid #ffcc00;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-}
-
-.home-cta {
-    display: flex;
-    gap: 15px;
-}
-
-.home-button {
-    background-color: #ffcc00;
-    color: #1e1e2e;
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.home-button:hover {
-    background-color: #ffd700;
-}
-
-.home-button.secondary {
-    background-color: #1e1e2e;
-    color: #ffcc00;
-    border: 2px solid #ffcc00;
-}
-
-.home-button.secondary:hover {
-    background-color: #32324a;
-} */
+@media screen and (min-width: 1200px) {}

@@ -1,58 +1,67 @@
+import AuthPage from './components/AuthPage';
+import NotFound from './components/AppUser/Layout/NotFound';
 import Layout from './components/AppUser/Layout';
 import HomePage from './components/AppUser/Body/HomePage';
 import Deck from './components/AppUser/Body/DeckPage';
-import UserCollection from './components/AppUser/Body/UserCollectionPage';
 import User from './components/AppUser/Body/UserPage';
-import NotFound from './components/AppUser/Layout/NotFound';
-import CreateNewDeck from './components/AppUser/Body/CreateNewDeck';
+// import UserCollection from './components/AppUser/Body/UserCollectionPage';
+// import CreateNewDeck from './components/AppUser/Body/CreateNewDeck';
 import Store from './components/AppUser/Body/Store';
-import AuthPage from './components/AuthPage';
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { getUserToken } from './lib/utils/localStorage.utils';
 import { UserContextProvider } from './context/userContext';
 
-const queryClient = new QueryClient();
+const ProtectedRoute = ({ children }) => {
+  const navigate = useNavigate();
 
-const ProtectedRoute = ({ token, children }) => {
-  if (token == undefined) {
-    return <Navigate to='/auth' replace />;
-  }
+  useEffect(() => {
+    const checkToken = () => {
+      const currentToken = getUserToken();
+      if (currentToken === null) {
+        navigate('/auth');
+      }
+    };
+    checkToken();
+
+    window.addEventListener('storage', checkToken);
+
+    return () => {
+      window.removeEventListener('storage', checkToken);
+    }
+  }, [navigate]);
   return children;
 };
 
 const App = () => {
-  const [forceUpdate, setForceUpdate] = useState(false);
-  const token = getUserToken();
-
   return (
-    <QueryClientProvider client={queryClient}>
-      <UserContextProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path='/'
-              element={
-                <ProtectedRoute token={token}>
-                  <Layout />
-                </ProtectedRoute>
-              }
-            >
-              <Route index element={<HomePage />} />
-              <Route path='deck' element={<Deck />} />
-              <Route path='controldeck' element={<CreateNewDeck />} />
-              <Route path='collection' element={<UserCollection />} />
+    <UserContextProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path='auth' element={<AuthPage />} />
+          <Route path='*' element={<NotFound />} />
+          <Route
+            path='/'
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<HomePage />} />
+            <Route path='deck' element={<Deck />} />
               <Route path='store' element={<Store />} />
-              <Route path='user' element={<User />} />
-            </Route>
-            <Route path='*' element={<NotFound />} />
-            <Route path='auth' element={<AuthPage forceUpdate={forceUpdate} setForceUpdate={setForceUpdate} />} />
-          </Routes>
-        </BrowserRouter>
-      </UserContextProvider>
-    </QueryClientProvider>
+            <Route path='user' element={<User />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </UserContextProvider>
   );
 };
 
 export default App;
+{/* 
+            <Route path='controldeck' element={<CreateNewDeck />} />
+            <Route path='collection' element={<UserCollection />} />
+            
+          </Route>*/}
