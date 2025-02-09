@@ -2,22 +2,44 @@
   width: 80%;
   margin: 20px auto;
 
-  border-radius: 0px 0px 20px 20px;
+  border-radius: 0px 0px 10px 10px;
   background-color: #f8edd3;
 }
 
 .userListTitle {
   display: grid;
-  grid-template-columns: 2fr 3fr 1fr 1fr 2fr;
+  grid-template-columns: 2fr 2fr 1fr 1fr 2fr;
   gap: 10px;
 
-  padding: 15px 10px 15px 60px;
+  padding: 15px 10px;
 
   border-bottom: 2px solid #a87304;
 
   font-family: 'Metamorphous', sans-serif;
-  font-size: 14px;
+  font-size: 10px;
 }
+
+.userPageRows {
+  list-style: none;
+}
+
+.userImg {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+}
+
+.userField {
+  justify-content: center;
+  align-self: center;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  color: #333;
+}
+
+/* 
+
+
 
 .userPageRows {
   margin: 0;
@@ -42,13 +64,6 @@
   border-bottom: none;
 }
 
-.userImg {
-  height: 50px;
-  width: 50px;
-  border-radius: 50%;
-}
 
-.userField {
-  font-size: 14px;
-  color: #333;
-}
+
+ */

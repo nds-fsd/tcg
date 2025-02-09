@@ -1,9 +1,7 @@
-/* Estilo para el cuerpo de usuario */
 .bodyUserPageContainer {
   height: 90vh;
 }
 
-/* Estilo si no se encuentran usuarios */
 .emptyMessage {
   padding: 20px;
   margin: 10px;

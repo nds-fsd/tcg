@@ -1,4 +1,6 @@
 .filterButton {
+  padding: 3px;
+
   border: 1px solid transparent;
   border-radius: 5px;
   background-color: transparent;
@@ -6,7 +8,7 @@
   cursor: pointer;
   transition: background-color 0.3s;
   font-family: 'Metamorphous', sans-serif;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .filterButton:hover {
