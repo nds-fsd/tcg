@@ -1,6 +1,6 @@
 const { StoreProduct } = require('../data/Schema/storeProducts');
 const { User } = require('../data/Schema/user');
-const { userCollection } = require('../data/Schema/userCollection');
+const { UserCollection } = require('../data/Schema/userCollection');
 const { Card } = require('../data/Schema/card');
 
 const getProducts = async (req, res) => {
@@ -60,10 +60,10 @@ const updateProduct = async (req, res) => {
 };
 
 const rarityDistribution = {
-    "Cofre básico": { common: 4, random: ["rare", "epic"] },
-    "Cofre especial": { common: 3, rare: 1, random: ["epic", "legendary"] },
-    "Cofre mágico": { rare: 1, epic: 2, legendary: 2 }
-  };
+  'Cofre básico': { common: 4, random: ['rare', 'epic'] },
+  'Cofre especial': { common: 3, rare: 1, random: ['epic', 'legendary'] },
+  'Cofre mágico': { rare: 1, epic: 2, legendary: 2 },
+};
 
 const buyChest = async (req, res) => {
   try {
@@ -91,8 +91,20 @@ const buyChest = async (req, res) => {
       return res.status(400).json({ message: 'No tienes suficiente saldo para comprar este cofre' });
     }
 
-    if (canPayWithPixelcoins) user.pixelcoins -= product.price.pixelcoins;
-    if (canPayWithPixelgems) user.pixelgems -= product.price.pixelgems;
+    if (canPayWithPixelcoins) {
+        user.pixelcoins -= product.price.pixelcoins;
+      } else if (canPayWithPixelgems) {
+        user.pixelgems -= product.price.pixelgems;
+      } else {
+        return res.status(400).json({ message: 'No tienes suficiente saldo para comprar este cofre' });
+      }
+
+    let userCollection = await UserCollection.findOne({ userId: userId });
+
+    if (!userCollection) {
+      userCollection = new UserCollection({ userId, cards: [] });
+      await userCollection.save();
+    }
 
     if (product.reward.cards) {
       const chestType = product.name;
@@ -128,19 +140,22 @@ const buyChest = async (req, res) => {
       }
 
       for (const cardId of newCards) {
-        const existingCard = await UserCollection.findOne({ userId, 'cards.cardId': cardId });
+
+        const existingCard = userCollection.cards.find(card => card.cardId.toString() === cardId.toString());
 
         if (existingCard) {
-          await UserCollection.updateOne({ userId, 'cards.cardId': cardId }, { $inc: { 'cards.$.amount': 1 } });
+          existingCard.amount += 1;
         } else {
-          await UserCollection.updateOne({ userId }, { $push: { cards: { cardId, amount: 1 } } }, { upsert: true });
+          userCollection.cards.push({ cardId, amount: 1 });
         }
       }
+
+      await userCollection.save();
     }
 
     await user.save();
 
-    res.status(200).json({ message: 'Compra realizada con éxito', user });
+    res.status(200).json({ message: 'Compra realizada con éxito', user, userCollection });
   } catch (error) {
     console.error('Error al procesar la compra:', error);
     res.status(500).json({ message: 'Error al procesar la compra', error: error.message });
@@ -157,6 +172,10 @@ const buyCurrency = async (req, res) => {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
 
+    if (!product.reward.pixelcoins || product.reward.pixelcoins <= 0) {
+        return res.status(400).json({ message: 'Este producto no es un pack de pixelcoins válido.' });
+      }
+
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -170,7 +189,6 @@ const buyCurrency = async (req, res) => {
 
     res.status(200).json({ message: 'Compra de pixelcoins realizada con éxito', user });
   } catch (error) {
-    console.error('Error al procesar la compra de pixelcoins:', error);
     res.status(500).json({ message: 'Error al procesar la compra de pixelcoins', error: error.message });
   }
 };

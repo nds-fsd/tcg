@@ -8,7 +8,7 @@ const { jwtMiddleware } = require('../security/jwt.js');
 
 const userCollectionRouter = Router();
 
-userCollectionRouter.get('/', jwtMiddleware, getUserCollection);
+userCollectionRouter.get('/:userId', getUserCollection);
 userCollectionRouter.post('/', createCardForUser);
 userCollectionRouter.delete('/:userId/cards/:cardId', cardForUserDeleteById);
 
