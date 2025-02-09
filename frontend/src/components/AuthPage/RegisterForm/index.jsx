@@ -14,7 +14,7 @@ const RegisterForm = () => {
             navigate('/');
         },
         onError: (e) => {
-            alert('Error al registrarse. Revisa la información proporcionada.');
+            alert('Error al registrarse. Revisa la información proporcionada.', e);
         },
     });
 
@@ -25,6 +25,7 @@ const RegisterForm = () => {
     } = useForm();
 
     const onSubmit = (data) => {
+        console.log('EL onsubmit', data);
         registerMutation.mutate(data);
     };
 

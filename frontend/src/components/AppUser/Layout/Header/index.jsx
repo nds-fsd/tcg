@@ -9,13 +9,9 @@ import { useEffect } from 'react';
 const Header = () => {
     const { userData, setToken } = useUser();
     const navigate = useNavigate();
-    //console.log('Información del usuario ', userData)
+    console.log('Información del usuario ', userData)
 
     useEffect(() => {
-        const token = getUserToken();
-        if (token) {
-            setToken(token);
-        }
     }, []);
 
     return (

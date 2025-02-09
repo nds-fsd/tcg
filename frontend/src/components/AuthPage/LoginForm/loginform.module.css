@@ -67,11 +67,33 @@
   }
 }
 
-@media screen and (min-width: 768px) {}
+@media screen and (min-width: 768px) {
+  .loginForm {
+    gap: 0.5rem;
+  }
+
+  .field input {
+    font-size: 12px;
+  }
+
+  .loginButton {
+    font-size: 14px;
+  }
+}
 
 @media screen and (min-width: 992px) {}
 
 @media screen and (min-width: 1200px) {}
+
+@media screen and (min-width: 1800px) {
+  .field input {
+    font-size: 14px;
+  }
+
+  .loginButton {
+    font-size: 16px;
+  }
+}
 
 /* 
 

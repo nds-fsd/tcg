@@ -13,6 +13,7 @@ const API = axios.create({
 // };
 
 export const fetchCurrentUser = async (token) => {
+    
     const response = await API.get('/user/me', {
         headers: {
             Authorization: `Bearer ${token}`,

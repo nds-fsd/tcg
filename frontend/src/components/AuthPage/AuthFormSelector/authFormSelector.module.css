@@ -44,6 +44,28 @@
 }
 
 @media screen and (min-width: 576px) {
+    .tabs {
+        min-width: 90%;
+    }
+
+    .tab {
+        font-size: 0.7rem;
+    }
+
+    .tab.active {
+        font-size: 0.8rem;
+    }
+
+    .tab.active2 {
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (min-width: 1800px) {
+    .tabs {
+        min-width: 75%;
+    }
+
     .tab {
         font-size: 0.8rem;
     }
