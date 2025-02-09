@@ -25,6 +25,7 @@ const RegisterForm = () => {
     } = useForm();
 
     const onSubmit = (data) => {
+        console.log('EL onsubmit', data);
         registerMutation.mutate(data);
     };
 
