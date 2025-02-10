@@ -38,7 +38,8 @@ const CreateNewDeck = () => {
     const userCard = userCards.find((c) => c.id === card.id);
     const userCardQuantity = userCard ? userCard.quantity : 0;
 
-    const isFusionCard = card.category.toLowerCase() === 'fusion';
+    const normalizedCategory = card.category.trim().toLowerCase();
+    const isFusionCard = normalizedCategory === 'fusión'; 
     
     const cardCount = isFusionCard
       ? selectedFusionCards.filter((c) => c.id === card.id).length
@@ -71,7 +72,6 @@ const CreateNewDeck = () => {
     } else {
       setSelectedCards((prevCards) => [...prevCards, card]);
     }
-    // toast.success(`✅ "${card.name}" añadida al mazo.`);
   };
 
   const handleRemoveCard = (card) => {
