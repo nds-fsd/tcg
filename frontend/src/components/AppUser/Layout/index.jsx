@@ -1,3 +1,4 @@
+import '@fontsource/metamorphous';
 import Header from './Header';
 import Footer from './Footer';
 import { Outlet } from 'react-router-dom';

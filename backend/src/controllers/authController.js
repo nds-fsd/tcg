@@ -4,9 +4,7 @@ const registerFunction = async (req, res) => {
     try {
         const { email, userName, password } = req.body;
 
-        if (!email || !userName || !password) {
-            return res.status(400).json({ error: 'Faltan datos obligatorios' });
-        }
+        if (!email || !userName || !password) return res.status(400).json({ error: 'Faltan datos obligatorios' });
 
         const userExists = await User.findOne({ email });
         if (userExists) {
@@ -25,21 +23,24 @@ const registerFunction = async (req, res) => {
 };
 
 const loginFunction = async (req, res) => {
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    if (!email || !password) return res.status(400).json({ error: { login: 'Falta el email o la contraseña' } });
+        if (!email || !password) return res.status(400).json({ error: 'Falta el email o la contraseña' });
 
-    User.findOne({ email }).then((foundUser) => {
-        if (!foundUser)
-            return res
-                .status(400)
-                .json({ error: { email: 'Usuario no encontrado, porfavor Registrate antes de iniciar sesión' } });
-        if (!foundUser.comparePassword(password))
-            return res.status(400).json({ error: { password: 'Contraseña incorrecta' } });
-        return res.status(200).json({
-            token: foundUser.generateJWT()
+        User.findOne({ email }).then((foundUser) => {
+            if (!foundUser)
+                return res
+                    .status(400)
+                    .json({ error: { email: 'Usuario no encontrado, porfavor Registrate antes de iniciar sesión' } });
+            if (!foundUser.comparePassword(password)) return res.status(400).json({ error: { password: 'Contraseña incorrecta' } });
+            return res.status(200).json({
+                token: foundUser.generateJWT()
+            });
         });
-    });
+    } catch (e) {
+        return res.status(500).json({ error: 'Error interno del servidor.' });
+    }
 };
 
 module.exports = {

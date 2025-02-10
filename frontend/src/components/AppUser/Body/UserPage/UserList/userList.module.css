@@ -1,22 +1,21 @@
 .userPageList {
   width: 80%;
   margin: 20px auto;
-
   border-radius: 0px 0px 10px 10px;
   background-color: #f8edd3;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .userListTitle {
   display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr 2fr;
+  grid-auto-flow: column;
+  grid-template-columns: 3fr 2fr 1fr 1fr 2fr;
   gap: 10px;
-
+  overflow-x: auto;
+  white-space: nowrap;
   padding: 15px 10px;
-
   border-bottom: 2px solid #a87304;
-
-  font-family: 'Metamorphous', sans-serif;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .userPageRows {
@@ -37,33 +36,61 @@
   color: #333;
 }
 
-/* 
-
-
-
-.userPageRows {
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
+.emptyMessage {
+  padding: 20px;
+  margin: 10px;
+  text-align: center;
+  font-size: 14px;
+  color: #666;
 }
 
-.userPageRow {
-  display: grid;
-  grid-template-columns: 0.3fr 2fr 3fr 1fr 1fr 2fr;
-  gap: 30px;
-  align-items: center;
+@media screen and (min-width: 1800px) {
+  .userPageList {
+    width: 80%;
+    margin: 20px auto;
+    border-radius: 0px 0px 10px 10px;
+    background-color: #f8edd3;
+    font-family: 'Metamorphous', sans-serif;
+  }
 
-  padding: 12px;
+  .userListTitle {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 1fr 2fr 2fr 1fr 1fr 1fr 2fr;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 15px 20px;
+    border-bottom: 2px solid #a87304;
+    font-size: 14px;
+  }
 
-  border-bottom: 1px solid #ddd;
-  transition: background-color 0.2s ease;
+  .userPageRows {
+    display: grid;
+    grid-template-columns: 1fr;
+    list-style: none;
+  }
+
+  .userPageRow {
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr 1fr 1fr 1fr 2fr;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    background-color: #f8edd3;
+  }
+
+  .userField {
+    text-align: center;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    color: #333;
+  }
+
+  .userImg {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+  }
 }
-
-.userPageRow:last-child {
-  border-bottom: none;
-}
-
-
-
- */

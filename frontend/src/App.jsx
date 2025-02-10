@@ -34,8 +34,8 @@ const ProtectedRoute = ({ children }) => {
 
 const App = () => {
   return (
-    <UserContextProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <UserContextProvider>
         <Routes>
           <Route path='auth' element={<AuthPage />} />
           <Route path='*' element={<NotFound />} />
@@ -52,14 +52,13 @@ const App = () => {
             <Route path='user' element={<User />} />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </UserContextProvider>
+      </UserContextProvider>
+    </BrowserRouter>
   );
 };
 
 export default App;
 {/* 
-            <Route path='controldeck' element={<CreateNewDeck />} />
-            <Route path='collection' element={<UserCollection />} />
-            
-          </Route>*/}
+  <Route path='controldeck' element={<CreateNewDeck />} />
+  <Route path='collection' element={<UserCollection />} />
+*/}

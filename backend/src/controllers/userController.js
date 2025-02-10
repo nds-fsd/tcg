@@ -1,14 +1,14 @@
 const { User } = require('../data/Schema/user');
 
-// const getUsers = async (req, res) => {
-//   try {
-//     const queryStrings = req.query || {};
-//     const allUsers = await User.find(queryStrings);
-//     res.status(200).json(allUsers);
-//   } catch (error) {
-//     res.status(500).json([{ Error: 'Error al cargar la lista de Usuarios' }]);
-//   }
-// };
+const getUsers = async (req, res) => {
+    try {
+        const queryStrings = req.query || {};
+        const allUsers = await User.find(queryStrings);
+        res.status(200).json(allUsers);
+    } catch (error) {
+        res.status(500).json([{ Error: 'Error al cargar la lista de Usuarios' }]);
+    }
+};
 
 const getCurrentUser = async (req, res) => {
     try {
@@ -17,7 +17,6 @@ const getCurrentUser = async (req, res) => {
         if (!currentUser) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
-
         res.status(200).json(currentUser);
     } catch (error) {
         res.status(500).json([{ Error: 'Error al obtener el usuario actual' }]);
@@ -47,17 +46,18 @@ const getCurrentUser = async (req, res) => {
 //   }
 // };
 
-// const userDeleteById = async (req, res) => {
-//   try {
-//     const deletedUser = await User.findByIdAndDelete(req.params.id);
-//     if (!deletedUser) {
-//       return res.status(404).json({ error: 'Usuario no encontrado' });
-//     }
-//     res.status(200).json({ message: 'Usuario eliminado' });
-//   } catch (error) {
-//     res.status(400).json([{ Error: 'Error en la eliminación del usuario' }]);
-//   }
-// };
+const deleteUser = async (req, res) => {
+    console.log('Persona ha eliminar ', req.params.id);
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
+        if (!deletedUser) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+        res.status(200).json({ message: 'Usuario eliminado' });
+    } catch (error) {
+        res.status(400).json([{ Error: 'Error en la eliminación del usuario' }]);
+    }
+};
 
 const createUser = async (req, res) => {
     const body = req.body;
@@ -81,10 +81,10 @@ const createUser = async (req, res) => {
 };
 
 module.exports = {
-    //   getUsers,
+    getUsers,
     getCurrentUser,
     //   getUser,
     //   updateUserById,
-    //   userDeleteById,
     createUser,
+    deleteUser,
 };
