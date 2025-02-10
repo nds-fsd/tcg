@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
 import styles from './cardmodal.module.css';
+import level1 from '../../../../../../public/assets/CardImg/1.png';
+import level2 from '../../../../../../public/assets/CardImg/2.png';
+import level3 from '../../../../../../public/assets/CardImg/3.png';
+import level4 from '../../../../../../public/assets/CardImg/4.png';
+import level5 from '../../../../../../public/assets/CardImg/5.png';
+import level6 from '../../../../../../public/assets/CardImg/6.png';
+import level7 from '../../../../../../public/assets/CardImg/7.png';
+import level8 from '../../../../../../public/assets/CardImg/8.png';
+
+
+const levelImages = [level1, level2, level3, level4, level5, level6, level7, level8];
 
 const attributeIcons = {
   fire: FaFireAlt,
@@ -66,7 +77,7 @@ const CardModal = ({ card, onClose }) => {
         {/* Nivel */}
         {level && (
           <div className={styles.levelBadge}>
-            <img src={`../../../../../../public/assets/CardImg/${level}.png`} alt={`Nivel ${level}`} />
+            <img src={levelImages[level - 1]} alt={`Nivel ${level}`} />
           </div>
         )}
 
