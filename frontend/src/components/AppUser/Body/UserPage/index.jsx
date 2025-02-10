@@ -1,11 +1,10 @@
 import '@fontsource/metamorphous';
 import styles from './userPage.module.css';
 import { useState, useEffect, useMemo } from 'react';
-import { /*fetchUsers,*/ createUser, /*deleteUser*/ } from '../../../../lib/utils/apiUser';
-import { useUser } from '../../../../context/userContext';
+import { fetchUsers, createUser, deleteUser } from '../../../../lib/utils/apiUser';
 import PageTitle from '../Generic/PageTitle';
-//import InfoContainer from './InfoContainer';
-//import UserList from './UserList';
+// import InfoContainer from './InfoContainer';
+import UserList from './UserList';
 import CreateUser from './CreateUser';
 import { useUser } from '../../../../context/userContext';
 
@@ -16,12 +15,12 @@ const UserPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form, setForm] = useState({ userName: '', email: '', password: '', level: '', admin: false });
 
-    const [searchTerm, setSearchTerm] = useState('');
+    //const [searchTerm, setSearchTerm] = useState('');
 
-    const [activeFilter, setActiveFilter] = useState('all');
+    //const [activeFilter, setActiveFilter] = useState('all');
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const usersPerPage = 5;
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const usersPerPage = 5;
 
     useEffect(() => {
         fetchUsersList();
@@ -53,23 +52,23 @@ const UserPage = () => {
         });
     }, [userArray, searchTerm, activeFilter]);
 
-    const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
-    const startIndex = (currentPage - 1) * usersPerPage;
-    const paginatedUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
+    // const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+    // const startIndex = (currentPage - 1) * usersPerPage;
+    // const paginatedUsers = filteredUsers.slice(startIndex, startIndex + usersPerPage);
 
-    const handlePageChange = (newPage) => {
-        if (newPage >= 1 && newPage <= totalPages) {
-            setCurrentPage(newPage);
-        }
-    };
+    // const handlePageChange = (newPage) => {
+    //     if (newPage >= 1 && newPage <= totalPages) {
+    //         setCurrentPage(newPage);
+    //     }
+    // };
 
-    const handleSortChange = ({ field, order }) => {
-        const sortedUsers = [...userArray].sort((a, b) => {
-            if (order === 'asc') return a[field] > b[field] ? 1 : -1;
-            return a[field] < b[field] ? 1 : -1;
-        });
-        setuserArray(sortedUsers);
-    };
+    // const handleSortChange = ({ field, order }) => {
+    //     const sortedUsers = [...userArray].sort((a, b) => {
+    //         if (order === 'asc') return a[field] > b[field] ? 1 : -1;
+    //         return a[field] < b[field] ? 1 : -1;
+    //     });
+    //     setuserArray(sortedUsers);
+    // };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -102,8 +101,8 @@ const UserPage = () => {
                 <PageTitle
                     title='Usuarios'
                     showAddIcon={true}
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
+                    //searchTerm={searchTerm}
+                    //setSearchTerm={setSearchTerm}
                     openModal={openModal}
                     placeholder='Escribe el nombre del usuario ...'
                 />
@@ -116,7 +115,7 @@ const UserPage = () => {
                     currentPage={currentPage}
                     totalPages={totalPages}
                     handlePageChange={handlePageChange}
-                />
+                /> */}
 
                 {/* <UserList handleUpdate={handleUpdate}  /> */}
                 <UserList filteredUsers={paginatedUsers} handleDelete={handleDelete} />

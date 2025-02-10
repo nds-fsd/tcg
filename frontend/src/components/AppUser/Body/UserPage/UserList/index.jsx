@@ -1,7 +1,7 @@
-// import styles from './userList.module.css';
-// import UserActions from '../UserActions';
+import styles from './userList.module.css';
+import UserActions from '../UserActions';
 
-const UserList = ({ filteredUsers, handleUpdate, handleDelete }) => {
+const UserList = ({ userArray, handleUpdate, handleDelete }) => {
     return (
         <div className={styles.userPageList}>
             <div className={styles.userListTitle}>
@@ -15,8 +15,8 @@ const UserList = ({ filteredUsers, handleUpdate, handleDelete }) => {
             </div>
 
             <ul className={styles.userPageRows}>
-                {filteredUsers?.length > 0 ? (
-                    filteredUsers.map((user) => (
+                {userArray?.length > 0 ? (
+                    userArray.map((user) => (
                         <li key={user._id} className={styles.userPageRow}>
                             <div className={styles.userField}>
                                 <img className={styles.userImg} src={user.profilePicture} alt="No img" />
@@ -34,7 +34,7 @@ const UserList = ({ filteredUsers, handleUpdate, handleDelete }) => {
                 )}
             </ul>
 
-            {/* <ul className={styles.userPageRows}>
+            <ul className={styles.userPageRows}>
                 {filteredUsers.length > 0 ? (
                     filteredUsers.map((user) => (
                         <li key={user._id} className={styles.userPageRow}>
@@ -51,9 +51,9 @@ const UserList = ({ filteredUsers, handleUpdate, handleDelete }) => {
                 ) : (
                     <li className={styles.emptyMessage}>No hay usuarios.</li>
                 )}
-            </ul> */}
+            </ul>
         </div>
     );
 };
 
-// export default UserList;
+export default UserList;

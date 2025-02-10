@@ -1,5 +1,5 @@
-// import styles from './deleteUser.module.css';
-// import { IoTrashBin } from 'react-icons/io5';
+import styles from './deleteUser.module.css';
+import { IoTrashBin } from 'react-icons/io5';
 
 const DeleteUser = ({ userId, handleDelete }) => {
     return (
@@ -13,4 +13,4 @@ const DeleteUser = ({ userId, handleDelete }) => {
     );
 };
 
-// export default DeleteUser;
+export default DeleteUser;

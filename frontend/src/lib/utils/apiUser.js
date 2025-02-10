@@ -8,12 +8,10 @@ const API = axios.create({
 
 export const fetchUsers = async () => {
     const response = await API.get('/user');
-    console.log('Usuarios obtenidos fetchUsers:', response.data);
     return response.data;
 };
 
 export const fetchCurrentUser = async (token) => {
-    
     const response = await API.get('/user/me', {
         headers: {
             Authorization: `Bearer ${token}`,
