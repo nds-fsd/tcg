@@ -56,6 +56,7 @@ const CardModal = ({ card, onClose }) => {
 
   return (
     <div className={styles.modalBackground} onClick={onClose}>
+      <div className={styles.modalWrapper}>
       <div
         className={styles.modalContent}
         style={{
@@ -109,6 +110,17 @@ const CardModal = ({ card, onClose }) => {
             )}
           </div>
         </div>
+      </div>
+      <div className={styles.cardInfoBox}>
+    <h2 className={styles.cardInfoName}>{name}</h2>
+    <div className={styles.infoRow}>
+      <p className={styles.cardInfoCategory}>{category}</p>
+      {AttributeIcon && <AttributeIcon className={styles.attributeInfoIcon} />}
+      <p className={styles.cardInfoType}>{type}</p>
+    </div>
+    <p className={styles.cardDescription}>Descripción: {description}</p>
+    <p className={styles.cardDescription}>Efecto: {effect}</p>
+  </div>
       </div>
     </div>
   );

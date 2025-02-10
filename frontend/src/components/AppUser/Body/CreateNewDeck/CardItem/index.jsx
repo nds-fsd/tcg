@@ -49,8 +49,6 @@ const CardItem = ({ card, onAction, actionLabel }) => {
 
   const { name, image, category, rarity, attribute, type, quantity } = card;
 
-  //Cambiar y quitar valores por defecto
-
   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
   const normalizedCategory = normalizeValue(category, categoryTranslations);
 

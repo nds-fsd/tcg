@@ -5,6 +5,7 @@ import UserCollection from './components/AppUser/Body/UserCollectionPage';
 import User from './components/AppUser/Body/UserPage';
 import NotFound from './components/AppUser/Layout/NotFound';
 import CreateNewDeck from './components/AppUser/Body/CreateNewDeck';
+import Store from './components/AppUser/Body/Store';
 import AuthPage from './components/AuthPage';
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
@@ -42,6 +43,7 @@ const App = () => {
               <Route path='deck' element={<Deck />} />
               <Route path='controldeck' element={<CreateNewDeck />} />
               <Route path='collection' element={<UserCollection />} />
+              <Route path='store' element={<Store />} />
               <Route path='user' element={<User />} />
             </Route>
             <Route path='*' element={<NotFound />} />

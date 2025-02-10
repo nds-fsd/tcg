@@ -24,7 +24,7 @@ const Header = () => {
         <Link to='/collection' className={styles.navLink}>
           Colección
         </Link>
-        <Link to='' className={styles.navLink}>
+        <Link to='/store' className={styles.navLink}>
           Tienda
         </Link>
 
