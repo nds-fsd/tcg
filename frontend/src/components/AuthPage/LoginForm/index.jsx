@@ -14,7 +14,7 @@ const LoginForm = () => {
             navigate('/');
         },
         onError: (e) => {
-            alert('Error al iniciar sesión. Por favor, revisa tus credenciales.');
+            alert('Error al iniciar sesión. Por favor, revisa tus credenciales.', e);
         },
     });
 

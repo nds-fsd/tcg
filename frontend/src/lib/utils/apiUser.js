@@ -7,13 +7,12 @@ const API = axios.create({
 });
 
 
-// export const fetchUsers = async () => {
-//     const response = await API.get('/user');
-//     return response.data;
-// };
+export const fetchUsers = async () => {
+    const response = await API.get('/user');
+    return response.data;
+};
 
 export const fetchCurrentUser = async (token) => {
-    
     const response = await API.get('/user/me', {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -44,10 +43,11 @@ export const createUser = async (newUser, userData) => {
 //     return response.data;
 // };
 
-// export const deleteUser = async (id) => {
-//     const response = await API.delete(`/user/${id}`);
-//     return response.data;
-// };
+export const deleteUser = async (id) => {
+    console.log('Id del usuario a eliminar ', id);
+    const response = await API.delete(`/admin/delete/${id}`);
+    return response.data;
+};
 
 export const loginUser = async (data) => {
     const response = await API.post('/auth/login', data);
