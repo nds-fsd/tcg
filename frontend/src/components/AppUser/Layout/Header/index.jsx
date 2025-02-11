@@ -50,7 +50,7 @@ const Header = () => {
                         className={styles.userIconImage}
                         onClick={() => {
                             removeSession();
-                            navigate('/auth');
+                            navigate('/auth');  
                         }}
                     />
                 ) : (

@@ -9,7 +9,6 @@ export const useUser = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }) => {
     const storedToken = getUserToken();
-
     const { data, isLoading, isError } = useQuery(
         'user',
         () => fetchCurrentUser(storedToken),

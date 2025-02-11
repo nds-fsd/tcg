@@ -5,7 +5,7 @@ import HomePage from './components/AppUser/Body/HomePage';
 import Deck from './components/AppUser/Body/DeckPage';
 import User from './components/AppUser/Body/UserPage';
 // import UserCollection from './components/AppUser/Body/UserCollectionPage';
-// import CreateNewDeck from './components/AppUser/Body/CreateNewDeck';
+import CreateNewDeck from './components/AppUser/Body/CreateNewDeck';
 import Store from './components/AppUser/Body/Store';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
@@ -50,8 +50,10 @@ const App = () => {
           >
             <Route index element={<HomePage />} />
             <Route path='deck' element={<Deck />} />
-              <Route path='store' element={<Store />} />
+            <Route path='controldeck' element={<CreateNewDeck />} />
+            <Route path='store' element={<Store />} />
             <Route path='user' element={<User />} />
+            {/* <Route path='collection' element={<UserCollection />} /> */}
           </Route>
         </Routes>
       </UserContextProvider>
@@ -60,7 +62,3 @@ const App = () => {
 };
 
 export default App;
-{/* 
-  <Route path='controldeck' element={<CreateNewDeck />} />
-  <Route path='collection' element={<UserCollection />} />
-*/}

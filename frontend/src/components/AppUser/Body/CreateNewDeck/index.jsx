@@ -14,13 +14,14 @@ const MAX_DUPLICATES = 3;
 const CreateNewDeck = () => {
   const [deckTitle, setDeckTitle] = useState('');
   const [selectedCards, setSelectedCards] = useState([]);
-  const [collectedCards, setCollectedCards] = useState([]);
+  const [selectedFusionCards, setSelectedFusionCards] = useState([]);
+  const [userCards, setUserCards] = useState([]);
 
   useEffect(() => {
     const getUserCards = async () => {
       try {
         const response = await fetchUserCollection();
-        setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, quantity: amount })));
+        setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, amount: amount })));
       } catch (e) {
         setError('Error al cargar las cartas');
       }
@@ -34,11 +35,25 @@ const CreateNewDeck = () => {
   };
 
   const handleAddCard = (card) => {
-    const cardCount = selectedCards.filter((c) => c.name === card.name).length;
+    const userCard = userCards.find((c) => c.id === card.id);
+    const userCardQuantity = userCard ? userCard.amount : 0;
 
-    if (selectedCards.length >= MAX_CARDS) {
-      toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas al mazo.`);
-      return;
+    const isFusionCard = card.category.toLowerCase() === 'fusion';
+    
+    const cardCount = isFusionCard
+      ? selectedFusionCards.filter((c) => c.id === card.id).length
+      : selectedCards.filter((c) => c.id === card.id).length;
+
+    if (isFusionCard) {
+      if (selectedFusionCards.length >= MAX_FUSION_CARDS) {
+        toast.error(`⚠️ No puedes añadir más de ${MAX_FUSION_CARDS} cartas de fusión.`);
+        return;
+      }
+    } else {
+      if (selectedCards.length >= MAX_CARDS) {
+          toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas.`);
+          return;
+      }
     }
 
     if (cardCount >= MAX_DUPLICATES) {
@@ -46,7 +61,16 @@ const CreateNewDeck = () => {
       return;
     }
 
-    setSelectedCards([...selectedCards, card]);
+    if (cardCount >= userCardQuantity) {
+      toast.error(`⚠️ No puedes añadir más de ${userCardQuantity} copias de "${card.name}" porque solo tienes ${userCardQuantity}.`);
+      return;
+    }
+
+    if (isFusionCard) {
+      setSelectedFusionCards((prevCards) => [...prevCards, card]);
+    } else {
+      setSelectedCards((prevCards) => [...prevCards, card]);
+    }
     // toast.success(`✅ "${card.name}" añadida al mazo.`);
   };
 

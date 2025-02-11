@@ -1,14 +1,14 @@
-// import React, { useState } from 'react';
-// import { FaTrashAlt } from 'react-icons/fa';
-// import CardItem from '../CardItem';
-// import CardModal from '../CardModal';
-// import styles from './cardsselecteddisplay.module.css';
+import React, { useState } from 'react';
+import { FaTrashAlt } from 'react-icons/fa';
+import CardItem from '../CardItem';
+import CardModal from '../CardModal';
+import styles from './cardsselecteddisplay.module.css';
 
 const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
   const [selectedCard, setSelectedCard] = useState(null);
 
-//   const handleCardClick = (card) => setSelectedCard(card);
-//   const handleCloseModal = () => setSelectedCard(null);
+  const handleCardClick = (card) => setSelectedCard(card);
+  const handleCloseModal = () => setSelectedCard(null);
 
   const totalCards = normalCards.length + fusionCards.length;
 
@@ -53,4 +53,4 @@ const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
   );
 };
 
-// export default CardsSelectedDisplay;
+export default CardsSelectedDisplay;

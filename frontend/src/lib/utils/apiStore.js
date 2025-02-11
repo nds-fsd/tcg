@@ -7,6 +7,7 @@ const API = axios.create({
 export const getProducts = async () => {
   try {
     const response = await API.get("/store");
+    console.log('Resposta', response.data);
     return response.data;
   } catch (error) {
     console.error("❌ Error al obtener productos:", error);

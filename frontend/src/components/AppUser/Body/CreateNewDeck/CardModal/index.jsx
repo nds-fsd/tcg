@@ -22,48 +22,48 @@ const attributeIcons = {
   wind: FaWind,
 };
 
-// const rarityColors = {
-//   legendary: '#ae8d0b',
-//   epic: 'purple',
-//   rare: '#B0B0B0',
-//   common: 'black',
-// };
+const rarityColors = {
+  legendary: '#ae8d0b',
+  epic: 'purple',
+  rare: '#B0B0B0',
+  common: 'black',
+};
 
-// const categoryColors = {
-//   monster: '#5c330a',
-//   support: '#8892c6',
-//   fusion: '#543c5a',
-// };
+const categoryColors = {
+  monster: '#5c330a',
+  support: '#8892c6',
+  fusion: '#543c5a',
+};
 
-// const rarityTranslations = {
-//   Legendaria: 'legendary',
-//   Épica: 'epic',
-//   Rara: 'rare',
-//   Común: 'common',
-// };
+const rarityTranslations = {
+  Legendaria: 'legendary',
+  Épica: 'epic',
+  Rara: 'rare',
+  Común: 'common',
+};
 
-// const categoryTranslations = {
-//   Monstruo: 'monster',
-//   Apoyo: 'support',
-//   Fusión: 'fusion',
-// };
+const categoryTranslations = {
+  Monstruo: 'monster',
+  Apoyo: 'support',
+  Fusión: 'fusion',
+};
 
-// const normalizeValue = (value, translations) => {
-//   return translations[value] || value.toLowerCase();
-// };
+const normalizeValue = (value, translations) => {
+  return translations[value] || value.toLowerCase();
+};
 
-// const CardModal = ({ card, onClose }) => {
-//   const [showEffect, setShowEffect] = useState(false);
-//   const toggleView = () => setShowEffect((prev) => !prev);
+const CardModal = ({ card, onClose }) => {
+  const [showEffect, setShowEffect] = useState(false);
+  const toggleView = () => setShowEffect((prev) => !prev);
 
-//   const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
+  const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
 
-//   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
-//   const normalizedCategory = normalizeValue(category, categoryTranslations);
+  const normalizedRarity = normalizeValue(rarity, rarityTranslations);
+  const normalizedCategory = normalizeValue(category, categoryTranslations);
 
-//   const AttributeIcon = attributeIcons[attribute?.toLowerCase()];
-//   const rarityColor = rarityColors[normalizedRarity] || 'gray';
-//   const categoryColor = categoryColors[normalizedCategory] || '#1a1a1a';
+  const AttributeIcon = attributeIcons[attribute?.toLowerCase()];
+  const rarityColor = rarityColors[normalizedRarity] || 'gray';
+  const categoryColor = categoryColors[normalizedCategory] || '#1a1a1a';
 
   return (
     <div className={styles.modalBackground} onClick={onClose}>
@@ -83,33 +83,32 @@ const attributeIcons = {
           </div>
         )}
 
-//         {/* Rareza */}
-//         <div className={styles.rarityBadge} style={{ backgroundColor: rarityColor }}>
-//           {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
-//         </div>
+         {/* Rareza */}
+         <div className={styles.rarityBadge} style={{ backgroundColor: rarityColor }}>
+           {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
+         </div>
+         {/* Imagen */}
+         <div className={styles.cardImageContainer}>
+           <img src={image} alt={name} className={styles.modalImage} />
+         </div>
 
-//         {/* Imagen */}
-//         <div className={styles.cardImageContainer}>
-//           <img src={image} alt={name} className={styles.modalImage} />
-//         </div>
+         {/* Detalles */}
+         <div className={styles.cardDetails}>
+           <div className={styles.cardHeader}>
+             <h2 className={styles.cardName}>{name}</h2>
+             {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
+           </div>
 
-//         {/* Detalles */}
-//         <div className={styles.cardDetails}>
-//           <div className={styles.cardHeader}>
-//             <h2 className={styles.cardName}>{name}</h2>
-//             {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
-//           </div>
+           {/* Type y Botón */}
+           <div className={styles.typeAndButtonContainer}>
+             <p className={styles.cardType}>{type}</p>
+             <button className={styles.switchButton} onClick={toggleView}>
+               {showEffect ? 'Mostrar descripción' : 'Mostrar efecto'}
+             </button>
+           </div>
 
-//           {/* Type y Botón */}
-//           <div className={styles.typeAndButtonContainer}>
-//             <p className={styles.cardType}>{type}</p>
-//             <button className={styles.switchButton} onClick={toggleView}>
-//               {showEffect ? 'Mostrar descripción' : 'Mostrar efecto'}
-//             </button>
-//           </div>
-
-//           {/* Descripción/Efecto */}
-//           <p className={styles.cardText}>{showEffect ? effect : description}</p>
+           {/* Descripción/Efecto */}
+           <p className={styles.cardText}>{showEffect ? effect : description}</p>
 
           {/* Expansión y ATK/DEF */}
           <div className={styles.cardFooter}>
@@ -137,4 +136,4 @@ const attributeIcons = {
   );
 };
 
-// export default CardModal;
+export default CardModal;

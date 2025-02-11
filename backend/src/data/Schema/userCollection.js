@@ -23,7 +23,7 @@ const userCollectionSchema = new Schema(
             },
         ],
         public: {
-            type: boolean,
+            type: Boolean,
             default: false
         }
     },
