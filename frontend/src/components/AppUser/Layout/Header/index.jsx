@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 
 const Header = () => {
     const { data } = useUser();
-    console.log('Datos del usuario actual ', data);
     const navigate = useNavigate();
 
     useEffect(() => {

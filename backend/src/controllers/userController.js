@@ -1,3 +1,4 @@
+const { default: mongoose } = require('mongoose');
 const { User } = require('../data/Schema/user');
 
 const getUsers = async (req, res) => {
@@ -52,20 +53,38 @@ const updateUserById = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-    console.log('Persona ha eliminar ', req.params.id);
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(400).json({ error: 'ID de usuario inválido' });
+    }
+
+    const { admin } = req.jwtPayload;
+
+    if (admin !== true) {
+        return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
+    }
+
     try {
-        const deletedUser = await User.findByIdAndDelete(req.params.id);
+        const deletedUser = await User.findByIdAndDelete(id);
+
         if (!deletedUser) {
             return res.status(404).json({ error: 'Usuario no encontrado' });
         }
-        res.status(200).json({ message: 'Usuario eliminado' });
-    } catch (error) {
+
+        res.status(200).json({ message: 'Usuario eliminado', deletedUser });
+    } catch (e) {
         res.status(400).json([{ Error: 'Error en la eliminación del usuario' }]);
     }
 };
 
 const createUser = async (req, res) => {
     const body = req.body;
+    const { admin } = req.jwtPayload;
+
+    if (admin !== true) {
+        return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
+    }
 
     const data = {
         userName: body.newUser.userName,
