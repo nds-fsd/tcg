@@ -8,7 +8,6 @@ import { useUser } from "../../../../context/userContext";
 
 const Store = () => {
   const { data } = useUser();
-  console.log('aqui estan los datos del user ', data)
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -18,8 +17,8 @@ const Store = () => {
       const updatedProducts = fetchedProducts.map((product) => ({
         ...product,
         canAfford:
-          (product.price.pixelcoins && data.pixelcoins >= product.price.pixelcoins) ||
-          (product.price.pixelgems && data.pixelgems >= product.price.pixelgems),
+          (product.price.pixelcoins && data?.pixelcoins >= product.price.pixelcoins) ||
+          (product.price.pixelgems && data?.pixelgems >= product.price.pixelgems),
       }));
 
       setProducts(updatedProducts);
@@ -28,30 +27,9 @@ const Store = () => {
     if (data) fetchStoreData();
   }, [data]);
 
-  const handleBuyChest = async (product) => {
-    const token = localStorage.getItem("token");
+  const handleBuyProduct = async (product) => {
+    const result = await buyChest(product._id);
 
-    if (!token) {
-      toast.error("No estás autenticado. Por favor, inicia sesión.");
-      return;
-    }
-    const result = await buyChest(product._id, token);
-
-    if (result) {
-      toast.success("Compra realizada con éxito");
-    } else {
-      toast.error("Error al comprar el producto");
-    }
-  };
-
-  const handleBuyCurrency = async (product) => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      toast.error("No estás autenticado. Por favor, inicia sesión.");
-      return;
-    }
-    const result = await buyCurrency(product._id, token);
     if (result) {
       toast.success("Compra realizada con éxito");
     } else {
@@ -66,12 +44,12 @@ const Store = () => {
         <ProductList
           title="Cofres"
           products={products.filter((p) => p.name.toLowerCase().includes("cofre"))}
-          onBuy={handleBuyChest}
+          onBuy={(product) => handleBuyProduct(product, buyChest)}
         />
         <ProductList
           title="Packs de Pixelcoins"
           products={products.filter((p) => p.name.toLowerCase().includes("pack"))}
-          onBuy={handleBuyCurrency}
+          onBuy={(product) => handleBuyProduct(product, buyCurrency)}
         />
       </div>
     </>
