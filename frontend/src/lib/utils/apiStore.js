@@ -24,7 +24,7 @@ export const buyChest = async (productId) => {
   }
   
   try {
-    const response = await API.post(`/buy/chest/${productId}`, {}, { 
+    const response = await API.post(`/store/buy/chest/${productId}`, {}, { 
       headers: { 
         Authorization: `Bearer ${token}`,
       },
@@ -46,7 +46,7 @@ export const buyCurrency = async (productId) => {
   }
   
   try {
-    const response = await API.post(`/buy/currency/${productId}`, {}, { 
+    const response = await API.post(`/store/buy/currency/${productId}`, {}, { 
       headers: { 
         Authorization: `Bearer ${token}`,
       },

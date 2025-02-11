@@ -7,7 +7,7 @@ import styles from '../Store/store.module.css';
 import { useUser } from "../../../../context/userContext";
 
 const Store = () => {
-  const { data } = useUser();
+  const { data, updateUser } = useUser();
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -27,11 +27,12 @@ const Store = () => {
     if (data) fetchStoreData();
   }, [data]);
 
-  const handleBuyProduct = async (product) => {
-    const result = await buyChest(product._id);
+  const handleBuyProduct = async (product, buyFunction) => {
+    const result = await buyFunction(product._id);
 
     if (result) {
       toast.success("Compra realizada con éxito");
+      updateUser();
     } else {
       toast.error("Error al comprar el producto");
     }
