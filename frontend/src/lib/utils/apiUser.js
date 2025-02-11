@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getUserToken } from './localStorage.utils';
-import { useUser } from '../../context/userContext';
 
 const API = axios.create({
     baseURL: import.meta.env.VITE_BACKEND_API_URL,
@@ -9,6 +8,7 @@ const API = axios.create({
 
 export const fetchUsers = async () => {
     const response = await API.get('/user');
+    console.log('Usuarios obtenidos fetchUsers:', response.data);
     return response.data;
 };
 
@@ -21,20 +21,21 @@ export const fetchCurrentUser = async (token) => {
     return response.data;
 };
 
-export const createUser = async (newUser, userData) => {
+export const createUser = async (newUser, userInfo) => {
     const token = getUserToken();
 
-    if (!userData.admin) {
+    if (!userInfo.admin) {
         return alert('El usuario no es administrador');
     }
 
-    const response = await API.post('/user/admin/create', {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        data: newUser
-
-    });
+    const response = await API.post('/admin/create',
+        { newUser },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
     return response;
 };
 
@@ -43,10 +44,19 @@ export const createUser = async (newUser, userData) => {
 //     return response.data;
 // };
 
-export const deleteUser = async (id) => {
-    console.log('Id del usuario a eliminar ', id);
-    const response = await API.delete(`/admin/delete/${id}`);
-    return response.data;
+export const deleteUser = async (id, data) => {
+    const token = getUserToken();
+
+    if (!data.admin) {
+        return alert('El usuario no es administrador');
+    }
+
+    const response = await API.delete(`/admin/delete/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return response;
 };
 
 export const loginUser = async (data) => {

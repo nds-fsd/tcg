@@ -7,7 +7,7 @@ const { jwtMiddleware } = require('../security/jwt.js');
 
 const adminRouter = Router();
 
-adminRouter.post('/create', createUser);
-adminRouter.delete('/delete/:id', deleteUser);
+adminRouter.post('/create', jwtMiddleware, createUser);
+adminRouter.delete('/delete/:id', jwtMiddleware, deleteUser);
 
 module.exports = { adminRouter };
