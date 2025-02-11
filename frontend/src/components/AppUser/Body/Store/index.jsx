@@ -7,7 +7,7 @@ import styles from '../Store/store.module.css';
 
 // const getUserIdFromToken = () => {agafar ID de l'usuari a través del seu token i decodificar-lo per obtenir-lo.}
 
-const userId = "67a905c1761d599159d8c976";
+const userId = "67aa5c0624eff8f56d0690b3";
 
 //const Store = () => {
     // const userId = getUserIdFromToken();

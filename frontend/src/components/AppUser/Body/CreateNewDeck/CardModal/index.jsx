@@ -68,7 +68,7 @@ const CardModal = ({ card, onClose }) => {
         {/* Nivel */}
         {level && (
           <div className={styles.levelBadge}>
-            <img src={`../../../../../../public/assets/CardImg/${level}.png`} alt={`Nivel ${level}`} />
+            <img src={`../../../../../../public/assets/CardImg/${level}.png`} alt={`Nivel ${level}`} />            
           </div>
         )}
 
