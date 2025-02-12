@@ -1,6 +1,6 @@
 const { User } = require('../data/Schema/user');
 const { UserCollection } = require('../data/Schema/userCollection');
-const sendEmail = require('../services/sendgrid');
+const sendWelcomeEmail = require('../services/sendgrid');
 
 const registerFunction = async (req, res) => {
     try {
@@ -18,7 +18,7 @@ const registerFunction = async (req, res) => {
 
     const newUserCollection = new UserCollection({ userId: createdUser._id, cards: [] });
     await newUserCollection.save();
-    sendEmail(email, 'Te damos la bienvenida a PixelQuest', `¡Hola ${userName}!\nTe damos la bienvenida a PixelQuest. Deseamos que tengas una feliz aventura y colecciones todas las cartas posibles. ¿Te atreves?\n\nEquipo PixelQuest `);
+    sendWelcomeEmail(email, userName);
     // Aqui se va pal secret en shema user y sale correctamente
     const token = createdUser.generateJWT();
 
@@ -26,6 +26,7 @@ const registerFunction = async (req, res) => {
             token
         });
     } catch (e) {
+        console.error(e);
         return res.status(500).json({ error: 'Error interno del servidor.' });
     }
 };

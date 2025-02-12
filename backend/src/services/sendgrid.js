@@ -1,17 +1,24 @@
 const sendgrid = require('@sendgrid/mail');
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY);
 
-const sendEmail = (to, subject, text) => {
+const sendWelcomeEmail = (to, userName) => {
   const msg = {
-    to,
-    from: {
-      email: process.env.EMAIL,
-      name: 'PixelQuest TCG',
-    },
-    subject,
-    text,
+    from: process.env.EMAIL,
+    personalizations: [
+      {
+        to: [
+          {
+            email: to,
+          },
+        ],
+        dynamic_template_data: {
+          userName,
+        },
+      },
+    ],
+    template_id: 'd-88253b5135d245879f9cd3d23ead5191',
   };
   sendgrid.send(msg);
 };
 
-module.exports = sendEmail;
+module.exports = sendWelcomeEmail;
