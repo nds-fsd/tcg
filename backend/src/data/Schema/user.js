@@ -50,33 +50,33 @@ const userSchema = new Schema(
     },
     pixelcoins: {
       type: Number,
-      default:0,
+      default: 0,
     },
     pixelgems: {
       type: Number,
-      default:0,
+      default: 0,
     },
   },
   { timestamps: true },
 );
 
 userSchema.pre('save', async function (next) {
-    if (this.isModified('password')) {
-        const salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, salt);
-    }
-    next();
+  if (this.isModified('password')) {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  }
+  next();
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
-    return await bcrypt.compare(candidatePassword, this.password);
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 
 userSchema.methods.generateJWT = function () {
-    const today = new Date();
-    const expirationDate = new Date();
+  const today = new Date();
+  const expirationDate = new Date();
 
-    expirationDate.setDate(today.getDate());
+  expirationDate.setDate(today.getDate());
 
   let payload = {
     id: this._id,
@@ -84,9 +84,9 @@ userSchema.methods.generateJWT = function () {
     email: this.email,
   };
 
-    return jwt.sign(payload, secret, {
-        expiresIn: parseInt(expirationDate.getTime() / 1000, 10),
-    });
+  return jwt.sign(payload, secret, {
+    expiresIn: parseInt(expirationDate.getTime() / 1000, 10),
+  });
 };
 
 const User = model('User', userSchema);

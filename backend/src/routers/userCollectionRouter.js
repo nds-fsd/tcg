@@ -1,9 +1,9 @@
 require('dotenv').config();
 const { Router } = require('express');
 const {
-    getUserCollection,
-    createCardForUser,
-    cardForUserDeleteById,
+  getUserCollection,
+  createCardForUser,
+  cardForUserDeleteById,
 } = require('../controllers/userCollectionController');
 const { jwtMiddleware } = require('../security/jwt.js');
 const rolePath = process.env.ROLE_PATH;

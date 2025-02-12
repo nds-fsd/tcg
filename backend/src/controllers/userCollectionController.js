@@ -5,9 +5,7 @@ const getUserCollection = async (req, res) => {
   try {
     const userId = req.jwtPayload.id;
 
-    const userCollection = await UserCollection.findOne({ userId })
-      .populate('userId')
-      .populate('cards.cardId');
+    const userCollection = await UserCollection.findOne({ userId }).populate('userId').populate('cards.cardId');
     if (!userCollection) {
       return res.status(404).json({ e: 'Colección no encontrada para el usuario' });
     }
@@ -15,9 +13,7 @@ const getUserCollection = async (req, res) => {
     res.status(200).json(userCollection);
   } catch (e) {
     console.error(e);
-    res
-      .status(500)
-      .json([{ e: 'Error en la recoleccion de Cartas del usuario' }]);
+    res.status(500).json([{ e: 'Error en la recoleccion de Cartas del usuario' }]);
   }
 };
 
@@ -57,7 +53,7 @@ const cardForUserDeleteById = async (req, res) => {
     const userCollection = await UserCollection.findOneAndUpdate(
       { userId },
       { $pull: { cards: { cardId } } },
-      { new: true }
+      { new: true },
     );
 
     if (!userCollection) {
@@ -67,9 +63,7 @@ const cardForUserDeleteById = async (req, res) => {
     res.status(200).json({ message: 'Carta eliminada de la colección', userCollection });
   } catch (e) {
     console.error(e);
-    res
-      .status(400)
-      .json([{ e: 'Error al eliminar la carta del usuario' }]);
+    res.status(400).json([{ e: 'Error al eliminar la carta del usuario' }]);
   }
 };
 

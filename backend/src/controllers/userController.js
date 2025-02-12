@@ -2,113 +2,136 @@ const { default: mongoose } = require('mongoose');
 const { User } = require('../data/Schema/user');
 
 const getUsers = async (req, res) => {
-    try {
-        const queryStrings = req.query || {};
-        const allUsers = await User.find(queryStrings);
-        res.status(200).json(allUsers);
-    } catch (error) {
-        res.status(500).json([{ Error: 'Error al cargar la lista de Usuarios' }]);
-    }
-};
-
-const getCurrentUser = async (req, res) => {
-    try {
-        const userId = req.jwtPayload.id;
-        const currentUser = await User.findById(userId);
-        if (!currentUser) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
-        }
-        res.status(200).json(currentUser);
-    } catch (error) {
-        res.status(500).json([{ Error: 'Error al obtener el usuario actual' }]);
-    }
-};
-
-const getUser = async (req, res) => {
   try {
-    const user = await User.findById(req.params.id);
-
-    if (!user) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
-    }
-    
-    res.status(200).json(user);
+    const queryStrings = req.query || {};
+    const allUsers = await User.find(queryStrings);
+    res.status(200).json(allUsers);
   } catch (error) {
-    res.status(500).json([{ Error: 'Error al cargar al usuario' }]);
+    res.status(500).json([{ Error: 'Error al cargar la lista de Usuarios' }]);
   }
 };
 
-// const updateUserById = async (req, res) => {
+const getCurrentUser = async (req, res) => {
+  try {
+    const userId = req.jwtPayload.id;
+    const currentUser = await User.findById(userId);
+    if (!currentUser) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    res.status(200).json(currentUser);
+  } catch (error) {
+    res.status(500).json([{ Error: 'Error al obtener el usuario actual' }]);
+  }
+};
+
+// const getUser = async (req, res) => {
 //   try {
-//     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-//       new: true,
-//     });
-//     if (!updatedUser) {
+//     const user = await User.findById(req.params.id);
+
+//     if (!user) {
 //       return res.status(404).json({ error: 'Usuario no encontrado' });
 //     }
-//     res.status(200).json(updatedUser);
+
+//     res.status(200).json(user);
 //   } catch (error) {
-//     res.status(400).json([{ Error: 'Error al interntar modificar al usuario' }]);
+//     res.status(500).json([{ Error: 'Error al cargar al usuario' }]);
 //   }
 // };
 
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'ID de usuario inválido' });
+  }
+
+  try {
+    const requestingUser = await User.findById(req.jwtPayload.id);
+    if (!requestingUser) {
+      return res.status(404).json({ error: 'Usuario que realiza la solicitud no encontrado' });
+    }
+
+    if (!requestingUser.admin) {
+      return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id, req.body.userUpdate, {
+      new: true,
+    });
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(400).json([{ Error: 'Error al interntar modificar al usuario' }]);
+  }
+};
+
 const deleteUser = async (req, res) => {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({ error: 'ID de usuario inválido' });
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'ID de usuario inválido' });
+  }
+
+  try {
+    const requestingUser = await User.findById(req.jwtPayload.id);
+    if (!requestingUser) {
+      return res.status(404).json({ error: 'Usuario que realiza la solicitud no encontrado' });
     }
 
-    const { admin } = req.jwtPayload;
-
-    if (admin !== true) {
-        return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
+    if (!requestingUser.admin) {
+      return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
     }
 
-    try {
-        const deletedUser = await User.findByIdAndDelete(id);
+    const deletedUser = await User.findByIdAndDelete(id);
 
-        if (!deletedUser) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
-        }
-
-        res.status(200).json({ message: 'Usuario eliminado', deletedUser });
-    } catch (e) {
-        res.status(400).json([{ Error: 'Error en la eliminación del usuario' }]);
+    if (!deletedUser) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
+
+    res.status(200).json({ message: 'Usuario eliminado' });
+  } catch (e) {
+    res.status(400).json([{ Error: 'Error en la eliminación del usuario' }]);
+  }
 };
 
 const createUser = async (req, res) => {
-    const body = req.body;
-    const { admin } = req.jwtPayload;
+  const body = req.body;
 
-    if (admin !== true) {
-        return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
+  try {
+    const requestingUser = await User.findById(req.jwtPayload.id);
+    if (!requestingUser) {
+      return res.status(404).json({ error: 'Usuario que realiza la solicitud no encontrado' });
+    }
+
+    if (!requestingUser.admin) {
+      return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
     }
 
     const data = {
-        userName: body.newUser.userName,
-        email: body.newUser.email,
-        password: body.newUser.password,
-        level: body.newUser.level,
-        admin: body.newUser.admin,
+      userName: body.newUser.userName,
+      email: body.newUser.email,
+      password: body.newUser.password,
+      level: body.newUser.level,
+      admin: body.newUser.admin,
     };
 
     const newUser = new User(data);
 
-    try {
-        await newUser.save();
-        res.status(200).json(newUser);
-    } catch (error) {
-        res.status(500).json([{ Error: 'Error en la creación del usuario' }]);
-    }
+
+    await newUser.save();
+    res.status(200).json(newUser);
+  } catch (error) {
+    res.status(500).json([{ Error: 'Error en la creación del usuario' }]);
+  }
 };
 
 module.exports = {
-    getUsers,
-    getCurrentUser,
-    //   getUser,
-    //   updateUserById,
-    createUser,
-    deleteUser,
+  getUsers,
+  getCurrentUser,
+  //   getUser,
+  updateUser,
+  createUser,
+  deleteUser,
 };

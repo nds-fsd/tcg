@@ -39,7 +39,7 @@ const CreateNewDeck = () => {
     const userCardQuantity = userCard ? userCard.amount : 0;
 
     const isFusionCard = card.category.toLowerCase() === 'fusion';
-    
+
     const cardCount = isFusionCard
       ? selectedFusionCards.filter((c) => c.id === card.id).length
       : selectedCards.filter((c) => c.id === card.id).length;
@@ -51,8 +51,8 @@ const CreateNewDeck = () => {
       }
     } else {
       if (selectedCards.length >= MAX_CARDS) {
-          toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas.`);
-          return;
+        toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas.`);
+        return;
       }
     }
 
@@ -62,7 +62,9 @@ const CreateNewDeck = () => {
     }
 
     if (cardCount >= userCardQuantity) {
-      toast.error(`⚠️ No puedes añadir más de ${userCardQuantity} copias de "${card.name}" porque solo tienes ${userCardQuantity}.`);
+      toast.error(
+        `⚠️ No puedes añadir más de ${userCardQuantity} copias de "${card.name}" porque solo tienes ${userCardQuantity}.`,
+      );
       return;
     }
 
@@ -130,13 +132,10 @@ const CreateNewDeck = () => {
       <DeckTitle onTitleChange={handleTitleChange} />
       <div className={styles.deckContent}>
         <div className={styles.cardsCollectedWrapper}>
-          <CardsCollectedDisplay
-            cards={Array.isArray(userCards) ? userCards : []}
-            onAddCard={handleAddCard}
-          />
+          <CardsCollectedDisplay cards={Array.isArray(userCards) ? userCards : []} onAddCard={handleAddCard} />
         </div>
         <div className={styles.cardsSelectedWrapper}>
-        <CardsSelectedDisplay
+          <CardsSelectedDisplay
             normalCards={selectedCards}
             fusionCards={selectedFusionCards}
             onRemoveCard={handleRemoveCard}
@@ -144,7 +143,9 @@ const CreateNewDeck = () => {
         </div>
       </div>
       <button
-        disabled={deckTitle.trim() === '' || selectedCards.length > MAX_CARDS || selectedFusionCards.length > MAX_FUSION_CARDS}
+        disabled={
+          deckTitle.trim() === '' || selectedCards.length > MAX_CARDS || selectedFusionCards.length > MAX_FUSION_CARDS
+        }
         onClick={handleSaveDeck}
       >
         Guardar Mazo

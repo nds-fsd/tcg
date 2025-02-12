@@ -88,10 +88,10 @@ const buyChest = async (req, res) => {
     }
 
     if (canPayWithPixelcoins) {
-        user.pixelcoins -= pixelcoins;
-      } else {
-        user.pixelgems -= pixelgems;
-      }
+      user.pixelcoins -= pixelcoins;
+    } else {
+      user.pixelgems -= pixelgems;
+    }
 
     let userCollection = await UserCollection.findOne({ userId });
 
@@ -131,7 +131,7 @@ const buyChest = async (req, res) => {
 
       let cardsModified = false;
       for (const cardId of newCards) {
-        const existingCard = userCollection.cards.find(card => card.cardId.toString() === cardId.toString());
+        const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId.toString());
         if (existingCard) {
           existingCard.amount += 1;
         } else {
@@ -145,7 +145,6 @@ const buyChest = async (req, res) => {
 
     await user.save();
     res.status(200).json({ message: 'Compra realizada con éxito' });
-  
   } catch (error) {
     res.status(500).json({ error: 'Error al procesar la compra' });
   }
@@ -160,8 +159,8 @@ const buyCurrency = async (req, res) => {
     if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
 
     if (!product.reward.pixelcoins || product.reward.pixelcoins <= 0) {
-        return res.status(400).json({ error: 'Este producto no es un pack de pixelcoins válido.' });
-      }
+      return res.status(400).json({ error: 'Este producto no es un pack de pixelcoins válido.' });
+    }
 
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -170,7 +169,6 @@ const buyCurrency = async (req, res) => {
     await user.save();
 
     res.status(200).json({ message: 'Compra de pixelcoins realizada con éxito', user });
-  
   } catch (error) {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
