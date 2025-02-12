@@ -1,116 +1,139 @@
-// import React, { useState } from 'react';
-// import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun } from 'react-icons/fa';
-// import styles from './cardmodal.module.css';
+import React, { useState } from 'react';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-icons/fa';
+import styles from './cardmodal.module.css';
+import level1 from '../../../../../../public/assets/CardImg/1.png';
+import level2 from '../../../../../../public/assets/CardImg/2.png';
+import level3 from '../../../../../../public/assets/CardImg/3.png';
+import level4 from '../../../../../../public/assets/CardImg/4.png';
+import level5 from '../../../../../../public/assets/CardImg/5.png';
+import level6 from '../../../../../../public/assets/CardImg/6.png';
+import level7 from '../../../../../../public/assets/CardImg/7.png';
+import level8 from '../../../../../../public/assets/CardImg/8.png';
 
-// const attributeIcons = {
-//   fire: FaFireAlt,
-//   water: FaWater,
-//   earth: FaMountain,
-//   darkness: FaMoon,
-//   light: FaSun,
-// };
 
-// const rarityColors = {
-//   legendary: '#ae8d0b',
-//   epic: 'purple',
-//   rare: '#B0B0B0',
-//   common: 'black',
-// };
+const levelImages = [level1, level2, level3, level4, level5, level6, level7, level8];
 
-// const categoryColors = {
-//   monster: '#5c330a',
-//   support: '#8892c6',
-//   fusion: '#543c5a',
-// };
+const attributeIcons = {
+  fire: FaFireAlt,
+  water: FaWater,
+  earth: FaMountain,
+  darkness: FaMoon,
+  light: FaSun,
+  wind: FaWind,
+};
 
-// const rarityTranslations = {
-//   Legendaria: 'legendary',
-//   Épica: 'epic',
-//   Rara: 'rare',
-//   Común: 'common',
-// };
+const rarityColors = {
+  legendary: '#ae8d0b',
+  epic: 'purple',
+  rare: '#B0B0B0',
+  common: 'black',
+};
 
-// const categoryTranslations = {
-//   Monstruo: 'monster',
-//   Apoyo: 'support',
-//   Fusión: 'fusion',
-// };
+const categoryColors = {
+  monster: '#5c330a',
+  support: '#8892c6',
+  fusion: '#543c5a',
+};
 
-// const normalizeValue = (value, translations) => {
-//   return translations[value] || value.toLowerCase();
-// };
+const rarityTranslations = {
+  Legendaria: 'legendary',
+  Épica: 'epic',
+  Rara: 'rare',
+  Común: 'common',
+};
 
-// const CardModal = ({ card, onClose }) => {
-//   const [showEffect, setShowEffect] = useState(false);
-//   const toggleView = () => setShowEffect((prev) => !prev);
+const categoryTranslations = {
+  Monstruo: 'monster',
+  Apoyo: 'support',
+  Fusión: 'fusion',
+};
 
-//   const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
+const normalizeValue = (value, translations) => {
+  return translations[value] || value.toLowerCase();
+};
 
-//   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
-//   const normalizedCategory = normalizeValue(category, categoryTranslations);
+const CardModal = ({ card, onClose }) => {
+  const [showEffect, setShowEffect] = useState(false);
+  const toggleView = () => setShowEffect((prev) => !prev);
 
-//   const AttributeIcon = attributeIcons[attribute?.toLowerCase()];
-//   const rarityColor = rarityColors[normalizedRarity] || 'gray';
-//   const categoryColor = categoryColors[normalizedCategory] || '#1a1a1a';
+  const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
 
-//   return (
-//     <div className={styles.modalBackground} onClick={onClose}>
-//       <div
-//         className={styles.modalContent}
-//         style={{
-//           borderColor: rarityColor,
-//           backgroundColor: categoryColor,
-//         }}
-//         onClick={(e) => e.stopPropagation()}
-//       >
-//         {/* Nivel */}
-//         {level && (
-//           <div className={styles.levelBadge}>
-//             <img src={`../../../../../../public/assets/CardImg/${level}.png`} alt={`Nivel ${level}`} />
-//           </div>
-//         )}
+  const normalizedRarity = normalizeValue(rarity, rarityTranslations);
+  const normalizedCategory = normalizeValue(category, categoryTranslations);
 
-//         {/* Rareza */}
-//         <div className={styles.rarityBadge} style={{ backgroundColor: rarityColor }}>
-//           {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
-//         </div>
+  const AttributeIcon = attributeIcons[attribute?.toLowerCase()];
+  const rarityColor = rarityColors[normalizedRarity] || 'gray';
+  const categoryColor = categoryColors[normalizedCategory] || '#1a1a1a';
 
-//         {/* Imagen */}
-//         <div className={styles.cardImageContainer}>
-//           <img src={image} alt={name} className={styles.modalImage} />
-//         </div>
+  return (
+    <div className={styles.modalBackground} onClick={onClose}>
+      <div className={styles.modalWrapper}>
+      <div
+        className={styles.modalContent}
+        style={{
+          borderColor: rarityColor,
+          backgroundColor: categoryColor,
+        }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Nivel */}
+        {level && (
+          <div className={styles.levelBadge}>
+            <img src={levelImages[level - 1]} alt={`Nivel ${level}`} />
+          </div>
+        )}
 
-//         {/* Detalles */}
-//         <div className={styles.cardDetails}>
-//           <div className={styles.cardHeader}>
-//             <h2 className={styles.cardName}>{name}</h2>
-//             {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
-//           </div>
+         {/* Rareza */}
+         <div className={styles.rarityBadge} style={{ backgroundColor: rarityColor }}>
+           {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
+         </div>
+         {/* Imagen */}
+         <div className={styles.cardImageContainer}>
+           <img src={image} alt={name} className={styles.modalImage} />
+         </div>
 
-//           {/* Type y Botón */}
-//           <div className={styles.typeAndButtonContainer}>
-//             <p className={styles.cardType}>{type}</p>
-//             <button className={styles.switchButton} onClick={toggleView}>
-//               {showEffect ? 'Mostrar descripción' : 'Mostrar efecto'}
-//             </button>
-//           </div>
+         {/* Detalles */}
+         <div className={styles.cardDetails}>
+           <div className={styles.cardHeader}>
+             <h2 className={styles.cardName}>{name}</h2>
+             {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
+           </div>
 
-//           {/* Descripción/Efecto */}
-//           <p className={styles.cardText}>{showEffect ? effect : description}</p>
+           {/* Type y Botón */}
+           <div className={styles.typeAndButtonContainer}>
+             <p className={styles.cardType}>{type}</p>
+             <button className={styles.switchButton} onClick={toggleView}>
+               {showEffect ? 'Mostrar descripción' : 'Mostrar efecto'}
+             </button>
+           </div>
 
-//           {/* Expansión y ATK/DEF */}
-//           <div className={styles.cardFooter}>
-//             <p className={styles.expansion}>{expansion}</p>
-//             {(atk || def) && (
-//               <p className={styles.atkDef}>
-//                 {atk || '0'} / {def || '0'}
-//               </p>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
+           {/* Descripción/Efecto */}
+           <p className={styles.cardText}>{showEffect ? effect : description}</p>
 
-// export default CardModal;
+          {/* Expansión y ATK/DEF */}
+          <div className={styles.cardFooter}>
+            <p className={styles.expansion}>{expansion}</p>
+            {(atk || def) && (
+              <p className={styles.atkDef}>
+                {atk || '0'} / {def || '0'}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className={styles.cardInfoBox}>
+    <h2 className={styles.cardInfoName}>{name}</h2>
+    <div className={styles.infoRow}>
+      <p className={styles.cardInfoCategory}>{category}</p>
+      {AttributeIcon && <AttributeIcon className={styles.attributeInfoIcon} />}
+      <p className={styles.cardInfoType}>{type}</p>
+    </div>
+    <p className={styles.cardDescription}>Descripción: {description}</p>
+    <p className={styles.cardDescription}>Efecto: {effect}</p>
+  </div>
+      </div>
+    </div>
+  );
+};
+
+export default CardModal;

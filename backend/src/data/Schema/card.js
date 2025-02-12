@@ -47,10 +47,11 @@ const cardSchema = new Schema(
         },
         level: { type: Number },
         foil: {
-            type: boolean,
+            type: Boolean,
             default: false
-        }
-    },
+        },
+      estado: {type: Number, required: true},
+  },
     { timestamps: true },
 );
 

@@ -13,14 +13,29 @@ const deckSchema = new Schema(
         },
         cards: [
             {
-                cardId: {
+                card: {
+          type: Schema.Types.ObjectId,
+          ref: 'Card',
+          required: true,
+        },
+        amount: {
+          type: Number,
+          required: true,
+          max: [3],
+        },
+      },
+    ],
+    fusionCards: [
+      {
+        card: {
                     type: Schema.Types.ObjectId,
                     ref: 'Card',
                     required: true
                 },
                 amount: {
                     type: Number,
-                    required: true
+                    required: true,
+          max: [3],
                 },
             },
         ],

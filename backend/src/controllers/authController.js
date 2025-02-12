@@ -1,4 +1,5 @@
 const { User } = require('../data/Schema/user');
+const { UserCollection } = require('../data/Schema/userCollection');
 
 const registerFunction = async (req, res) => {
     try {
@@ -11,9 +12,14 @@ const registerFunction = async (req, res) => {
             return res.status(400).json({ error: { email: 'Email ya está en uso.' } });
         }
 
-        const newUser = new User({ userName, email, password });
-        const createdUser = await newUser.save();
-        const token = createdUser.generateJWT();
+    const newUser = new User({ userName, email, password });
+    const createdUser = await newUser.save();
+
+    const newUserCollection = new UserCollection({ userId: createdUser._id, cards: [] });
+    await newUserCollection.save();
+    // Aqui se va pal secret en shema user y sale correctamente
+    const token = createdUser.generateJWT();
+
         return res.status(201).json({
             token
         });

@@ -23,7 +23,7 @@ const userCollectionSchema = new Schema(
             },
         ],
         public: {
-            type: boolean,
+            type: Boolean,
             default: false
         }
     },
@@ -31,5 +31,4 @@ const userCollectionSchema = new Schema(
 );
 
 const UserCollection = model('UserCollection', userCollectionSchema);
-
 module.exports = { UserCollection };

@@ -1,7 +1,8 @@
 const { Router } = require('express');
-// const { cardRouter } = require('./cardRouter.js');
+const { cardRouter } = require('./cardRouter.js');
 const { userRouter } = require('./userRouter.js');
-// const { userCollectionRouter } = require('./userCollectionRouter.js');
+const { userCollectionRouter } = require('./userCollectionRouter.js');
+const { storeRouter } = require('./storeRouter.js');
 const { authRouter } = require('./auth');
 const { adminRouter } = require('./adminRouter');
 // const { addDateMiddleware, validatePassword, validateEmail, validateUser } = require('../middlewares');
@@ -11,8 +12,8 @@ const router = Router();
 
 // router.use('/card', cardRouter);
 router.use('/user', userRouter);
-// router.use('/userCollection', userCollectionRouter);
-// router.use('/deck', deckRouter);
+router.use('/userCollection', userCollectionRouter);
+router.use('/store', storeRouter);
 router.use('/auth', authRouter);
 router.use('/admin', adminRouter);
 

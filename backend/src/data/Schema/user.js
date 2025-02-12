@@ -7,57 +7,57 @@ const bcrypt = require('bcrypt');
 const secret = process.env.JWT_SECRET_KEY;
 
 const userSchema = new Schema(
-    {
-        userName: {
-            type: String,
-            required: true,
-            unique: true,
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-            lowercase: true,
-            trim: true,
-            match: [/\S+@\S+\.\S+/, 'El email no es válido'],
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        profilePicture: {
-            type: String,
-            default: '/assets/UserImg/userimage3.svg',
-        },
-        level: {
-            type: Number,
-            default: 1,
-        },
-        birthDate: {
-            type: Date,
-        },
-        lastActivity: {
-            type: Date,
-            default: Date.now,
-        },
-        isActive: {
-            type: Boolean,
-            default: false,
-        },
-        admin: {
-            type: Boolean,
-            default: false,
-        },
-        coins: {
-            type: Number,
-            default: 0,
-        },
-        gems: {
-            type: Number,
-            default: 0,
-        }
+  {
+    userName: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    { timestamps: true },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      match: [/\S+@\S+\.\S+/, 'El email no es válido'],
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    profilePicture: {
+      type: String,
+      default: '/assets/UserImg/userimage3.svg',
+    },
+    level: {
+      type: Number,
+      default: 1,
+    },
+    birthDate: {
+      type: Date,
+    },
+    lastActivity: {
+      type: Date,
+      default: Date.now,
+    },
+    isActive: {
+      type: Boolean,
+      default: false,
+    },
+    admin: {
+      type: Boolean,
+      default: false,
+    },
+    pixelcoins: {
+      type: Number,
+      default:0,
+    },
+    pixelgems: {
+      type: Number,
+      default:0,
+    },
+  },
+  { timestamps: true },
 );
 
 userSchema.pre('save', async function (next) {
@@ -78,10 +78,11 @@ userSchema.methods.generateJWT = function () {
 
     expirationDate.setDate(today.getDate());
 
-    let payload = {
-        id: this._id,
-        admin: this.admin
-    };
+  let payload = {
+    id: this._id,
+    name: this.userName,
+    email: this.email,
+  };
 
     return jwt.sign(payload, secret, {
         expiresIn: parseInt(expirationDate.getTime() / 1000, 10),
