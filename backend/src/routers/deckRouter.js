@@ -1,13 +1,15 @@
+require('dotenv').config();
 const { Router } = require('express');
-const { getDecksUser, getDeckById, createDeck, updateDeck, deleteDeck } = require('../controllers/deckController');
-const { jwtMiddleware } = require('../security/jwt');
-
+// // const { getDecksUser, getDeckById, createDeck, updateDeck, deleteDeck } = require('../controllers/deckController');
+// // const { jwtMiddleware } = require('../security/jwt');
+const rolePath = process.env.ROLE_PATH;
 const deckRouter = Router();
 
-deckRouter.get('/user/:id', getDecksUser);
-deckRouter.get('/:id', getDeckById);
-deckRouter.post('/', jwtMiddleware, createDeck);
-deckRouter.put('/:id', jwtMiddleware, updateDeck);
-deckRouter.delete('/:id', jwtMiddleware, deleteDeck);
+// protegido para sabes si eres el usuario que dices ser o admin
+deckRouter.get('/user', middlewarePerPublicOElUserEsCorrecte, getAllUserDecks);
+deckRouter.get('user/:deckId', middlewarePerPublicOElUserEsCorrecte, getDeckById);
+deckRouter.post('/create', jwtMiddlewareSabeTokeOAdmin, createDeck);
+deckRouter.put('/:id', jwtMiddlewareSabeTokeOAdmin, updateDeck);
+deckRouter.delete('/:id', jwtMiddlewareSabeTokeOAdmin, deleteDeck);
 
 module.exports = { deckRouter };

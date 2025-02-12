@@ -1,13 +1,70 @@
 import axios from 'axios';
+import { getUserToken } from './localStorage.utils';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_API_URL,
+    baseURL: import.meta.env.VITE_BACKEND_API_URL,
 });
 
-export const fetchUsers = () => API.get('/user');
-export const createUser = (user) => API.post('/user', user);
-export const updateUser = (id, user) => API.put(`/user/${id}`, user);
-export const deleteUser = (id) => API.delete(`/user/${id}`);
 
-export const loginUser = (data) => API.post('/auth/login', data).then((res) => res.data);
-export const registerUser = (data) => API.post('/auth/register', data).then((res) => res.data);
+export const fetchUsers = async () => {
+    const response = await API.get('/user');
+    console.log('Usuarios obtenidos fetchUsers:', response.data);
+    return response.data;
+};
+
+export const fetchCurrentUser = async (token) => {
+    const response = await API.get('/user/me', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return response.data;
+};
+
+export const createUser = async (newUser, userInfo) => {
+    const token = getUserToken();
+
+    if (!userInfo.admin) {
+        return alert('El usuario no es administrador');
+    }
+
+    const response = await API.post('/admin/create',
+        { newUser },
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+    return response;
+};
+
+// export const updateUser = async (id, user) => {
+//     const response = await API.put(`/user/${id}`, user);
+//     return response.data;
+// };
+
+export const deleteUser = async (id, data) => {
+    const token = getUserToken();
+
+    if (!data.admin) {
+        return alert('El usuario no es administrador');
+    }
+
+    const response = await API.delete(`/admin/delete/${id}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return response;
+};
+
+export const loginUser = async (data) => {
+    const response = await API.post('/auth/login', data);
+    return response.data;
+};
+
+export const registerUser = async (data) => {
+    const response = await API.post('/auth/register', data);
+    return response.data;
+};

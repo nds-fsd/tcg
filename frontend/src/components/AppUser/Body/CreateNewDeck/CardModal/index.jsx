@@ -1,6 +1,17 @@
 import React, { useState } from 'react';
 import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-icons/fa';
 import styles from './cardmodal.module.css';
+import level1 from '../../../../../../public/assets/CardImg/1.png';
+import level2 from '../../../../../../public/assets/CardImg/2.png';
+import level3 from '../../../../../../public/assets/CardImg/3.png';
+import level4 from '../../../../../../public/assets/CardImg/4.png';
+import level5 from '../../../../../../public/assets/CardImg/5.png';
+import level6 from '../../../../../../public/assets/CardImg/6.png';
+import level7 from '../../../../../../public/assets/CardImg/7.png';
+import level8 from '../../../../../../public/assets/CardImg/8.png';
+
+
+const levelImages = [level1, level2, level3, level4, level5, level6, level7, level8];
 
 const attributeIcons = {
   fire: FaFireAlt,
@@ -56,6 +67,7 @@ const CardModal = ({ card, onClose }) => {
 
   return (
     <div className={styles.modalBackground} onClick={onClose}>
+      <div className={styles.modalWrapper}>
       <div
         className={styles.modalContent}
         style={{
@@ -67,37 +79,36 @@ const CardModal = ({ card, onClose }) => {
         {/* Nivel */}
         {level && (
           <div className={styles.levelBadge}>
-            <img src={`../../../../../../public/assets/CardImg/${level}.png`} alt={`Nivel ${level}`} />
+            <img src={levelImages[level - 1]} alt={`Nivel ${level}`} />
           </div>
         )}
 
-        {/* Rareza */}
-        <div className={styles.rarityBadge} style={{ backgroundColor: rarityColor }}>
-          {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
-        </div>
+         {/* Rareza */}
+         <div className={styles.rarityBadge} style={{ backgroundColor: rarityColor }}>
+           {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
+         </div>
+         {/* Imagen */}
+         <div className={styles.cardImageContainer}>
+           <img src={image} alt={name} className={styles.modalImage} />
+         </div>
 
-        {/* Imagen */}
-        <div className={styles.cardImageContainer}>
-          <img src={image} alt={name} className={styles.modalImage} />
-        </div>
+         {/* Detalles */}
+         <div className={styles.cardDetails}>
+           <div className={styles.cardHeader}>
+             <h2 className={styles.cardName}>{name}</h2>
+             {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
+           </div>
 
-        {/* Detalles */}
-        <div className={styles.cardDetails}>
-          <div className={styles.cardHeader}>
-            <h2 className={styles.cardName}>{name}</h2>
-            {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
-          </div>
+           {/* Type y Botón */}
+           <div className={styles.typeAndButtonContainer}>
+             <p className={styles.cardType}>{type}</p>
+             <button className={styles.switchButton} onClick={toggleView}>
+               {showEffect ? 'Mostrar descripción' : 'Mostrar efecto'}
+             </button>
+           </div>
 
-          {/* Type y Botón */}
-          <div className={styles.typeAndButtonContainer}>
-            <p className={styles.cardType}>{type}</p>
-            <button className={styles.switchButton} onClick={toggleView}>
-              {showEffect ? 'Mostrar descripción' : 'Mostrar efecto'}
-            </button>
-          </div>
-
-          {/* Descripción/Efecto */}
-          <p className={styles.cardText}>{showEffect ? effect : description}</p>
+           {/* Descripción/Efecto */}
+           <p className={styles.cardText}>{showEffect ? effect : description}</p>
 
           {/* Expansión y ATK/DEF */}
           <div className={styles.cardFooter}>
@@ -109,6 +120,17 @@ const CardModal = ({ card, onClose }) => {
             )}
           </div>
         </div>
+      </div>
+      <div className={styles.cardInfoBox}>
+    <h2 className={styles.cardInfoName}>{name}</h2>
+    <div className={styles.infoRow}>
+      <p className={styles.cardInfoCategory}>{category}</p>
+      {AttributeIcon && <AttributeIcon className={styles.attributeInfoIcon} />}
+      <p className={styles.cardInfoType}>{type}</p>
+    </div>
+    <p className={styles.cardDescription}>Descripción: {description}</p>
+    <p className={styles.cardDescription}>Efecto: {effect}</p>
+  </div>
       </div>
     </div>
   );

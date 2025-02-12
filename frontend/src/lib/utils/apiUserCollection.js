@@ -11,9 +11,9 @@ export const fetchUserCollection = async () => {
         const response = await API.get('/', {
             headers: { Authorization: `Bearer ${token}` },
         });
-        return response.data[0].cards || [];
+        console.log('aqui la resposta ', response.data.cards);
+        return response.data.cards || [];
     } catch (e) {
-        console.error('Error fetching user collection:', e);
         return [];
     }
 };

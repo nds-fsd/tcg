@@ -1,21 +1,22 @@
+require('dotenv').config();
 const { Router } = require('express');
 const {
-  getUsers,
-  getCurrentUser,
-  getUser,
-  updateUserById,
-  userDeleteById,
-  createUser,
+    getUsers,
+    getCurrentUser,
+    getUser,
+    updateUserById,
+    userDeleteById,
+    createUser,
+    delteAllUsers
 } = require('../controllers/userController');
-const { addDateMiddleware, validateUser } = require('../middlewares');
-
+const { jwtMiddleware } = require('../security/jwt.js');
+const rolePath = process.env.ROLE_PATH;
 const userRouter = Router();
 
-userRouter.get('/', addDateMiddleware, getUsers);
-userRouter.get('/me', addDateMiddleware, getCurrentUser);
-userRouter.get('/:id', addDateMiddleware, getUser);
-userRouter.put('/:id', updateUserById);
-userRouter.delete('/:id', userDeleteById);
-userRouter.post('/', validateUser, createUser);
+userRouter.get('/', getUsers);
+// userRouter.get('/:id', getUser);
+// ID del usuario corresponde al token o admin
+userRouter.get('/me', jwtMiddleware, getCurrentUser);
+// userRouter.put('/:id', jwtMiddlewareParaSaberSiTokenOAdmin, updateUserById);
 
 module.exports = { userRouter };

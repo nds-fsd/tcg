@@ -1,4 +1,4 @@
-const { Deck } = require('../data/Schema/deck');
+// const { Deck } = require('../data/Schema/deck');
 
 const getDecksUser = async (req, res) => {
   const id = req.params.id;
@@ -69,11 +69,11 @@ const createDeck = async (req, res) => {
     .populate('cards.card')
     .populate('fusionCards.card');
 
-    res.status(201).json(deckToReturn);
-  } catch (error) {
-    res.status(400).json([{ error: 'Error al crear un mazo' }]);
-  }
-};
+//     res.status(201).json(deckToReturn);
+//   } catch (error) {
+//     res.status(400).json([{ error: 'Error al crear un mazo' }]);
+//   }
+// };
 
 const updateDeck = async (req, res) => {
   try {
@@ -103,17 +103,17 @@ const updateDeck = async (req, res) => {
       .populate('cards.card')
       .populate('fusionCards.card');
 
-    if (!updatedDeck) {
-      return res.status(404).json({ error: 'No se ha podido encontrar el mazo' });
-    }
-    res.status(200).json(updatedDeck);
-  } catch (error) {
-    res.status(400).json([{ error: 'Error al actualizar el mazo' }]);
-  }
-};
+//     if (!updatedDeck) {
+//       return res.status(404).json({ error: 'No se ha podido encontrar el mazo' });
+//     }
+//     res.status(200).json(updatedDeck);
+//   } catch (error) {
+//     res.status(400).json([{ error: 'Error al actualizar el mazo' }]);
+//   }
+// };
 
-const deleteDeck = async (req, res) => {
-  const id = req.params.id;
+// const deleteDeck = async (req, res) => {
+//   const id = req.params.id;
 
   try {
     const deletedDeck = await Deck.findByIdAndDelete(id);
@@ -128,10 +128,10 @@ const deleteDeck = async (req, res) => {
   }
 };
 
-module.exports = {
-  getDecksUser,
-  getDeckById,
-  createDeck,
-  updateDeck,
-  deleteDeck,
-};
+// module.exports = {
+//   getDecksUser,
+//   getDeckById,
+//   createDeck,
+//   updateDeck,
+//   deleteDeck,
+// };

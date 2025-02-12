@@ -21,7 +21,7 @@ const CreateNewDeck = () => {
     const getUserCards = async () => {
       try {
         const response = await fetchUserCollection();
-        setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, quantity: amount })));
+        setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, amount: amount })));
       } catch (e) {
         setError('Error al cargar las cartas');
       }
@@ -36,7 +36,7 @@ const CreateNewDeck = () => {
 
   const handleAddCard = (card) => {
     const userCard = userCards.find((c) => c.id === card.id);
-    const userCardQuantity = userCard ? userCard.quantity : 0;
+    const userCardQuantity = userCard ? userCard.amount : 0;
 
     const isFusionCard = card.category.toLowerCase() === 'fusion';
     

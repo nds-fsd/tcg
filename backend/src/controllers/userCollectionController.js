@@ -3,17 +3,16 @@ const { UserCollection } = require('../data/Schema/userCollection');
 
 const getUserCollection = async (req, res) => {
   try {
-    const { id } = req.jwtPayload;
+    const userId = req.jwtPayload.id;
 
-    const userCollections = await UserCollection.find({ userId: id })
+    const userCollection = await UserCollection.findOne({ userId })
       .populate('userId')
       .populate('cards.cardId');
-
-    if (!userCollections) {
+    if (!userCollection) {
       return res.status(404).json({ e: 'Colección no encontrada para el usuario' });
     }
 
-    res.status(200).json(userCollections);
+    res.status(200).json(userCollection);
   } catch (e) {
     console.error(e);
     res

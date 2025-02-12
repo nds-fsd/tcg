@@ -1,149 +1,94 @@
-.homeContainer {
+.homePagecontainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 40px;
-
-  min-height: 90vh;
-  padding: 20px;
-
-  background-color: #664631;
-}
-
-/* Estilos del Header */
-.homeHeader {
   text-align: center;
-  margin-bottom: 40px;
+  padding: 2rem;
+  gap: 2rem;
+  min-height: 90vh;
+  font-family: 'Metamorphous', sans-serif;
 }
 
-.homeTitle {
+.homePageTitle {
+  padding-top: 1.5rem;
   font-size: 2.5rem;
-  margin-bottom: 10px;
-  color: #ffffff;
+  color: #c6a65f;
 }
 
-.homeDescription {
-  font-size: 1.25rem;
-  line-height: 1.5;
-  color: #acacac;
+.homePageDescription {
+  font-size: 1.2rem;
+  color: #f8edd3;
+  max-width: 600px;
 }
 
-/* Estilos del Contenedor */
-.homeContent {
+.homePageSections {
+  padding-top: 3rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 5rem;
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+}
+
+.homePageSection {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  background-color: #445978;
+  padding: 1.5rem;
+  min-height: 250px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  position: relative;
 }
 
-.homeCta {
-  display: flex;
-  gap: 20px;
+.homePageSectionTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #c6a65f;
 }
 
-.homeButton {
-  padding: 10px 20px;
+.homePageSection p {
+  color: #f8edd3;
+}
+
+.homePageButton {
+  margin-top: auto;
+  margin-bottom: 10px;
+  align-self: center;
+  padding: 0.7rem 1.5rem;
   font-size: 1rem;
+  text-decoration: none;
   border: none;
-  border-radius: 5px;
-  background-color: #3498db;
-  color: white;
+  border-radius: 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease-in-out;
 }
 
-.homeButton:hover {
-  background-color: #2980b9;
+.battleButton {
+  background-color: #a82d16;
+  color: white;
 }
 
-.secondary {
-  background-color: #95a5a6;
+.battleButton:hover {
+  background-color: #521e00;
+  transform: translateY(-4px);
 }
 
-.secondary:hover {
-  background-color: #7f8c8d;
+.aboutButton {
+  background-color: #53612b;
+  color: white;
 }
 
-@media screen and (min-width: 576px) {
+.aboutButton:hover {
+  background-color: #727848;
+  transform: translateY(-4px);
 }
 
-@media screen and (min-width: 768px) {
+@media (min-width: 768px) {
+  .homePageSections {
+    grid-template-columns: 1fr 1fr;
+  }
 }
-
-@media screen and (min-width: 992px) {
-}
-
-@media screen and (min-width: 1200px) {
-}
-
-/* HomePage.css
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #1e1e2e;
-    color: #fff;
-}
-
-
-
-.home-header {
-    margin-bottom: 40px;
-}
-
-.home-title {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #ffcc00;
-}
-
-.home-description {
-    font-size: 1.2rem;
-    margin-top: 10px;
-    color: #cfcfcf;
-}
-
-.home-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.home-illustration {
-    width: 100%;
-    max-width: 600px;
-    border: 4px solid #ffcc00;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-}
-
-.home-cta {
-    display: flex;
-    gap: 15px;
-}
-
-.home-button {
-    background-color: #ffcc00;
-    color: #1e1e2e;
-    padding: 15px 30px;
-    font-size: 1.1rem;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.home-button:hover {
-    background-color: #ffd700;
-}
-
-.home-button.secondary {
-    background-color: #1e1e2e;
-    color: #ffcc00;
-    border: 2px solid #ffcc00;
-}
-
-.home-button.secondary:hover {
-    background-color: #32324a;
-} */
