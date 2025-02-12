@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import ProductList from "../Store/ProductList";
-import BalanceBar from "../Store/BalanceBar";
+import React, { useState, useEffect } from 'react';
+import ProductList from '../Store/ProductList';
+import BalanceBar from '../Store/BalanceBar';
 import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiStore';
 import { toast } from 'react-toastify';
 import styles from '../Store/store.module.css';
@@ -33,10 +33,10 @@ const Store = () => {
     const result = await buyFunction(product._id);
 
     if (result) {
-      toast.success("Compra realizada con éxito");
+      toast.success('Compra realizada con éxito');
       updateUser();
     } else {
-      toast.error("Error al comprar el producto");
+      toast.error('Error al comprar el producto');
     }
   };
 
@@ -54,15 +54,15 @@ const Store = () => {
 
         {showOrderHistory && <OrderHistory />}
         {/* Borrar quan canviem de lloc l'OrderHistory*/}
-        
+
         <ProductList
-          title="Cofres"
-          products={products.filter((p) => p.name.toLowerCase().includes("cofre"))}
+          title='Cofres'
+          products={products.filter((p) => p.name.toLowerCase().includes('cofre'))}
           onBuy={(product) => handleBuyProduct(product, buyChest)}
         />
         <ProductList
-          title="Packs de Pixelcoins"
-          products={products.filter((p) => p.name.toLowerCase().includes("pack"))}
+          title='Packs de Pixelcoins'
+          products={products.filter((p) => p.name.toLowerCase().includes('pack'))}
           onBuy={(product) => handleBuyProduct(product, buyCurrency)}
         />
       </div>

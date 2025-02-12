@@ -3,14 +3,14 @@ import ReactMarkdown from 'react-markdown';
 import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-icons/fa';
 import { effectDescriptions } from '../../../../../lib/utils/effectGlossary';
 import styles from './cardmodal.module.css';
-import level1 from '../../../../../../public/assets/CardImg/1.png';
-import level2 from '../../../../../../public/assets/CardImg/2.png';
-import level3 from '../../../../../../public/assets/CardImg/3.png';
-import level4 from '../../../../../../public/assets/CardImg/4.png';
-import level5 from '../../../../../../public/assets/CardImg/5.png';
-import level6 from '../../../../../../public/assets/CardImg/6.png';
-import level7 from '../../../../../../public/assets/CardImg/7.png';
-import level8 from '../../../../../../public/assets/CardImg/8.png';
+import level1 from '/assets/CardImg/1.png';
+import level3 from '/assets/CardImg/3.png';
+import level2 from '/assets/CardImg/2.png';
+import level4 from '/assets/CardImg/4.png';
+import level5 from '/assets/CardImg/5.png';
+import level6 from '/assets/CardImg/6.png';
+import level7 from '/assets/CardImg/7.png';
+import level8 from '/assets/CardImg/8.png';
 
 const levelImages = [level1, level2, level3, level4, level5, level6, level7, level8];
 
@@ -23,31 +23,31 @@ const attributeIcons = {
   wind: FaWind,
 };
 
-// const rarityColors = {
-//   legendary: '#ae8d0b',
-//   epic: 'purple',
-//   rare: '#B0B0B0',
-//   common: 'black',
-// };
+const rarityColors = {
+  legendary: '#ae8d0b',
+  epic: 'purple',
+  rare: '#B0B0B0',
+  common: 'black',
+};
 
-// const categoryColors = {
-//   monster: '#5c330a',
-//   support: '#8892c6',
-//   fusion: '#543c5a',
-// };
+const categoryColors = {
+  monster: '#5c330a',
+  support: '#8892c6',
+  fusion: '#543c5a',
+};
 
-// const rarityTranslations = {
-//   Legendaria: 'legendary',
-//   Épica: 'epic',
-//   Rara: 'rare',
-//   Común: 'common',
-// };
+const rarityTranslations = {
+  Legendaria: 'legendary',
+  Épica: 'epic',
+  Rara: 'rare',
+  Común: 'common',
+};
 
-// const categoryTranslations = {
-//   Monstruo: 'monster',
-//   Apoyo: 'support',
-//   Fusión: 'fusion',
-// };
+const categoryTranslations = {
+  Monstruo: 'monster',
+  Apoyo: 'support',
+  Fusión: 'fusion',
+};
 
 const normalizeValue = (value, translations) => {
   return translations[value] || value.toLowerCase();
@@ -61,14 +61,14 @@ const EffectDisplay = ({ effect }) => {
   return <ReactMarkdown>{formattedEffect}</ReactMarkdown>;
 };
 
-// const CardModal = ({ card, onClose }) => {
-//   const [showEffect, setShowEffect] = useState(false);
-//   const toggleView = () => setShowEffect((prev) => !prev);
+const CardModal = ({ card, onClose }) => {
+  const [showEffect, setShowEffect] = useState(false);
+  const toggleView = () => setShowEffect((prev) => !prev);
 
-//   const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
+  const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
 
-//   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
-//   const normalizedCategory = normalizeValue(category, categoryTranslations);
+  const normalizedRarity = normalizeValue(rarity, rarityTranslations);
+  const normalizedCategory = normalizeValue(category, categoryTranslations);
 
   const AttributeIcon = attributeIcons[attribute?.toLowerCase()];
   const rarityColor = rarityColors[normalizedRarity] || 'gray';
@@ -171,4 +171,4 @@ const EffectDisplay = ({ effect }) => {
   );
 };
 
-// export default CardModal;
+export default CardModal;

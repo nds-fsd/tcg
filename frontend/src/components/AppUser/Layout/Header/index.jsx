@@ -6,19 +6,18 @@ import { removeSession } from '../../../../lib/utils/userSession';
 import { useEffect } from 'react';
 
 const Header = () => {
-    const { data } = useUser();
-    const navigate = useNavigate();
+  const { data } = useUser();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-    }, []);
+  useEffect(() => {}, []);
 
-    return (
-        <div className={styles.header}>
-            <div>
-                <Link to='/'>
-                    <img src="/assets/GameImg/logopixelquest4.png" alt="Logo del juego" className={styles.gameIcon} />
-                </Link>
-            </div>
+  return (
+    <div className={styles.header}>
+      <div>
+        <Link to='/'>
+          <img src='/assets/GameImg/logopixelquest4.png' alt='Logo del juego' className={styles.gameIcon} />
+        </Link>
+      </div>
 
             <nav className={styles.nav}>
                 <Link to='/deck' className={styles.navLink}>
@@ -31,42 +30,42 @@ const Header = () => {
                     Tienda
                 </Link>
 
-                {data?.admin && (
-                    <>
-                        <Link to='/user' className={styles.navLink}>
-                            Usuarios
-                        </Link>
-                        <Link to='/createCards' className={styles.navLink}>
-                            Crear Cartas
-                        </Link>
-                    </>
-                )}
-            </nav>
-            <div className={styles.userIcon}>
-                {data?.profilePicture ? (
-                    <img
-                        src={data.profilePicture}
-                        alt="Foto de perfil"
-                        className={styles.userIconImage}
-                        onClick={() => {
-                            removeSession();
-                            navigate('/auth');
-                        }}
-                    />
-                ) : (
-                    <div
-                        className={styles.userIconImage}
-                        onClick={() => {
-                            removeSession();
-                            navigate('/auth');
-                        }}
-                    >
-                        <img src="/assets/default-icon.png" alt="Icono predeterminado" />
-                    </div>
-                )}
-            </div>
-        </div>
-    );
+        {data?.admin && (
+          <>
+            <Link to='/user' className={styles.navLink}>
+              Usuarios
+            </Link>
+            <Link to='/createCards' className={styles.navLink}>
+              Crear Cartas
+            </Link>
+          </>
+        )}
+      </nav>
+      <div className={styles.userIcon}>
+        {data?.profilePicture ? (
+          <img
+            src={data.profilePicture}
+            alt='Foto de perfil'
+            className={styles.userIconImage}
+            onClick={() => {
+              removeSession();
+              navigate('/auth');
+            }}
+          />
+        ) : (
+          <div
+            className={styles.userIconImage}
+            onClick={() => {
+              removeSession();
+              navigate('/auth');
+            }}
+          >
+            <img src='/assets/default-icon.png' alt='Icono predeterminado' />
+          </div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 export default Header;

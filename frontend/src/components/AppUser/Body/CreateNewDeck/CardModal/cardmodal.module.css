@@ -62,7 +62,8 @@
   color: #444;
 }
 
-.cardInfoCategory, .cardInfoType {
+.cardInfoCategory,
+.cardInfoType {
   font-size: 14px;
   font-weight: bold;
   color: #444;

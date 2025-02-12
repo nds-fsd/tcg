@@ -47,7 +47,7 @@ const attributeIcons = {
 //   const [isModalOpen, setIsModalOpen] = useState(false);
 //   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const { name, image, category, rarity, attribute, type , amount} = card;
+  const { name, image, category, rarity, attribute, type, amount } = card;
 
 //   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
 //   const normalizedCategory = normalizeValue(category, categoryTranslations);

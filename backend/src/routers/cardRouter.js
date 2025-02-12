@@ -5,7 +5,7 @@ const { jwtMiddleware } = require('../security/jwt');
 const rolePath = process.env.ROLE_PATH;
 const cardRouter = Router();
 
-// SIN PROTEGER 
+// SIN PROTEGER
 cardRouter.get('/', getCards);
 cardRouter.get('/:id', getCardById);
 

@@ -144,7 +144,7 @@ const buyChest = async (req, res) => {
 
       let cardsModified = false;
       for (const cardId of newCards) {
-        const existingCard = userCollection.cards.find(card => card.cardId.toString() === cardId.toString());
+        const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId.toString());
         if (existingCard) {
           existingCard.amount += 1;
         } else {

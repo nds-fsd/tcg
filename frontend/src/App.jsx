@@ -28,7 +28,7 @@ const ProtectedRoute = ({ children }) => {
 
     return () => {
       window.removeEventListener('storage', checkToken);
-    }
+    };
   }, [navigate]);
   return children;
 };

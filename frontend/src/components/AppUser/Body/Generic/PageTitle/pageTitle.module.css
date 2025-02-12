@@ -60,7 +60,7 @@
   border: none;
   border-bottom: 2px solid #a87304;
   background-color: transparent;
-
+  font-family: 'Metamorphous', sans-serif;
   font-size: 10px;
   text-overflow: ellipsis;
   outline: none;
@@ -83,6 +83,33 @@
   color: #a87304;
 
   cursor: pointer;
+}
+
+@media screen and (min-width: 1200px) {
+  .userPageTitleContainer {
+    width: 80%;
+  }
+
+  .userPageTitle {
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  .plus {
+    font-size: 2rem;
+  }
+
+  .userPageSercherContainer {
+    max-width: 30vw;
+  }
+
+  .userPageSercher {
+    font-size: 12px;
+  }
+
+  .searchIcon {
+    font-size: 20px;
+  }
 }
 
 @media screen and (min-width: 1800px) {

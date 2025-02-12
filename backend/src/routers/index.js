@@ -6,15 +6,15 @@ const { storeRouter } = require('./storeRouter.js');
 const { authRouter } = require('./auth');
 const { adminRouter } = require('./adminRouter');
 // const { addDateMiddleware, validatePassword, validateEmail, validateUser } = require('../middlewares');
-// const { jwtMiddleware } = require('../security/jwt.js');
+const { jwtMiddleware } = require('../security/jwt.js');
 
 const router = Router();
 
-// router.use('/card', cardRouter);
+router.use('/card', cardRouter);
 router.use('/user', userRouter);
 router.use('/userCollection', userCollectionRouter);
 router.use('/store', storeRouter);
 router.use('/auth', authRouter);
-router.use('/admin', adminRouter);
+router.use('/admin', jwtMiddleware, adminRouter);
 
 module.exports = router;

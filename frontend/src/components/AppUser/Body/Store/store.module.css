@@ -1,15 +1,15 @@
 .storeContainer {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
 }
 
 .productsgrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-content: center;
 }
 
 /* Borrar quan passem de lloc el OrderHistory */
@@ -42,13 +42,13 @@
 /* Borrar quan passem de lloc el OrderHistory */
 
 @media (max-width: 768px) {
-    .productsGrid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .productsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
-    .productsGrid {
-        grid-template-columns: repeat(1, 1fr);
-    }
+  .productsGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
