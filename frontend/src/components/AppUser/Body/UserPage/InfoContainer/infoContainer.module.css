@@ -1,4 +1,3 @@
-/* Estilo de todo el segundo baner de usuarios */
 .userPageInfoContainer {
   display: flex;
   flex-flow: row nowrap;
@@ -11,23 +10,20 @@
   margin: 30px auto 20px auto;
 }
 
-/* Informacion */
 .userPageInfo {
-  padding: 15px;
+  max-width: 100px;
+  padding: 5px;
 
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: #f8edd3;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Contenedor de la paginación */
 .paginationContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-
-  padding: 15px 20px;
+  gap: 5x;
 
   border-radius: 20px;
   background-color: #f8edd3;
@@ -35,7 +31,6 @@
   margin-top: 10px;
 }
 
-/* Botones de paginación */
 .paginationButton {
   width: 35px;
   height: 35px;
@@ -46,8 +41,7 @@
   border-radius: 50%;
 
   color: #5a5a5a;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -69,24 +63,22 @@
 
 .paginationInfo {
   font-family: 'Metamorphous', sans-serif;
-  font-size: 18px;
+  font-size: 16px;
 }
 
-/* Estilo del contenedor para el filtro */
 .userPageFiltros {
   display: flex;
   align-items: center;
-  gap: 1vw;
 
-  padding: 15px 20px;
+  padding: 12px;
 
-  border-radius: 20px;
+  border-radius: 10px;
   background-color: #f8edd3;
 
   cursor: pointer;
 }
 
 .userPageFiltros svg:hover {
-  transform: scale(1.4);
+  transform: scale(1.2);
   color: #53612b;
 }

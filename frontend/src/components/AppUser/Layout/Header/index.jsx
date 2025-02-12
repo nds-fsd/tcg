@@ -1,21 +1,24 @@
 import styles from './header.module.css';
-import { FaGamepad, FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { useUser } from '../../../../context/userContext';
-import { removeSession } from '../../../../lib/utils/localStorage.utils';
+import { removeSession } from '../../../../lib/utils/userSession';
+import { useEffect } from 'react';
 
 const Header = () => {
-  const { userData } = useUser();
-  const navigate = useNavigate();
+    const { data } = useUser();
+    const navigate = useNavigate();
 
-  return (
-    <div className={styles.header}>
-      <div>
-        <Link to='/'>
-          <FaGamepad className={styles.gameIcon} />
-        </Link>
-      </div>
+    useEffect(() => {
+    }, []);
+
+    return (
+        <div className={styles.header}>
+            <div>
+                <Link to='/'>
+                    <img src="/assets/GameImg/logopixelquest4.png" alt="Logo del juego" className={styles.gameIcon} />
+                </Link>
+            </div>
 
       <nav className={styles.nav}>
         <Link to='/deck' className={styles.navLink}>
@@ -24,35 +27,46 @@ const Header = () => {
         <Link to='/collection' className={styles.navLink}>
           Colección
         </Link>
-        <Link to='' className={styles.navLink}>
+        <Link to='/store' className={styles.navLink}>
           Tienda
         </Link>
 
-        {userData?.role && (
-          <>
-            <Link to='/user' className={styles.navLink}>
-              Usuarios
-            </Link>
-            <Link to='/' className={styles.navLink}>
-              Crear Cartas
-            </Link>
-          </>
-        )}
-      </nav>
-
-      <div className={styles.userIcon}>
-        <FaUserCircle className={styles.userIconImage} />
-      </div>
-      <button
-        onClick={() => {
-          removeSession();
-          navigate('/auth');
-        }}
-      >
-        Salir
-      </button>
-    </div>
-  );
+                {data?.admin && (
+                    <>
+                        <Link to='/user' className={styles.navLink}>
+                            Usuarios
+                        </Link>
+                        <Link to='/createCards' className={styles.navLink}>
+                            Crear Cartas
+                        </Link>
+                    </>
+                )}
+            </nav>
+            <div className={styles.userIcon}>
+                {data?.profilePicture ? (
+                    <img
+                        src={data.profilePicture}
+                        alt="Foto de perfil"
+                        className={styles.userIconImage}
+                        onClick={() => {
+                            removeSession();
+                            navigate('/auth');  
+                        }}
+                    />
+                ) : (
+                    <div
+                        className={styles.userIconImage}
+                        onClick={() => {
+                            removeSession();
+                            navigate('/auth');
+                        }}
+                    >
+                        <img src="/assets/default-icon.png" alt="Icono predeterminado" />
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 };
 
 export default Header;

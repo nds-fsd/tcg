@@ -1,13 +1,29 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchCurrentUser } from '../lib/utils/apiUser';
+import { getUserToken } from '../lib/utils/localStorage.utils';
 
 const UserContext = createContext();
 
-export const useUser = () => {
-  return useContext(UserContext);
-};
+export const useUser = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }) => {
-  const [userData, setUserData] = useState(null);
+    const storedToken = getUserToken();
+    const queryClient = useQueryClient();
 
-  return <UserContext.Provider value={{ userData, setUserData }}>{children}</UserContext.Provider>;
+    const { data, isLoading, isError } = useQuery(
+        'user',
+        () => fetchCurrentUser(storedToken),
+        { enabled: !!storedToken }
+    );
+
+    const updateUser = () => {
+        queryClient.invalidateQueries('user');
+    };
+
+    return (
+        <UserContext.Provider value={{ data, isLoading, isError, updateUser }}>
+            {children}
+        </UserContext.Provider>
+    );
 };
