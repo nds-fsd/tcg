@@ -7,7 +7,7 @@ const API = axios.create({
 
 export const getProducts = async () => {
   try {
-    const response = await API.get("/store");
+    const response = await API.get("/store/products");
     return response.data;
   } catch (error) {
     console.error("Error al obtener productos:", error);
@@ -24,7 +24,7 @@ export const buyChest = async (productId) => {
   }
   
   try {
-    const response = await API.post(`/store/buy/chest/${productId}`, {}, { 
+    const response = await API.post(`/store/products/${productId}/buy-chest`, {}, { 
       headers: { 
         Authorization: `Bearer ${token}`,
       },
@@ -46,7 +46,7 @@ export const buyCurrency = async (productId) => {
   }
   
   try {
-    const response = await API.post(`/store/buy/currency/${productId}`, {}, { 
+    const response = await API.post(`/store/products/${productId}/buy-currency`, {}, { 
       headers: { 
         Authorization: `Bearer ${token}`,
       },
