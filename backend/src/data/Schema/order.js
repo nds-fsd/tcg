@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const OrderSchema = new Schema(
   {
+<<<<<<< HEAD
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',
@@ -50,6 +51,21 @@ const OrderSchema = new Schema(
     },
   },
   { timestamps: true },
+=======
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  price: {
+    pixelcoins: { type: Number, required: false },
+    pixelgems: { type: Number, required: false },
+    euros: { type: Number, required: false },
+  },
+  reward: {
+    cards: { type: Number, default: 0 },
+    pixelcoins: { type: Number, default: 0 },
+  },
+  imageUrl: { type: String, required: true },
+}
+>>>>>>> 08c9a65 (Add new template for email sending)
 );
 
 const Order = model('Order', OrderSchema);
