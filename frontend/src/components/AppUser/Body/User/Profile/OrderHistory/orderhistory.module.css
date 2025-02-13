@@ -1,0 +1,82 @@
+.orderHistory {
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+    background-color: #F8EDD3;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Metamorphous', sans-serif;
+}
+
+.orderTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.orderTable th,
+.orderTable td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.orderTable th {
+    background-color: #521E00;
+    color: white;
+}
+
+.orderTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.priceItem, .balanceItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: bold;
+}
+
+.coinIcon, .gemIcon {
+    width: 18px;
+    height: 18px;
+}
+
+.completed {
+    color: #4caf50;
+    font-weight: bold;
+}
+
+.failed {
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.loading {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .orderTable th, .orderTable td {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .orderTable {
+        font-size: 0.8rem;
+    }
+
+    .coinIcon, .gemIcon {
+        width: 14px;
+        height: 14px;
+    }
+}

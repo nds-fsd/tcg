@@ -10,7 +10,7 @@ export const getUserOrders = async () => {
 
   if (!token) {
     console.error('Error: Usuario no autenticado.');
-    return null;
+    return [];
   }
 
   try {
@@ -18,9 +18,9 @@ export const getUserOrders = async () => {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    return response.data;
+    return Array.isArray(response.data) ? response.data : [];
   } catch (error) {
     console.error('Error al obtener el historial de compras:', error);
-    return null;
+    return [];
   }
 };
