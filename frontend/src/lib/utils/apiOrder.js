@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getUserToken } from './localStorage.utils';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_API_URL + '/store/orders',
+  baseURL: import.meta.env.VITE_BACKEND_API_URL + '/store',
 });
 
 export const getUserOrders = async () => {
