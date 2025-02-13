@@ -15,7 +15,7 @@ const getProducts = async (req, res) => {
 
 const getUserOrders = async (req, res) => {
   try {
-    const userId = req.jwtPayload.userId;
+    const userId = req.jwtPayload.id;
 
     const orders = await Order.find({ userId }).sort({ createdAt: -1 });
 
