@@ -21,7 +21,6 @@ const getUserOrders = async (req, res) => {
 
     res.status(200).json(orders);
   } catch (error) {
-    console.error('Error al obtener el historial de compras:', error);
     res.status(500).json({ error: 'Error al obtener el historial de compras' });
   }
 };

@@ -2,7 +2,11 @@ import axios from 'axios';
 import { getUserToken } from './localStorage.utils';
 
 const API = axios.create({
+<<<<<<< HEAD
   baseURL: import.meta.env.VITE_BACKEND_API_URL + '/store',
+=======
+  baseURL: import.meta.env.VITE_BACKEND_API_URL + '/store/orders',
+>>>>>>> ca00dcc (Add Backend for Orders (FE api, controller, entity and route))
 });
 
 export const getUserOrders = async () => {
@@ -10,6 +14,7 @@ export const getUserOrders = async () => {
 
   if (!token) {
     console.error('Error: Usuario no autenticado.');
+<<<<<<< HEAD
     return [];
   }
 
@@ -22,5 +27,19 @@ export const getUserOrders = async () => {
   } catch (error) {
     console.error('Error al obtener el historial de compras:', error);
     return [];
+=======
+    return null;
+  }
+
+  try {
+    const response = await API.get('/', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener el historial de compras:', error);
+    return null;
+>>>>>>> ca00dcc (Add Backend for Orders (FE api, controller, entity and route))
   }
 };
