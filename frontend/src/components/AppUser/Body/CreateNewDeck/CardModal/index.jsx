@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-icons/fa';
 import styles from './cardmodal.module.css';
 import level1 from '../../../../../../public/assets/CardImg/1.png';
@@ -9,7 +10,6 @@ import level5 from '../../../../../../public/assets/CardImg/5.png';
 import level6 from '../../../../../../public/assets/CardImg/6.png';
 import level7 from '../../../../../../public/assets/CardImg/7.png';
 import level8 from '../../../../../../public/assets/CardImg/8.png';
-
 
 const levelImages = [level1, level2, level3, level4, level5, level6, level7, level8];
 
@@ -52,11 +52,17 @@ const normalizeValue = (value, translations) => {
   return translations[value] || value.toLowerCase();
 };
 
+const EffectDisplay = ({ effect }) => (
+  <ReactMarkdown>{effect.replace(/\n/g, '\n\n')}</ReactMarkdown>
+);
+
 const CardModal = ({ card, onClose }) => {
   const [showEffect, setShowEffect] = useState(false);
   const toggleView = () => setShowEffect((prev) => !prev);
 
   const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
+
+  console.log("📌 Contenido de effect en CardModal:", effect);
 
   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
   const normalizedCategory = normalizeValue(category, categoryTranslations);
@@ -108,7 +114,9 @@ const CardModal = ({ card, onClose }) => {
            </div>
 
            {/* Descripción/Efecto */}
-           <p className={styles.cardText}>{showEffect ? effect : description}</p>
+           <div className={styles.cardText}>
+              {showEffect ? <EffectDisplay effect={effect} /> : <p>{description}</p>}
+            </div>
 
           {/* Expansión y ATK/DEF */}
           <div className={styles.cardFooter}>
@@ -129,7 +137,7 @@ const CardModal = ({ card, onClose }) => {
       <p className={styles.cardInfoType}>{type}</p>
     </div>
     <p className={styles.cardDescription}>Descripción: {description}</p>
-    <p className={styles.cardDescription}>Efecto: {effect}</p>
+    <p className={styles.cardDescription}>Efecto: <EffectDisplay effect={effect} /></p>
   </div>
       </div>
     </div>
