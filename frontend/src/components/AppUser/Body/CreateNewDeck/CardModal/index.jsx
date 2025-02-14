@@ -67,6 +67,8 @@ const CardModal = ({ card, onClose }) => {
 
   const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
 
+  console.log("📌 Contenido de effect en CardModal:", effect);
+
   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
   const normalizedCategory = normalizeValue(category, categoryTranslations);
 
