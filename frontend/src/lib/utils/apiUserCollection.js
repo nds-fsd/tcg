@@ -6,16 +6,15 @@ const API = axios.create({
 });
 
 export const fetchUserCollection = async () => {
-  const token = getUserToken();
-  try {
-    const response = await API.get('/', {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    console.log('aqui la resposta ', response.data.cards);
-    return response.data.cards || [];
-  } catch (e) {
-    return [];
-  }
+    const token = getUserToken();
+    try {
+        const response = await API.get('/', {
+            headers: { Authorization: `Bearer ${token}` },
+        });
+        return response.data.cards || [];
+    } catch (e) {
+        return [];
+    }
 };
 
 export const createCardUser = (idUser, idCard) => {
