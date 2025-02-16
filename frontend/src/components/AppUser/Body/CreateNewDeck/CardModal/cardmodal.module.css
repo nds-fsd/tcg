@@ -26,17 +26,16 @@
 }
 
 .cardInfoBox {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 240, 240, 0.9));
+  background: rgba(255, 255, 255, 0.9);
   padding: 1rem;
-  font-size: 1rem;
-  border-radius: 12px;
+  font-size: 0.9rem;
+  border-radius: 16px;
   max-height: 700px;
-  width: 30%;
-  min-width: 250px;
-  overflow-y: auto;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  width: 28%;
+  box-sizing: border-box;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
   text-align: justify;
-  border: 3px solid #8B4513;
+  border: 8px solid;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -303,6 +302,10 @@
     text-align: center;
     padding: 8px;
     font-size: 0.8rem;
+  }
+
+  .cardInfoBox h3 {
+    font-size: 1.2rem;
   }
 
   .cardInfoBox h3 {

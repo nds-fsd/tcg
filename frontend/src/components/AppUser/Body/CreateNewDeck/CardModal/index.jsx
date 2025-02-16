@@ -67,8 +67,6 @@ const CardModal = ({ card, onClose }) => {
 
   const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
 
-  console.log("📌 Contenido de effect en CardModal:", effect);
-
   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
   const normalizedCategory = normalizeValue(category, categoryTranslations);
 
@@ -97,7 +95,29 @@ const CardModal = ({ card, onClose }) => {
               <img src={levelImages[level - 1]} alt={`Nivel ${level}`} />
             </div>
           )}
+        <div
+          className={styles.modalContent}
+          style={{
+            borderColor: rarityColor,
+            backgroundColor: categoryColor,
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/* Nivel */}
+          {level && (
+            <div className={styles.levelBadge}>
+              <img src={levelImages[level - 1]} alt={`Nivel ${level}`} />
+            </div>
+          )}
 
+          {/* Rareza */}
+          <div className={styles.rarityBadge} style={{ backgroundColor: rarityColor }}>
+            {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
+          </div>
+          {/* Imagen */}
+          <div className={styles.cardImageContainer}>
+            <img src={image} alt={name} className={styles.modalImage} />
+          </div>
           {/* Rareza */}
           <div className={styles.rarityBadge} style={{ backgroundColor: rarityColor }}>
             {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
@@ -113,7 +133,20 @@ const CardModal = ({ card, onClose }) => {
               <h2 className={styles.cardName}>{name}</h2>
               {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
             </div>
+          {/* Detalles */}
+          <div className={styles.cardDetails}>
+            <div className={styles.cardHeader}>
+              <h2 className={styles.cardName}>{name}</h2>
+              {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
+            </div>
 
+            {/* Type y Botón */}
+            <div className={styles.typeAndButtonContainer}>
+              <p className={styles.cardType}>{type}</p>
+              <button className={styles.switchButton} onClick={toggleView}>
+                {showEffect ? 'Mostrar descripción' : 'Mostrar efecto'}
+              </button>
+            </div>
             {/* Type y Botón */}
             <div className={styles.typeAndButtonContainer}>
               <p className={styles.cardType}>{type}</p>
