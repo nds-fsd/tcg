@@ -1,0 +1,56 @@
+.storeContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.productsgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Borrar quan passem de lloc el OrderHistory */
+.toggleOrderHistory {
+  display: block;
+  margin: 15px auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #8b4513;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+  font-family: 'Metamorphous', sans-serif;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.toggleOrderHistory:hover {
+  background-color: #6a3510;
+  transform: translateY(-2px);
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+.toggleOrderHistory:active {
+  transform: translateY(0);
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+}
+/* Borrar quan passem de lloc el OrderHistory */
+
+@media (max-width: 768px) {
+  .productsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .productsGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}

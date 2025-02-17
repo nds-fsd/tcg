@@ -1,28 +1,23 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
+import { fetchCurrentUser } from '../lib/utils/apiUser';
+import { getUserToken } from '../lib/utils/localStorage.utils';
 
 const UserContext = createContext();
 
-export const useUser = () => {
-  return useContext(UserContext);
-};
+export const useUser = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }) => {
-  const [userData, setUserData] = useState(() => {
-    const storedUser = localStorage.getItem('userData');
-    return storedUser ? JSON.parse(storedUser) : null;
+  const storedToken = getUserToken();
+  const queryClient = useQueryClient();
+
+  const { data, isLoading, isError } = useQuery('user', () => fetchCurrentUser(storedToken), {
+    enabled: !!storedToken,
   });
 
-  useEffect(() => {
-    if (userData) {
-      localStorage.setItem('userData', JSON.stringify(userData));
-    } else {
-      localStorage.removeItem('userData');
-    }
-  }, [userData]);
+  const updateUser = () => {
+    queryClient.invalidateQueries('user');
+  };
 
-  return (
-    <UserContext.Provider value={{ userData, setUserData }}>
-      {children}
-    </UserContext.Provider>
-  );
+  return <UserContext.Provider value={{ data, isLoading, isError, updateUser }}>{children}</UserContext.Provider>;
 };

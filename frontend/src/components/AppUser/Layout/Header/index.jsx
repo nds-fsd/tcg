@@ -1,19 +1,21 @@
 import styles from './header.module.css';
-import { FaGamepad, FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 import { useUser } from '../../../../context/userContext';
-import { removeSession } from '../../../../lib/utils/localStorage.utils';
+import { removeSession } from '../../../../lib/utils/userSession';
+import { useEffect } from 'react';
 
 const Header = () => {
-  const { userData } = useUser();
+  const { data } = useUser();
   const navigate = useNavigate();
+
+  useEffect(() => {}, []);
 
   return (
     <div className={styles.header}>
       <div>
         <Link to='/'>
-          <img src="./public/assets/GameImg/logopixelquest4.png" alt="Logo del juego" className={styles.gameIcon} />
+          <img src='/assets/GameImg/logopixelquest4.png' alt='Logo del juego' className={styles.gameIcon} />
         </Link>
       </div>
 
@@ -24,34 +26,44 @@ const Header = () => {
         <Link to='/collection' className={styles.navLink}>
           Colección
         </Link>
-        <Link to='' className={styles.navLink}>
+        <Link to='/store' className={styles.navLink}>
           Tienda
         </Link>
 
-        {userData?.role && (
+        {data?.admin && (
           <>
             <Link to='/user' className={styles.navLink}>
               Usuarios
             </Link>
-            <Link to='/' className={styles.navLink}>
+            <Link to='/createCards' className={styles.navLink}>
               Crear Cartas
             </Link>
           </>
         )}
       </nav>
-
       <div className={styles.userIcon}>
-        <FaUserCircle className={styles.userIconImage} />
+        {data?.profilePicture ? (
+          <img
+            src={data.profilePicture}
+            alt='Foto de perfil'
+            className={styles.userIconImage}
+            onClick={() => {
+              removeSession();
+              navigate('/auth');
+            }}
+          />
+        ) : (
+          <div
+            className={styles.userIconImage}
+            onClick={() => {
+              removeSession();
+              navigate('/auth');
+            }}
+          >
+            <img src='/assets/default-icon.png' alt='Icono predeterminado' />
+          </div>
+        )}
       </div>
-      <button
-        id='log-out-button'
-        onClick={() => {
-          removeSession();
-          navigate('/auth');
-        }}
-      >
-        Salir
-      </button>
     </div>
   );
 };

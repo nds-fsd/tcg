@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
 
 const jwtSecret = process.env.JWT_SECRET_KEY;
 
@@ -21,7 +21,12 @@ const jwtMiddleware = (req, res, next) => {
 };
 
 const signToken = (payload, expiresIn = '1d') => {
-  return jwt.sign(payload, jwtSecret, { expiresIn });
+  const token = jwt.sign(payload, jwtSecret, { expiresIn });
+
+  return {
+    token,
+    id: payload.id,
+  };
 };
 
 const verifyToken = (token) => {

@@ -1,26 +1,20 @@
 import styles from './loginform.module.css';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
 import { loginUser } from '../../../lib/utils/apiUser';
-import { setUserSession } from '../../../lib/utils/localStorage.utils';
-import { useUser } from '../../../context/userContext';
+import { setUserSession } from '../../../lib/utils/userSession';
 
-const LoginForm = ({ forceUpdate }) => {
-  const { setUserData } = useUser();
-  const queryClient = useQueryClient();
+const LoginForm = () => {
   const navigate = useNavigate();
 
   const loginMutation = useMutation(['loginUser'], loginUser, {
     onSuccess: (data) => {
       setUserSession(data);
-      setUserData(data.user);
-      queryClient.invalidateQueries('users');
-      forceUpdate();
       navigate('/');
     },
-    onError: (error) => {
-      alert('Error al iniciar sesión. Por favor, revisa tus credenciales.');
+    onError: (e) => {
+      alert('Error al iniciar sesión. Por favor, revisa tus credenciales.', e);
     },
   });
 
@@ -60,7 +54,8 @@ const LoginForm = ({ forceUpdate }) => {
           {...register('password', {
             required: 'La contraseña es obligatoria',
             minLength: {
-              value: 8,
+              value:
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/,
               message: 'Debe tener al menos 8 caracteres',
             },
           })}
@@ -68,11 +63,7 @@ const LoginForm = ({ forceUpdate }) => {
         {errors.password && <p className={styles.error}>{errors.password.message}</p>}
       </div>
 
-      <button
-        id='login-button'
-        className={styles.loginButton}
-        type='submit'
-        disabled={loginMutation.isLoading}>
+      <button id='login-button' className={styles.loginButton} type='submit' disabled={loginMutation.isLoading}>
         {loginMutation.isLoading ? 'Cargando...' : 'Logear'}
       </button>
     </form>

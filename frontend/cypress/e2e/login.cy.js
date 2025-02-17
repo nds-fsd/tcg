@@ -10,5 +10,5 @@ describe('Login-logout-flow', () => {
     cy.url().should('eq', Cypress.config().baseUrl);
     cy.get('#log-out-button').click();
     cy.url().should('eq', Cypress.config().baseUrl + 'auth');
-  })
-})
+  });
+});

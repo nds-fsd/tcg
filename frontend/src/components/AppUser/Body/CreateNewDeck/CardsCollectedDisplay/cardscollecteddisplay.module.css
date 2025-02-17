@@ -122,7 +122,6 @@
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 12px;
   overflow-y: auto;
-  max-height: calc(100% - 120px);
   padding-right: 4px;
   justify-content: start;
 }
@@ -134,17 +133,16 @@
   align-items: center;
 }
 
-.cardCount {
+.cardAmount {
   position: absolute;
-  top: 4px;
-  right: 4px;
+  top: 5px;
+  right: 5px;
   background-color: var(--color-primary);
   color: var(--color-light);
   font-size: 0.8rem;
-  font-weight: bold;
+  padding: 4px 8px;
   border-radius: 50%;
-  padding: 0.2rem 0.4rem;
-  z-index: 5;
+  font-weight: bold;
   font-family: 'Roboto', sans-serif;
 }
 

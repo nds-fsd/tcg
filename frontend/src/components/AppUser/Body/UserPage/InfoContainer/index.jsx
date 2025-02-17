@@ -4,7 +4,7 @@ import RoleFilter from '../RoleFilter';
 import Sort from '../../Generic/Sort';
 
 const InfoContainer = ({
-  usersArray,
+  userArray,
   activeFilter,
   setActiveFilter,
   handleSortChange,
@@ -15,7 +15,7 @@ const InfoContainer = ({
   return (
     <div className={styles.userPageInfoContainer}>
       <div className={styles.userPageInfo}>
-        <RoleFilter usersArray={usersArray} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
+        <RoleFilter userArray={userArray} activeFilter={activeFilter} setActiveFilter={setActiveFilter} />
       </div>
 
       <div className={styles.paginationContainer}>

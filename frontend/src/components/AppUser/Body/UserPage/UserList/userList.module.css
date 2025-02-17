@@ -1,69 +1,135 @@
-.userPageList {
-  width: 80%;
-  margin: 20px auto;
+@media screen and (min-width: 1200px) {
+  .userPageList {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 0px 0px 10px 10px;
+    background-color: #f8edd3;
+    font-family: 'Metamorphous', sans-serif;
+  }
 
-  border-radius: 0px 0px 10px 10px;
-  background-color: #f8edd3;
+  .userListTitle {
+    display: grid;
+    text-align: center;
+    grid-auto-flow: column;
+    grid-template-columns: 0.5fr 1fr 2fr 0.5fr 1fr 1fr 1fr;
+    padding: 10px;
+    border-bottom: 2px solid #a87304;
+    font-size: 14px;
+  }
+
+  .userPageRow {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 0.5fr 1fr 2fr 0.5fr 1fr 1fr 1fr;
+    padding: 10px;
+    border-bottom: 1px solid #664631;
+  }
+
+  .userField {
+    text-align: center;
+    font-size: 12px;
+    color: #333;
+  }
+
+  .userImg {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .userPageRows {
+    list-style: none;
+  }
+
+  .userImg {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+  }
+
+  .userField {
+    justify-content: center;
+    align-self: center;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    color: #333;
+  }
+
+  .emptyMessage {
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+  }
 }
 
-.userListTitle {
-  display: grid;
-  grid-template-columns: 2fr 2fr 1fr 1fr 2fr;
-  gap: 10px;
+@media screen and (min-width: 1800px) {
+  .userPageList {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 0px 0px 10px 10px;
+    background-color: #f8edd3;
+    font-family: 'Metamorphous', sans-serif;
+  }
 
-  padding: 15px 10px;
+  .userListTitle {
+    display: grid;
+    text-align: center;
+    grid-auto-flow: column;
+    grid-template-columns: 0.5fr 1fr 2fr 0.5fr 1fr 1fr 1fr;
+    padding: 10px;
+    border-bottom: 2px solid #a87304;
+    font-size: 14px;
+  }
 
-  border-bottom: 2px solid #a87304;
+  .userPageRow {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: 0.5fr 1fr 2fr 0.5fr 1fr 1fr 1fr;
+    padding: 10px;
+    border-bottom: 1px solid #664631;
+  }
 
-  font-family: 'Metamorphous', sans-serif;
-  font-size: 10px;
+  .userField {
+    text-align: center;
+    font-size: 12px;
+    color: #333;
+  }
+
+  .userImg {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .userPageRows {
+    list-style: none;
+  }
+
+  .userImg {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+  }
+
+  .userField {
+    justify-content: center;
+    align-self: center;
+    font-size: 12px;
+    text-overflow: ellipsis;
+    color: #333;
+  }
+
+  .emptyMessage {
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+  }
 }
-
-.userPageRows {
-  list-style: none;
-}
-
-.userImg {
-  height: 3rem;
-  width: 3rem;
-  border-radius: 50%;
-}
-
-.userField {
-  justify-content: center;
-  align-self: center;
-  font-size: 12px;
-  text-overflow: ellipsis;
-  color: #333;
-}
-
-/* 
-
-
-
-.userPageRows {
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-}
-
-.userPageRow {
-  display: grid;
-  grid-template-columns: 0.3fr 2fr 3fr 1fr 1fr 2fr;
-  gap: 30px;
-  align-items: center;
-
-  padding: 12px;
-
-  border-bottom: 1px solid #ddd;
-  transition: background-color 0.2s ease;
-}
-
-.userPageRow:last-child {
-  border-bottom: none;
-}
-
-
-
- */

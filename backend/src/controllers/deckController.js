@@ -3,10 +3,7 @@ const { Deck } = require('../data/Schema/deck');
 const getDecksUser = async (req, res) => {
   const id = req.params.id;
   try {
-    const decks = await Deck.find({ owner: id })
-      .populate('owner')
-      .populate('cards.card')
-      .populate('fusionCards.card');
+    const decks = await Deck.find({ owner: id }).populate('owner').populate('cards.card').populate('fusionCards.card');
 
     res.status(200).json(decks);
   } catch (error) {
@@ -18,10 +15,7 @@ const getDecksUser = async (req, res) => {
 const getDeckById = async (req, res) => {
   try {
     const { id } = req.params;
-    const deck = await Deck.findById(id)
-      .populate('owner')
-      .populate('cards.card')
-      .populate('fusionCards.card');
+    const deck = await Deck.findById(id).populate('owner').populate('cards.card').populate('fusionCards.card');
 
     if (!deck) {
       return res.status(404).json({ error: 'No se ha podido encontrar el mazo' });
@@ -60,14 +54,11 @@ const createDeck = async (req, res) => {
       cards,
       fusionCards,
     });
-    
+
     const savedDeck = await newDeck.save();
     const id = savedDeck._id;
 
-    const deckToReturn = await Deck.findById(id)
-    .populate('owner')
-    .populate('cards.card')
-    .populate('fusionCards.card');
+    const deckToReturn = await Deck.findById(id).populate('owner').populate('cards.card').populate('fusionCards.card');
 
     res.status(201).json(deckToReturn);
   } catch (error) {
@@ -93,7 +84,7 @@ const updateDeck = async (req, res) => {
     if (totalFusionCards > 10) {
       return res.status(400).json({ error: 'No puedes añadir más de 10 cartas de fusión al mazo' });
     }
-    
+
     const updatedDeck = await Deck.findByIdAndUpdate(
       req.params.id,
       { deckTitle: deckTitle.trim(), cards, fusionCards },
@@ -117,11 +108,11 @@ const deleteDeck = async (req, res) => {
 
   try {
     const deletedDeck = await Deck.findByIdAndDelete(id);
-    
+
     if (!deletedDeck) {
       return res.status(404).json({ error: 'No se ha podido encontrar el mazo' });
     }
-    
+
     res.status(200).json({ message: 'Mazo eliminado con éxito' });
   } catch (error) {
     res.status(400).json([{ error: 'Error al eliminar el mazo' }]);

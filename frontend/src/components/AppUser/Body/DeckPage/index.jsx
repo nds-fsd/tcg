@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 const DeckPage = () => {
   return (
     <div className={styles.deckPageContainer}>
-      <div className={styles.deckPageTitle}>
+      <header className={styles.deckPageTitle}>
         <h1>Mazos</h1>
-      </div>
+      </header>
       <div className={styles.deckPageDeck}>
         <div className={styles.deckPlusContainer}>
           <Link to='/controldeck' className={styles.navLink}>
@@ -15,22 +15,7 @@ const DeckPage = () => {
           </Link>
         </div>
         <div className={styles.deckContainer}>
-          <img src='../../../../../public/assets/DeckImg/testdeck.png' alt='not found' />
-        </div>
-        <div className={styles.deckContainer}>
-          <img src='../../../../../public/assets/DeckImg/testdeck.png' alt='not found' />
-        </div>
-        <div className={styles.deckContainer}>
-          <img src='../../../../../public/assets/DeckImg/testdeck.png' alt='not found' />
-        </div>
-        <div className={styles.deckContainer}>
-          <img src='../../../../../public/assets/DeckImg/testdeck.png' alt='not found' />
-        </div>
-        <div className={styles.deckContainer}>
-          <img src='../../../../../public/assets/DeckImg/testdeck.png' alt='not found' />
-        </div>
-        <div className={styles.deckContainer}>
-          <img src='../../../../../public/assets/DeckImg/testdeck.png' alt='not found' />
+          <img src='/assets/DeckImg/testdeck.png' alt='Imagen del mazo de cartas' />
         </div>
       </div>
     </div>

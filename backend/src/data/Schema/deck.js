@@ -4,7 +4,6 @@ const deckSchema = new Schema(
   {
     deckTitle: {
       type: String,
-      required: true,
       trim: true,
     },
     owner: {
@@ -40,6 +39,10 @@ const deckSchema = new Schema(
         },
       },
     ],
+    public: {
+      type: boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

@@ -47,9 +47,7 @@ const CardItem = ({ card, onAction, actionLabel }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const { name, image, category, rarity, attribute, type, quantity } = card;
-
-  //Cambiar y quitar valores por defecto
+  const { name, image, category, rarity, attribute, type, amount } = card;
 
   const normalizedRarity = normalizeValue(rarity, rarityTranslations);
   const normalizedCategory = normalizeValue(category, categoryTranslations);
@@ -91,11 +89,7 @@ const CardItem = ({ card, onAction, actionLabel }) => {
         </div>
 
         <div className={styles.cardImageContainer}>
-          <img
-            src={image || '../../../../../../public/assets/CardImg/cardplaceholdertcg.png'}
-            alt={name}
-            className={styles.cardImage}
-          />
+          <img src={image || '/assets/CardImg/cardplaceholdertcg.png'} alt={name} className={styles.cardImage} />
         </div>
 
         <div className={styles.cardDetails}>

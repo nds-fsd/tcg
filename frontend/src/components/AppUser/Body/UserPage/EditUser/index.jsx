@@ -2,24 +2,28 @@ import styles from './editUser.module.css';
 import { useState } from 'react';
 import { updateUser } from '../../../../../lib/utils/apiUser';
 import EditButton from '../../Generic/EditButton';
+import { useUser } from '../../../../../context/userContext';
 
 const EditUser = ({ user, handleUpdate }) => {
+  const { data } = useUser();
   const [form, setForm] = useState({
     userName: user.userName,
     email: user.email,
     level: user.level,
-    roles: user.roles,
+    pixelcoins: user.pixelcoins,
+    pixelgems: user.pixelgems,
+    admin: user.admin,
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: updatedUser } = await updateUser(user._id, form);
-      handleUpdate(updatedUser); // Actualiza la lista en UserPage
+      const { data: updatedUser } = await updateUser(user._id, form, data);
+      handleUpdate(updatedUser);
       setIsModalOpen(false);
-    } catch (error) {
-      alert(`Error al editar el usuario: ${error.message}`);
+    } catch (e) {
+      alert(`Error al editar el usuario: ${e.message}`);
     }
   };
 
@@ -30,36 +34,34 @@ const EditUser = ({ user, handleUpdate }) => {
       {isModalOpen && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
-            <h2>Editar Usuario</h2>
-            <form onSubmit={handleSubmit}>
-              <label>
-                Nombre de Usuario:
-                <input
-                  type='text'
-                  value={form.userName}
-                  onChange={(e) => setForm({ ...form, userName: e.target.value })}
-                />
-              </label>
-              <label>
-                Correo Electrónico:
-                <input type='email' value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
-              </label>
-              <label>
-                Nivel:
-                <input
-                  type='number'
-                  value={form.level}
-                  onChange={(e) => setForm({ ...form, level: parseInt(e.target.value, 10) })}
-                />
-              </label>
-              <label>
-                Rol:
-                <select value={form.roles} onChange={(e) => setForm({ ...form, roles: e.target.value })}>
-                  <option value='user'>Usuario</option>
-                  <option value='admin'>Administrador</option>
-                </select>
-              </label>
-              <div className={styles.buttons}>
+            <h2 className={styles.titleUserForm}>Editar Usuario</h2>
+            <form className={styles.formConainer} onSubmit={handleSubmit}>
+              <input
+                type='text'
+                value={form.userName}
+                onChange={(e) => setForm({ ...form, userName: e.target.value })}
+              />
+              <input type='email' value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+              <input
+                type='number'
+                value={form.level}
+                onChange={(e) => setForm({ ...form, level: parseInt(e.target.value, 10) })}
+              />
+              <input
+                type='number'
+                value={form.pixelcoins}
+                onChange={(e) => setForm({ ...form, pixelcoins: parseInt(e.target.value, 10) })}
+              />
+              <input
+                type='number'
+                value={form.pixelgems}
+                onChange={(e) => setForm({ ...form, pixelgems: parseInt(e.target.value, 10) })}
+              />
+              <select value={form.admin} onChange={(e) => setForm({ ...form, admin: e.target.value === 'true' })}>
+                <option value='false'>Usuario</option>
+                <option value='true'>Administrador</option>
+              </select>
+              <div className={styles.buttonContainer}>
                 <button type='submit' className={styles.saveButton}>
                   Guardar
                 </button>
