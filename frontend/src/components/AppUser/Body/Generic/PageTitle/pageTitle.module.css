@@ -1,5 +1,3 @@
-/* Todo el primer baner de usuarios */
-/* Titulo */
 .userPageTitleContainer {
   display: flex;
   flex-flow: row nowrap;
@@ -7,13 +5,13 @@
   align-items: center;
   align-content: center;
 
-  width: 86%;
-  min-height: 3vh;
+  width: 90%;
   margin: 30px auto 10px auto;
-  padding: 10px 30px;
+  padding: 10px;
 
   border-radius: 20px;
   background-color: #f8edd3;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .userPageTitle {
@@ -22,17 +20,13 @@
   justify-content: space-between;
   align-items: center;
   align-content: center;
-  gap: 1vw;
+  gap: 8px;
 
-  font-family: 'Metamorphous', sans-serif;
-  font-size: 14px;
+  font-size: 10px;
 }
 
-/* Añadir */
 .plus {
-  margin-left: 10px;
-
-  font-size: 36px;
+  font-size: 1.6rem;
   color: #a87304;
   cursor: pointer;
 
@@ -43,42 +37,38 @@
 
 .plus:hover {
   color: #dab971;
-
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 .plus:active {
   color: #a87304;
-
   transform: scale(1.1);
 }
 
-/* Buscador */
 .userPageSercherContainer {
   display: flex;
   align-items: center;
 
   width: 100%;
-  max-width: 18vw;
+  max-width: 35vw;
 }
 
 .userPageSercher {
   width: 100%;
-  padding: 5px 10px;
+  padding: 5px;
 
   border: none;
   border-bottom: 2px solid #a87304;
   background-color: transparent;
-
-  font-size: 14px;
+  font-family: 'Metamorphous', sans-serif;
+  font-size: 10px;
+  text-overflow: ellipsis;
   outline: none;
   transition: border-color 0.3s ease;
-  font-family: 'Metamorphous', sans-serif;
 }
 
 .userPageSercher::placeholder {
   color: #999;
-  font-style: italic;
 }
 
 .userPageSercher:focus {
@@ -93,4 +83,56 @@
   color: #a87304;
 
   cursor: pointer;
+}
+
+@media screen and (min-width: 1200px) {
+  .userPageTitleContainer {
+    width: 80%;
+  }
+
+  .userPageTitle {
+    gap: 10px;
+    font-size: 12px;
+  }
+
+  .plus {
+    font-size: 2rem;
+  }
+
+  .userPageSercherContainer {
+    max-width: 30vw;
+  }
+
+  .userPageSercher {
+    font-size: 12px;
+  }
+
+  .searchIcon {
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .userPageTitleContainer {
+    width: 80%;
+  }
+
+  .userPageTitle {
+    gap: 20px;
+    padding: 5px;
+    font-size: 16px;
+  }
+
+  .plus {
+    font-size: 3rem;
+  }
+
+  .userPageSercher {
+    font-size: 12px;
+  }
+
+  .searchIcon {
+    margin-right: 10px;
+    font-size: 24px;
+  }
 }

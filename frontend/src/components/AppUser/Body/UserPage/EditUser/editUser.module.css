@@ -1,5 +1,3 @@
-/* Estilo del formulario de edición
-/* Cubre toda la pantalla 
 .modalOverlay {
   display: flex;
   justify-content: center;
@@ -15,25 +13,23 @@
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(4px);
 
-  font-family: 'Metamorphous', sans-serif;
-
-  z-index: 1000;
+  z-index: 100;
 }
 
-/* Estilo del contenido del modal 
 .modalContent {
   padding: 25px 20px;
-  width: 90%;
+  width: 80%;
   max-width: 450px;
 
   background-color: #664631;
   border-radius: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
 
+  text-align: center;
   animation: fadeIn 0.3s ease-in-out;
+  font-family: 'Metamorphous', sans-serif;
 }
 
-/* Animación de entrada 
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -46,56 +42,72 @@
   }
 }
 
-h2 {
+.titleUserForm {
   padding-bottom: 2vh;
   color: #ffffff;
   text-align: center;
 }
 
-/* Estilos de etiquetas y entradas 
-.modalContent label {
-  display: block;
-
-  margin-bottom: 10px;
-
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.modalContent input,
-.modalContent select {
+.formConainer input,
+select {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: 6px;
+  margin: 10px 0;
+
+  border: 1px solid #f8edd3;
+  border-radius: 6px;
+  background-color: #f8edd3;
+
+  font-family: 'Metamorphous', sans-serif;
+  font-size: 10px;
+  transition: border-color 0.3s ease-in-out;
 }
 
-/* Botones de acción 
-.buttons {
+.formConainer input:focus,
+select:focus {
+  border-color: #dab971;
+  outline: none;
+  box-shadow: 0 0 2px #dab971;
+}
+
+.buttonContainer {
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  margin-top: 20px;
+  gap: 10px;
 }
 
-/* Botón de envío 
-button[type='submit'] {
+.buttonContainer button {
+  flex: 1;
+  padding: 6px;
+  font-size: 12px;
+  font-weight: bold;
+
+  border: none;
+  border-bottom: 2px solid #f8edd3;
+  border-radius: 0 0 20px 20px;
+
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    background-color 0.3s ease-in-out;
+}
+
+.buttonContainer button[type='submit'] {
   background-color: transparent;
 
   color: #9fb033;
   font-family: 'Metamorphous', sans-serif;
 }
 
-button[type='submit']:hover {
+.buttonContainer button[type='submit']:hover {
   transform: translateY(-4px);
 }
 
-button[type='submit']:active {
+.buttonContainer button[type='submit']:active {
   transform: translateY(0);
 }
 
-/* Botón de cancelar 
 .cancelButton {
   background-color: transparent;
 
@@ -109,4 +121,4 @@ button[type='submit']:active {
 
 .cancelButton:active {
   transform: translateY(0);
-} */
+}

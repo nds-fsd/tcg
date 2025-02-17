@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './editButton.module.css';
 import { MdModeEditOutline } from 'react-icons/md';
 

@@ -13,16 +13,22 @@ const userCollectionSchema = new Schema(
         cardId: {
           type: Schema.Types.ObjectId,
           ref: 'Card',
+          required: true,
         },
         amount: {
           type: Number,
+          default: 1,
+          min: 1,
         },
       },
     ],
+    public: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );
 
 const UserCollection = model('UserCollection', userCollectionSchema);
-
 module.exports = { UserCollection };

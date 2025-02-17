@@ -4,7 +4,6 @@ const deckSchema = new Schema(
   {
     deckTitle: {
       type: String,
-      required: true,
       trim: true,
     },
     owner: {
@@ -14,7 +13,7 @@ const deckSchema = new Schema(
     },
     cards: [
       {
-        cardId: {
+        card: {
           type: Schema.Types.ObjectId,
           ref: 'Card',
           required: true,
@@ -22,9 +21,28 @@ const deckSchema = new Schema(
         amount: {
           type: Number,
           required: true,
+          max: [3],
         },
       },
     ],
+    fusionCards: [
+      {
+        card: {
+          type: Schema.Types.ObjectId,
+          ref: 'Card',
+          required: true,
+        },
+        amount: {
+          type: Number,
+          required: true,
+          max: [3],
+        },
+      },
+    ],
+    public: {
+      type: boolean,
+      default: false,
+    },
   },
   { timestamps: true },
 );

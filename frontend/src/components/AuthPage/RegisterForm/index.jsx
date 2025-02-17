@@ -1,27 +1,20 @@
 import styles from './registerform.module.css';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
 import { registerUser } from '../../../lib/utils/apiUser';
-import { setUserSession } from '../../../lib/utils/localStorage.utils';
-import { useUser } from '../../../context/userContext';
+import { setUserSession } from '../../../lib/utils/userSession';
 
-const RegisterForm = ({ forceUpdate }) => {
-  const { setUserData } = useUser();
-  const queryClient = useQueryClient();
+const RegisterForm = () => {
   const navigate = useNavigate();
 
   const registerMutation = useMutation(['registerUser'], registerUser, {
     onSuccess: (data) => {
-      const { token, user } = data;
-      setUserSession(token);
-      setUserData(user);
-      queryClient.invalidateQueries('users');
-      forceUpdate();
+      setUserSession(data);
       navigate('/');
     },
     onError: (e) => {
-      alert('Error al registrarse. Revisa la información proporcionada.' + e);
+      alert('Error al registrarse. Revisa la información proporcionada.', e);
     },
   });
 
@@ -75,7 +68,8 @@ const RegisterForm = ({ forceUpdate }) => {
           {...register('password', {
             required: 'La contraseña es obligatoria',
             pattern: {
-              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+              value:
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/,
               message: 'Debe tener al menos 8 caracteres, una mayúscula, una minúscula y un número',
             },
           })}

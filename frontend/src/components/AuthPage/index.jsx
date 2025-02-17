@@ -1,8 +1,9 @@
 import styles from './authpage.module.css';
 import { useState } from 'react';
+import AuthTitle from './AuthTitle';
+import AuthFormSelector from './AuthFormSelector';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
-import AuthTitle from './AuthTitle';
 
 const AuthPage = ({ forceUpdate, setForceUpdate }) => {
   const [showLogin, setShowLogin] = useState(true);
@@ -11,16 +12,7 @@ const AuthPage = ({ forceUpdate, setForceUpdate }) => {
     <div className={styles.container}>
       <div className={styles.authContent}>
         <AuthTitle />
-
-        <div className={styles.tabs}>
-          <button className={`${styles.tab} ${showLogin ? styles.active : ''}`} onClick={() => setShowLogin(true)}>
-            Iniciar Sesión
-          </button>
-          <button className={`${styles.tab} ${!showLogin ? styles.active2 : ''}`} onClick={() => setShowLogin(false)}>
-            Registrarse
-          </button>
-        </div>
-
+        <AuthFormSelector showLogin={showLogin} setShowLogin={setShowLogin} />
         <div className={styles.formContainer}>
           {showLogin ? (
             <LoginForm
