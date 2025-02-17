@@ -19,10 +19,13 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: flex-start;
   align-items: center;
   align-content: center;
   gap: 2vw;
   width: 86%;
+  margin: auto;
   margin: auto;
   padding: 10px 30px;
   border-radius: 20px;
@@ -37,8 +40,10 @@
 
 .plus {
   font-size: clamp(4rem, 8vw, 10rem);
+  font-size: clamp(4rem, 8vw, 10rem);
   color: #a87304;
   cursor: pointer;
+  transition: transform 0.2s ease, color 0.3s ease;
   transition: transform 0.2s ease, color 0.3s ease;
 }
 
@@ -50,6 +55,7 @@
 .plus:active {
   color: #a87304;
   transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .deckContainer {
@@ -60,7 +66,7 @@
 
 .deckContainer img {
   width: 100%;
-  max-width: 12rem;
+  max-width: 15rem;
   height: auto;
 }
 
