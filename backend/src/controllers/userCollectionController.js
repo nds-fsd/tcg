@@ -1,6 +1,5 @@
 const { UserCollection } = require('../data/Schema/userCollection');
 const { Card } = require('../data/Schema/card');
-const { getCards } = require('./cardController');
 
 const getUserCollection = async (req, res) => {
   try {
@@ -10,10 +9,8 @@ const getUserCollection = async (req, res) => {
     if (!userCollection) {
       return res.status(404).json({ e: 'Colección no encontrada para el usuario' });
     }
-
     res.status(200).json(userCollection);
   } catch (e) {
-    console.error(e);
     res.status(500).json([{ e: 'Error en la recoleccion de Cartas del usuario' }]);
   }
 };
@@ -24,13 +21,13 @@ const cardsObtainedFromChests = async (req, res) => {
 
     const allCards = await Card.find();
 
-    const chestCards = allCards.filter(card => card.expansion === chest);
+    const chestCards = allCards.filter((card) => card.expansion === chest);
 
     const chestData = {
-      common: chestCards.filter(card => card.rarity === 'Común'),
-      rare: chestCards.filter(card => card.rarity === 'Rara'),
-      epic: chestCards.filter(card => card.rarity === 'Épica'),
-      legendary: chestCards.filter(card => card.rarity === 'Legendaria')
+      common: chestCards.filter((card) => card.rarity === 'Común'),
+      rare: chestCards.filter((card) => card.rarity === 'Rara'),
+      epic: chestCards.filter((card) => card.rarity === 'Épica'),
+      legendary: chestCards.filter((card) => card.rarity === 'Legendaria'),
     };
 
     const getRandomCard = (cardList) => {
@@ -51,10 +48,9 @@ const cardsObtainedFromChests = async (req, res) => {
     }
 
     let finalRarity = Math.random() < 0.02 ? 'legendary' : 'epic';
-    console.log(`Generando carta final de rareza: ${finalRarity}`);
     selectedCards.push({ cardId: getRandomCard(chestData[finalRarity]), rarity: finalRarity });
 
-    selectedCards = selectedCards.filter(card => card.cardId !== null);
+    selectedCards = selectedCards.filter((card) => card.cardId !== null);
 
     let userCollection = await UserCollection.findOne({ userId });
     if (!userCollection) {
@@ -62,7 +58,7 @@ const cardsObtainedFromChests = async (req, res) => {
     }
 
     selectedCards.forEach(({ cardId }) => {
-      const existingCard = userCollection.cards.find(card => card.cardId.toString() === cardId);
+      const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId);
       if (existingCard) {
         existingCard.amount += 1;
       } else {
@@ -77,10 +73,8 @@ const cardsObtainedFromChests = async (req, res) => {
   }
 };
 
-
-
-// const cardForUserDeleteById = async (req, res) => {
-//   const { userId, cardId } = req.params;
+const cardForUserDeleteById = async (req, res) => {
+  const { userId, cardId } = req.params;
 
   try {
     const userCollection = await UserCollection.findOneAndUpdate(
@@ -89,9 +83,9 @@ const cardsObtainedFromChests = async (req, res) => {
       { new: true },
     );
 
-//     if (!userCollection) {
-//       return res.status(404).json({ e: 'No se encontró la carta en la colección del usuario' });
-//     }
+    if (!userCollection) {
+      return res.status(404).json({ e: 'No se encontró la carta en la colección del usuario' });
+    }
 
     res.status(200).json({ message: 'Carta eliminada de la colección', userCollection });
   } catch (e) {

@@ -2,7 +2,6 @@ const { Schema, model } = require('mongoose');
 
 const OrderSchema = new Schema(
   {
-<<<<<<< HEAD
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User',

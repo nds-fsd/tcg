@@ -2,11 +2,7 @@ import axios from 'axios';
 import { getUserToken } from './localStorage.utils';
 
 const API = axios.create({
-<<<<<<< HEAD
   baseURL: import.meta.env.VITE_BACKEND_API_URL + '/store',
-=======
-  baseURL: import.meta.env.VITE_BACKEND_API_URL + '/store/orders',
->>>>>>> ca00dcc (Add Backend for Orders (FE api, controller, entity and route))
 });
 
 export const getUserOrders = async () => {

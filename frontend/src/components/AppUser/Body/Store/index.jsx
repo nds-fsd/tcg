@@ -4,8 +4,8 @@ import BalanceBar from '../Store/BalanceBar';
 import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiStore';
 import { toast } from 'react-toastify';
 import styles from '../Store/store.module.css';
-import { useUser } from "../../../../context/userContext";
-import OrderHistory from "../User/Profile/OrderHistory"; //Borrar quan canviem de lloc l'OrderHistory
+import { useUser } from '../../../../context/userContext';
+import OrderHistory from '../User/Profile/OrderHistory'; //Borrar quan canviem de lloc l'OrderHistory
 
 const Store = () => {
   const { data, updateUser } = useUser();
@@ -45,11 +45,8 @@ const Store = () => {
       <BalanceBar balance={{ pixelcoins: data?.pixelcoins, pixelgems: data?.pixelgems }} />
       <div className={styles.storeContainer}>
         {/* Borrar quan canviem de lloc l'OrderHistory*/}
-        <button
-          className={styles.toggleOrderHistory}
-          onClick={() => setShowOrderHistory((prev) => !prev)}
-        >
-          {showOrderHistory ? "Ocultar historial de compras" : "Ver historial de compras"}
+        <button className={styles.toggleOrderHistory} onClick={() => setShowOrderHistory((prev) => !prev)}>
+          {showOrderHistory ? 'Ocultar historial de compras' : 'Ver historial de compras'}
         </button>
 
         {showOrderHistory && <OrderHistory />}

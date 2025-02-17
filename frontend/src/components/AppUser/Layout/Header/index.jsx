@@ -19,16 +19,16 @@ const Header = () => {
         </Link>
       </div>
 
-            <nav className={styles.nav}>
-                <Link to='/deck' className={styles.navLink}>
-                    Mazos
-                </Link>
-                <Link to='/collection' className={styles.navLink}>
-                    Colección
-                </Link>
-                <Link to='/store' className={styles.navLink}>
-                    Tienda
-                </Link>
+      <nav className={styles.nav}>
+        <Link to='/deck' className={styles.navLink}>
+          Mazos
+        </Link>
+        <Link to='/collection' className={styles.navLink}>
+          Colección
+        </Link>
+        <Link to='/store' className={styles.navLink}>
+          Tienda
+        </Link>
 
         {data?.admin && (
           <>

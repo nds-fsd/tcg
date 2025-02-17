@@ -154,17 +154,19 @@ const buyChest = async (req, res) => {
 
       if (cardsModified) await userCollection.save();
     }
-    
+
     await user.save();
 
     const newOrder = new Order({
       userId: user._id,
-      products: [{
-        productId: product._id,
-        name: product.name,
-        price: product.price,
-        reward: product.reward,
-      }],
+      products: [
+        {
+          productId: product._id,
+          name: product.name,
+          price: product.price,
+          reward: product.reward,
+        },
+      ],
       totalPrice: product.price,
       previousBalance,
       newBalance: { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems },
@@ -203,12 +205,14 @@ const buyCurrency = async (req, res) => {
 
     const newOrder = new Order({
       userId: user._id,
-      products: [{
-        productId: product._id,
-        name: product.name,
-        price: product.price,
-        reward: product.reward,
-      }],
+      products: [
+        {
+          productId: product._id,
+          name: product.name,
+          price: product.price,
+          reward: product.reward,
+        },
+      ],
       totalPrice: product.price,
       previousBalance,
       newBalance: { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems },

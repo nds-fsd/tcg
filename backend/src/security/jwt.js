@@ -21,12 +21,12 @@ const jwtMiddleware = (req, res, next) => {
 };
 
 const signToken = (payload, expiresIn = '1d') => {
-    const token = jwt.sign(payload, jwtSecret, { expiresIn });
+  const token = jwt.sign(payload, jwtSecret, { expiresIn });
 
-    return {
-        token, 
-        id: payload.id
-    };
+  return {
+    token,
+    id: payload.id,
+  };
 };
 
 const verifyToken = (token) => {

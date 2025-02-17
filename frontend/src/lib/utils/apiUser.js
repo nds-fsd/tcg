@@ -26,7 +26,8 @@ export const createUser = async (newUser, userInfo) => {
     return alert('El usuario no es administrador');
   }
 
-  const response = await API.post('/admin/create',
+  const response = await API.post(
+    '/admin/create',
     { newUser },
     {
       headers: {
@@ -43,7 +44,8 @@ export const updateUser = async (id, userUpdate, data) => {
     return alert('El usuario no es administrador');
   }
 
-  const response = await API.put(`/admin/update/${id}`,
+  const response = await API.put(
+    `/admin/update/${id}`,
     { userUpdate },
     {
       headers: {

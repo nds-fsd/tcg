@@ -43,8 +43,12 @@
   font-size: clamp(4rem, 8vw, 10rem);
   color: #a87304;
   cursor: pointer;
-  transition: transform 0.2s ease, color 0.3s ease;
-  transition: transform 0.2s ease, color 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.3s ease;
+  transition:
+    transform 0.2s ease,
+    color 0.3s ease;
 }
 
 .plus:hover {
@@ -77,7 +81,8 @@
     gap: 20px;
   }
 
-  .deckPlusContainer, .deckContainer {
+  .deckPlusContainer,
+  .deckContainer {
     width: 30%;
   }
 
@@ -87,7 +92,8 @@
 }
 
 @media (max-width: 480px) {
-  .deckPlusContainer, .deckContainer {
+  .deckPlusContainer,
+  .deckContainer {
     width: 50%;
   }
 

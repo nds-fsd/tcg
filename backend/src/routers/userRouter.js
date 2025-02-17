@@ -1,10 +1,6 @@
 require('dotenv').config();
 const { Router } = require('express');
-const {
-  getUsers,
-  getCurrentUser,
-  getUser
-} = require('../controllers/userController');
+const { getUsers, getCurrentUser, getUser } = require('../controllers/userController');
 const { jwtMiddleware } = require('../security/jwt.js');
 const rolePath = process.env.ROLE_PATH;
 const userRouter = Router();

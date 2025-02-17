@@ -1,5 +1,13 @@
 const { Router } = require('express');
-const { getProducts, getUserOrders, createProduct, updateProduct, buyChest, buyCurrency, deleteProduct } = require('../controllers/storeProductController');
+const {
+  getProducts,
+  getUserOrders,
+  createProduct,
+  updateProduct,
+  buyChest,
+  buyCurrency,
+  deleteProduct,
+} = require('../controllers/storeProductController');
 const { jwtMiddleware } = require('../security/jwt');
 
 const storeRouter = Router();

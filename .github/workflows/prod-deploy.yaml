@@ -25,7 +25,6 @@ jobs:
       - name: 'Build Backend Image'
         run: |
           docker build . --tag ghcr.io/nds-fsd/tcg:latest
-<<<<<<< HEAD
           docker push ghcr.io/nds-fsd/tcg:latest
 
       - name: Install and configure the Koyeb CLI
@@ -36,6 +35,3 @@ jobs:
 
       - name: Deploy to Koyeb
         run: koyeb service redeploy written-alena/tcg
-=======
-          docker push ghcr.io/nds-fsd/tcg:latest
->>>>>>> a87dc48 (Production Worfflow)

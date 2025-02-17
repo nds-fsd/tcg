@@ -21,22 +21,22 @@ export const fetchCards = async () => {
 };
 
 export const createCard = async (card) => {
-    const token = getUserToken();
-    if (!token) {
-        console.errorconsole.error('Error: Usuario no autenticado. No se puede crear la carta.');
-        return null;
-    }
-    
-    try {
-      const response = await API.post('/', card, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      return response.data;
-    } catch (error) {
-        console.error('Error al crear la carta:', error);
-        return null;
-      }
-  };
+  const token = getUserToken();
+  if (!token) {
+    console.errorconsole.error('Error: Usuario no autenticado. No se puede crear la carta.');
+    return null;
+  }
+
+  try {
+    const response = await API.post('/', card, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error al crear la carta:', error);
+    return null;
+  }
+};
 
 export const updateCard = async (id, card) => {
   const token = getUserToken();

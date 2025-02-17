@@ -24,23 +24,20 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
-const getUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-
-    if (!user) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
-    }
-    
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(500).json([{ Error: 'Error al cargar al usuario' }]);
+const updateUser = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'ID de usuario inválido' });
   }
-};
-
-const updateUserById = async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+    const requestingUser = await User.findById(req.jwtPayload.id);
+    if (!requestingUser) {
+      return res.status(404).json({ error: 'Usuario que realiza la solicitud no encontrado' });
+    }
+    if (!requestingUser.admin) {
+      return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
+    }
+    const updatedUser = await User.findByIdAndUpdate(id, req.body.userUpdate, {
       new: true,
     });
     if (!updatedUser) {
@@ -104,7 +101,6 @@ const createUser = async (req, res) => {
 
     const newUser = new User(data);
 
-
     await newUser.save();
     res.status(200).json(newUser);
   } catch (error) {
@@ -115,7 +111,6 @@ const createUser = async (req, res) => {
 module.exports = {
   getUsers,
   getCurrentUser,
-  //   getUser,
   updateUser,
   createUser,
   deleteUser,

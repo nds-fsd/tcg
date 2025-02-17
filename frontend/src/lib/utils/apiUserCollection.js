@@ -1,20 +1,20 @@
-// import axios from 'axios';
-// import { getUserToken } from './localStorage.utils';
+import axios from 'axios';
+import { getUserToken } from './localStorage.utils';
 
 const API = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_API_URL + '/userCollection',
 });
 
 export const fetchUserCollection = async () => {
-    const token = getUserToken();
-    try {
-        const response = await API.get('/', {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-        return response.data.cards || [];
-    } catch (e) {
-        return [];
-    }
+  const token = getUserToken();
+  try {
+    const response = await API.get('/', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.cards || [];
+  } catch (e) {
+    return [];
+  }
 };
 
 export const createCardUser = (idUser, idCard) => {
