@@ -1,7 +1,8 @@
 require('dotenv').config();
 const { Router } = require('express');
 const {
-    getUserCollection,
+  getUserCollection,
+  cardsObtainedFromChests
 } = require('../controllers/userCollectionController');
 const { jwtMiddleware } = require('../security/jwt.js');
 const userCollectionRouter = Router();
@@ -9,5 +10,13 @@ const userCollectionRouter = Router();
 // PASAR LES DADES DE QUI ES EL USAER QUE DEMANE LA SEVA COLLECIÓ HA TRAES DEL TOKEN
 // Planteja que aquestes siguin privades ( Angel )
 userCollectionRouter.get('/', jwtMiddleware, getUserCollection);
+// userCollectionRouter.get(`/:id`, getUserCollectionById);
+// UID updateCardById
+// DID deleteCardById
+userCollectionRouter.put('/cardsObtainer', cardsObtainedFromChests);
+// PROTEGER para saber si es admin
+// userCollectionRouter.get(`/${rolePath}/:id`, jwtMiddleware, adminGetUserCollection);
+// userCollectionRouter.put(`/${rolePath}/card/:cardId`, jwtMiddleware, adminCreateCardForUser);
+// userCollectionRouter.delete(`/${rolePath}/card/:cardId`, jwtMiddleware, adminDeleteCardForUser);
 
 module.exports = { userCollectionRouter };

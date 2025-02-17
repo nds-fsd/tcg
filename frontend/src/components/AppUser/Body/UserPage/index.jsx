@@ -10,6 +10,7 @@ import { useUser } from '../../../../context/userContext';
 
 const UserPage = () => {
   const { data } = useUser();
+  console.log(data);
   const [userArray, setuserArray] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
