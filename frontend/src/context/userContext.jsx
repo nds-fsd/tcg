@@ -13,6 +13,5 @@ export const UserContextProvider = ({ children }) => {
   const { data, isLoading, isError } = useQuery('user', () => fetchCurrentUser(storedToken), {
     enabled: !!storedToken,
   });
-
   return <UserContext.Provider value={{ data, isLoading, isError }}>{children}</UserContext.Provider>;
 };

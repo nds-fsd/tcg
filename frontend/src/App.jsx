@@ -4,7 +4,7 @@ import Layout from './components/AppUser/Layout';
 import HomePage from './components/AppUser/Body/HomePage';
 import Deck from './components/AppUser/Body/DeckPage';
 import User from './components/AppUser/Body/UserPage';
-// import UserCollection from './components/AppUser/Body/UserCollectionPage';
+import UserCollection from './components/AppUser/Body/UserCollectionPage';
 import CreateNewDeck from './components/AppUser/Body/CreateNewDeck';
 import Store from './components/AppUser/Body/Store';
 import { useEffect } from 'react';
@@ -53,7 +53,7 @@ const App = () => {
             <Route path='controldeck' element={<CreateNewDeck />} />
             <Route path='store' element={<Store />} />
             <Route path='user' element={<User />} />
-            {/* <Route path='collection' element={<UserCollection />} /> */}
+            <Route path='collection' element={<UserCollection />} />
           </Route>
         </Routes>
       </UserContextProvider>

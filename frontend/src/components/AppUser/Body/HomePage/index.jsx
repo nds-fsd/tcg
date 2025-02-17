@@ -4,7 +4,7 @@ import styles from './homePage.module.css';
 const HomePage = () => {
   return (
     <div className={styles.homePagecontainer}>
-      <h1 className={styles.homePageTitle}>Bienvenido a Pixel-Quest-TCG</h1>
+      <h1 className={styles.homePageTitle}>Bienvenido a PixelQuest TCG</h1>
 
       <p className={styles.homePageDescription}>
         Pixel-Quest-TCG es un emocionante juego de cartas de estilo medieval fantástico, donde podrás hacer amigos,
@@ -23,7 +23,7 @@ const HomePage = () => {
         <div className={styles.homePageSection}>
           <h2 className={styles.homePageSectionTitle}>Conoce al equipo</h2>
           <p>
-            Descubre quiénes están detrás de este mundo de fantasía y cómo trabajamos para hacer crecer Pixel-Quest-TCG.
+            Descubre quiénes están detrás de este mundo de fantasía y cómo trabajamos para hacer crecer PixelQuest TCG.
           </p>
           <Link to='/about' className={`${styles.homePageButton} ${styles.aboutButton}`}>
             Sobre Nosotros
