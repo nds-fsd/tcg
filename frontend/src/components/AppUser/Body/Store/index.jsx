@@ -58,7 +58,7 @@ const Store = () => {
           onBuy={(product) => handleBuyProduct(product, buyChest)}
         />
         <ProductList
-          title='Packs de Pixelcoins'
+          title='Packs de Pixelgems'
           products={products.filter((p) => p.name.toLowerCase().includes('pack'))}
           onBuy={(product) => handleBuyProduct(product, buyCurrency)}
         />
