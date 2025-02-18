@@ -2,6 +2,7 @@ const { StoreProduct } = require('../data/Schema/storeProducts');
 const { User } = require('../data/Schema/user');
 const { UserCollection } = require('../data/Schema/userCollection');
 const { Card } = require('../data/Schema/card');
+const { Order } = require('../data/Schema/order');
 
 const getProducts = async (req, res) => {
   try {
@@ -9,6 +10,18 @@ const getProducts = async (req, res) => {
     res.status(200).json(products);
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener los productos' });
+  }
+};
+
+const getUserOrders = async (req, res) => {
+  try {
+    const userId = req.jwtPayload.id;
+
+    const orders = await Order.find({ userId }).sort({ createdAt: -1 });
+
+    res.status(200).json(orders);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener el historial de compras' });
   }
 };
 
@@ -69,9 +82,7 @@ const buyChest = async (req, res) => {
     const userId = req.jwtPayload.id;
     const { productId } = req.params;
 
-    if (!userId) {
-      return res.status(401).json({ error: 'Usuario no autenticado' });
-    }
+    if (!userId) return res.status(401).json({ error: 'Usuario no autenticado' });
 
     const product = await StoreProduct.findById(productId);
     if (!product) return res.status(404).json({ error: 'Cofre no encontrado' });
@@ -87,6 +98,8 @@ const buyChest = async (req, res) => {
       return res.status(400).json({ error: 'No tienes suficiente saldo para comprar este cofre' });
     }
 
+    const previousBalance = { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems };
+
     if (canPayWithPixelcoins) {
       user.pixelcoins -= pixelcoins;
     } else {
@@ -100,13 +113,12 @@ const buyChest = async (req, res) => {
       await userCollection.save();
     }
 
+    let newCards = [];
     if (product.reward.cards) {
       const chestType = product.name;
       const rarities = rarityDistribution[chestType];
 
       if (!rarities) return res.status(400).json({ error: 'Este cofre no es válido.' });
-
-      const newCards = [];
 
       for (const [rarity, amount] of Object.entries(rarities)) {
         if (rarity !== 'random') {
@@ -144,8 +156,28 @@ const buyChest = async (req, res) => {
     }
 
     await user.save();
-    res.status(200).json({ message: 'Compra realizada con éxito' });
+
+    const newOrder = new Order({
+      userId: user._id,
+      products: [
+        {
+          productId: product._id,
+          name: product.name,
+          price: product.price,
+          reward: product.reward,
+        },
+      ],
+      totalPrice: product.price,
+      previousBalance,
+      newBalance: { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems },
+      status: 'completada',
+    });
+
+    await newOrder.save();
+
+    res.status(200).json({ message: 'Compra realizada con éxito', order: newOrder });
   } catch (error) {
+    console.error('Error al procesar la compra:', error);
     res.status(500).json({ error: 'Error al procesar la compra' });
   }
 };
@@ -159,18 +191,40 @@ const buyCurrency = async (req, res) => {
     if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
 
     if (!product.reward.pixelcoins || product.reward.pixelcoins <= 0) {
-      return res.status(400).json({ error: 'Este producto no es un pack de pixelcoins válido.' });
+      return res.status(400).json({ error: 'Este producto no es un pack de pixelgems válido.' });
     }
 
     const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    const previousBalance = { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems };
 
     user.pixelcoins += product.reward.pixelcoins;
+
     await user.save();
 
-    res.status(200).json({ message: 'Compra de pixelcoins realizada con éxito', user });
+    const newOrder = new Order({
+      userId: user._id,
+      products: [
+        {
+          productId: product._id,
+          name: product.name,
+          price: product.price,
+          reward: product.reward,
+        },
+      ],
+      totalPrice: product.price,
+      previousBalance,
+      newBalance: { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems },
+      status: 'completada',
+    });
+
+    await newOrder.save();
+
+    res.status(200).json({ message: 'Compra de pixelcoins realizada con éxito', order: newOrder });
   } catch (error) {
-    res.status(500).json({ error: 'Error interno del servidor' });
+    console.error('Error al procesar la compra de pixelcoins:', error);
+    res.status(500).json({ error: 'Error al procesar la compra de pixelcoins' });
   }
 };
 
@@ -191,4 +245,4 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-module.exports = { getProducts, createProduct, updateProduct, buyChest, buyCurrency, deleteProduct };
+module.exports = { getProducts, getUserOrders, createProduct, updateProduct, buyChest, buyCurrency, deleteProduct };

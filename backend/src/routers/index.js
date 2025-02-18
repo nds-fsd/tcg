@@ -5,7 +5,6 @@ const { userCollectionRouter } = require('./userCollectionRouter.js');
 const { storeRouter } = require('./storeRouter.js');
 const { authRouter } = require('./auth');
 const { adminRouter } = require('./adminRouter');
-// const { addDateMiddleware, validatePassword, validateEmail, validateUser } = require('../middlewares');
 const { jwtMiddleware } = require('../security/jwt.js');
 
 const router = Router();

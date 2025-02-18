@@ -51,6 +51,7 @@ const CreateNewDeck = () => {
       }
     } else {
       if (selectedCards.length >= MAX_CARDS) {
+        console.log('MaxCards:', MAX_CARDS);
         toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas.`);
         return;
       }
@@ -73,7 +74,6 @@ const CreateNewDeck = () => {
     } else {
       setSelectedCards((prevCards) => [...prevCards, card]);
     }
-    // toast.success(`✅ "${card.name}" añadida al mazo.`);
   };
 
   const handleRemoveCard = (card) => {

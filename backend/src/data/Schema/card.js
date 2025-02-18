@@ -9,7 +9,7 @@ const cardSchema = new Schema(
     image: {
       type: String,
       required: true,
-      default: '../../../../frontend/public/assets/CardImg/cardplaceholdertcg.png',
+      default: 'assets/CardImg/cardplaceholdertcg.png',
     },
     attribute: {
       type: String,
@@ -67,8 +67,12 @@ const cardSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    estado: { type: Number, required: true },
+    estado: {
+      type: Number,
+      required: true,
+    },
   },
+  { timestamps: true },
   { timestamps: true },
 );
 

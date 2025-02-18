@@ -5,10 +5,12 @@ import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiSto
 import { toast } from 'react-toastify';
 import styles from '../Store/store.module.css';
 import { useUser } from '../../../../context/userContext';
+import OrderHistory from '../User/Profile/OrderHistory'; //Borrar quan canviem de lloc l'OrderHistory
 
 const Store = () => {
   const { data, updateUser } = useUser();
   const [products, setProducts] = useState([]);
+  const [showOrderHistory, setShowOrderHistory] = useState(false); //Borrar quan canviem de lloc l'OrderHistory
 
   useEffect(() => {
     const fetchStoreData = async () => {
@@ -42,16 +44,25 @@ const Store = () => {
     <>
       <BalanceBar balance={{ pixelcoins: data?.pixelcoins, pixelgems: data?.pixelgems }} />
       <div className={styles.storeContainer}>
-        <ProductList
-          title='Cofres'
-          products={products.filter((p) => p.name.toLowerCase().includes('cofre'))}
-          onBuy={(product) => handleBuyProduct(product, buyChest)}
-        />
-        <ProductList
-          title='Packs de Pixelcoins'
-          products={products.filter((p) => p.name.toLowerCase().includes('pack'))}
-          onBuy={(product) => handleBuyProduct(product, buyCurrency)}
-        />
+        {/* Borrar quan canviem de lloc l'OrderHistory*/}
+        <button className={styles.toggleOrderHistory} onClick={() => setShowOrderHistory((prev) => !prev)}>
+          {showOrderHistory ? 'Ocultar historial de compras' : 'Ver historial de compras'}
+        </button>
+
+        {showOrderHistory && <OrderHistory />}
+        {/* Borrar quan canviem de lloc l'OrderHistory*/}
+        <div className={styles.productsContainer}>
+          <ProductList
+            title='Cofres'
+            products={products.filter((p) => p.name.toLowerCase().includes('cofre'))}
+            onBuy={(product) => handleBuyProduct(product, buyChest)}
+          />
+          <ProductList
+            title='Packs de Pixelgems'
+            products={products.filter((p) => p.name.toLowerCase().includes('pack'))}
+            onBuy={(product) => handleBuyProduct(product, buyCurrency)}
+          />
+        </div>
       </div>
     </>
   );

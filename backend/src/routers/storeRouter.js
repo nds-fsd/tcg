@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const {
   getProducts,
+  getUserOrders,
   createProduct,
   updateProduct,
   buyChest,
@@ -11,11 +12,12 @@ const { jwtMiddleware } = require('../security/jwt');
 
 const storeRouter = Router();
 
-storeRouter.get('/', getProducts);
-storeRouter.post('/', jwtMiddleware, createProduct);
-storeRouter.post('/buy/chest/:productId', jwtMiddleware, buyChest);
-storeRouter.post('/buy/currency/:productId', jwtMiddleware, buyCurrency);
-storeRouter.put('/:id', jwtMiddleware, updateProduct);
-storeRouter.delete('/:id', jwtMiddleware, deleteProduct);
+storeRouter.get('/products', getProducts);
+storeRouter.get('/orders', jwtMiddleware, getUserOrders);
+storeRouter.post('/products', jwtMiddleware, createProduct);
+storeRouter.post('/products/:productId/buy-chest', jwtMiddleware, buyChest);
+storeRouter.post('/products/:productId/buy-currency', jwtMiddleware, buyCurrency);
+storeRouter.put('/products/:id', jwtMiddleware, updateProduct);
+storeRouter.delete('/products/:id', jwtMiddleware, deleteProduct);
 
 module.exports = { storeRouter };

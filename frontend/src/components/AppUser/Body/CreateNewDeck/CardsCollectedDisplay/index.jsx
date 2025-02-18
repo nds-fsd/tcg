@@ -15,7 +15,7 @@ const CardsCollectedDisplay = ({ cards, onAddCard }) => {
     attribute: [],
     rarity: [],
   });
-  console.log('Cartas en display', cards);
+
   const [sortOption, setSortOption] = useState('');
 
   const sortMenuRef = useRef(null);
@@ -79,10 +79,9 @@ const CardsCollectedDisplay = ({ cards, onAddCard }) => {
 
   const groupedCards = filteredCards.reduce((acc, card) => {
     if (!acc[card.name]) {
-      acc[card.name] = { ...card, amount: 1 };
-      console.log('Suma, ');
+      acc[card.name] = { ...card, amount: card.amount || 1 };
     } else {
-      acc[card.name].amount += 1;
+      acc[card.name].amount += card.amount || 1;
     }
     return acc;
   }, {});
@@ -118,13 +117,17 @@ const CardsCollectedDisplay = ({ cards, onAddCard }) => {
         <SearchBar onSearch={handleSearchChange} />
       </div>
       <div className={styles.cardsList}>
-        {cards.length === 0 ? (
+        {Object.values(groupedCards).length === 0 ? (
           <p>No tienes cartas en tu colección</p>
         ) : (
           Object.values(groupedCards).map((card) => (
             <div key={card.name} className={styles.cardWrapper}>
               <CardItem card={card} onAction={() => onAddCard(card)} actionLabel='+ Añadir' />
-              <span className={styles.cardCount}>x{card.amount}</span>
+              {card.amount > 1 && (
+                <div className={styles.cardAmount}>
+                  <span>x{card.amount}</span>
+                </div>
+              )}
             </div>
           ))
         )}

@@ -1,71 +1,73 @@
 .cardsSelected {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   height: 100%;
   overflow-y: auto;
   background-color: #ffffff;
   border-radius: 8px;
-  padding: 16px;
+  padding: 12px;
+  width: 100%;
   position: relative;
 }
 
-.normalCardsContainer {
+.normalCardsContainer,
+.fusionCardsContainer {
   background-color: #f0e6d2;
   padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  box-shadow: 0px 2px 3cm rgba(0, 0, 0, 0.15);
   font-family: 'Metamorphous', sans-serif;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .fusionCardsContainer {
   background-color: #d7c9e7;
-  padding: 12px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
-  font-family: 'Metamorphous', sans-serif;
 }
 
 .sectionTitle {
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   color: #444;
 }
 
 .cardsList {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 5px;
   overflow-y: auto;
   justify-content: start;
+  padding: 8px 12px;
+  width: 100%;
 }
 
 .cardWrapper {
   position: relative;
+  width: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition:
-    transform 0.3s ease,
-    opacity 0.3s ease;
+  margin: 0 auto;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .cardCounter {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: bold;
   color: #664631;
   font-family: 'Metamorphous', sans-serif;
   text-align: center;
-  margin-top: 12px;
+  margin-top: 8px;
 }
 
 .trashIcon {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: white;
   border-radius: 50%;
-  padding: 0.3rem;
+  padding: 0.2rem;
   cursor: pointer;
   transition:
     background-color 0.3s ease,
@@ -73,5 +75,29 @@
 }
 
 .trashIcon:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+}
+
+@media (max-width: 375px) {
+  .cardsList {
+    grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); /* 🔽 Reduce cartas aún más */
+    gap: 4px;
+  }
+
+  .cardWrapper {
+    width: 90px;
+  }
+
+  .sectionTitle {
+    font-size: 0.9rem;
+  }
+
+  .cardCounter {
+    font-size: 0.85rem;
+  }
+
+  .trashIcon {
+    font-size: 1rem;
+    padding: 0.15rem;
+  }
 }

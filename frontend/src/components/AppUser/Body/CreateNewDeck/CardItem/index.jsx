@@ -89,11 +89,7 @@ const CardItem = ({ card, onAction, actionLabel }) => {
         </div>
 
         <div className={styles.cardImageContainer}>
-          <img
-            src={image || '../../../../../../public/assets/CardImg/cardplaceholdertcg.png'}
-            alt={name}
-            className={styles.cardImage}
-          />
+          <img src={image || '/assets/CardImg/cardplaceholdertcg.png'} alt={name} className={styles.cardImage} />
         </div>
 
         <div className={styles.cardDetails}>

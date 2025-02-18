@@ -80,8 +80,7 @@ userSchema.methods.generateJWT = function () {
 
   let payload = {
     id: this._id,
-    name: this.userName,
-    email: this.email,
+    admin: this.admin,
   };
 
   return jwt.sign(payload, secret, {

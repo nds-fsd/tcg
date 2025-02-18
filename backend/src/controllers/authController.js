@@ -1,5 +1,6 @@
 const { User } = require('../data/Schema/user');
 const { UserCollection } = require('../data/Schema/userCollection');
+const sendWelcomeEmail = require('../services/sendgrid');
 
 const registerFunction = async (req, res) => {
   try {
@@ -17,6 +18,7 @@ const registerFunction = async (req, res) => {
 
     const newUserCollection = new UserCollection({ userId: createdUser._id, cards: [] });
     await newUserCollection.save();
+    sendWelcomeEmail(email, userName);
     // Aqui se va pal secret en shema user y sale correctamente
     const token = createdUser.generateJWT();
 
