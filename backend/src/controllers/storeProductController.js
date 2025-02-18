@@ -191,7 +191,7 @@ const buyCurrency = async (req, res) => {
     if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
 
     if (!product.reward.pixelcoins || product.reward.pixelcoins <= 0) {
-      return res.status(400).json({ error: 'Este producto no es un pack de pixelcoins válido.' });
+      return res.status(400).json({ error: 'Este producto no es un pack de pixelgems válido.' });
     }
 
     const user = await User.findById(userId);
