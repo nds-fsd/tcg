@@ -73,8 +73,6 @@ const cardsObtainedFromChests = async (req, res) => {
   }
 };
 
-
-
 const cardForUserDeleteById = async (req, res) => {
   const { userId, cardId } = req.params;
 
