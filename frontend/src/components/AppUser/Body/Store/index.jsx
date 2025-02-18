@@ -51,17 +51,18 @@ const Store = () => {
 
         {showOrderHistory && <OrderHistory />}
         {/* Borrar quan canviem de lloc l'OrderHistory*/}
-
-        <ProductList
-          title='Cofres'
-          products={products.filter((p) => p.name.toLowerCase().includes('cofre'))}
-          onBuy={(product) => handleBuyProduct(product, buyChest)}
-        />
-        <ProductList
-          title='Packs de Pixelgems'
-          products={products.filter((p) => p.name.toLowerCase().includes('pack'))}
-          onBuy={(product) => handleBuyProduct(product, buyCurrency)}
-        />
+        <div className={styles.productsContainer}>
+          <ProductList
+            title='Cofres'
+            products={products.filter((p) => p.name.toLowerCase().includes('cofre'))}
+            onBuy={(product) => handleBuyProduct(product, buyChest)}
+          />
+          <ProductList
+            title='Packs de Pixelgems'
+            products={products.filter((p) => p.name.toLowerCase().includes('pack'))}
+            onBuy={(product) => handleBuyProduct(product, buyCurrency)}
+          />
+        </div>
       </div>
     </>
   );
