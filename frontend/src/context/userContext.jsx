@@ -15,8 +15,16 @@ export const UserContextProvider = ({ children }) => {
     enabled: !!storedToken,
   });
 
-  const updateUser = () => {
-    queryClient.invalidateQueries('user');
+  const updateUser = (newBalance = null) => {
+    if (newBalance) {
+      queryClient.setQueryData('user', (oldData) => ({
+        ...oldData,
+        pixelcoins: newBalance.pixelcoins,
+        pixelgems: newBalance.pixelgems,
+      }));
+    } else {
+      queryClient.invalidateQueries('user');
+    }
   };
 
   return <UserContext.Provider value={{ data, isLoading, isError, updateUser }}>{children}</UserContext.Provider>;

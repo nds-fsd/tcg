@@ -11,7 +11,7 @@ const getUserCollection = async (req, res) => {
     }
     res.status(200).json(userCollection);
   } catch (e) {
-    res.status(500).json([{ e: 'Error en la recoleccion de Cartas del usuario' }]);
+    res.status(500).json([{ e: 'Error en la recolección de cartas del usuario' }]);
   }
 };
 
