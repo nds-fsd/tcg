@@ -9,15 +9,10 @@ export const useUser = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }) => {
   const storedToken = getUserToken();
-  const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery('user', () => fetchCurrentUser(storedToken), {
     enabled: !!storedToken,
   });
-
-  const updateUser = () => {
-    queryClient.invalidateQueries('user');
-  };
-
-  return <UserContext.Provider value={{ data, isLoading, isError, updateUser }}>{children}</UserContext.Provider>;
+  
+  return <UserContext.Provider value={{ data, isLoading, isError }}>{children}</UserContext.Provider>;
 };
