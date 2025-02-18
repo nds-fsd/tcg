@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import DeckTitle from './DeckTitle';
 import { fetchUserCollection } from '../../../../lib/utils/apiUserCollection';
 import CardsCollectedDisplay from './CardsCollectedDisplay';
@@ -46,26 +47,59 @@ const CreateNewDeck = () => {
 
     if (isFusionCard) {
       if (selectedFusionCards.length >= MAX_FUSION_CARDS) {
-        toast.error(`⚠️ No puedes añadir más de ${MAX_FUSION_CARDS} cartas de fusión.`);
+        toast.error(`⚠️ No puedes añadir más de ${MAX_FUSION_CARDS} cartas de fusión.`, {
+                  position: "top-right",
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "dark",
+                });
         return;
       }
     } else {
       if (selectedCards.length >= MAX_CARDS) {
-        console.log('MaxCards:', MAX_CARDS);
-        toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas.`);
+        toast.error(`⚠️ No puedes añadir más de ${MAX_CARDS} cartas.`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         return;
       }
     }
 
     if (cardCount >= MAX_DUPLICATES) {
-      toast.error(`⚠️ No puedes agregar más de ${MAX_DUPLICATES} copias de "${card.name}".`);
+      toast.error(`⚠️ No puedes agregar más de ${MAX_DUPLICATES} copias de "${card.name}".`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       return;
     }
 
     if (cardCount >= userCardQuantity) {
-      toast.error(
-        `⚠️ No puedes añadir más de ${userCardQuantity} copias de "${card.name}" porque solo tienes ${userCardQuantity}.`,
-      );
+      toast.error(`⚠️ No puedes añadir más de ${userCardQuantity} copias de "${card.name}" porque solo tienes ${userCardQuantity}.`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       return;
     }
 
@@ -83,7 +117,16 @@ const CreateNewDeck = () => {
     } else {
       setSelectedCards((prevCards) => prevCards.filter((c, index) => index !== prevCards.indexOf(card)));
     }
-    toast.info(`"${card.name}" eliminada del mazo.`);
+    toast.info(`"${card.name}" eliminada del mazo.`, {
+              position: "top-right",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
   };
 
   const handleSaveDeck = async () => {
@@ -117,12 +160,30 @@ const CreateNewDeck = () => {
       const token = localStorage.getItem('token');
       const savedDeck = await createDeck(payload, token);
 
-      toast.success(`✅ Mazo "${savedDeck.deckTitle}" guardado con éxito.`);
+      toast.success(`Mazo "${savedDeck.deckTitle}" guardado con éxito.`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       setDeckTitle('');
       setSelectedCards([]);
       setSelectedFusionCards([]);
     } catch (error) {
-      toast.error(error.message || 'Error al guardar el mazo. Inténtalo de nuevo.');
+      toast.error('Error al guardar el mazo. Inténtalo de nuevo.', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
 

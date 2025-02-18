@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import ProductList from '../Store/ProductList';
 import BalanceBar from '../Store/BalanceBar';
 import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiStore';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import styles from '../Store/store.module.css';
 import { useUser } from '../../../../context/userContext';
 import OrderHistory from '../User/Profile/OrderHistory'; //Borrar quan canviem de lloc l'OrderHistory
@@ -30,18 +31,52 @@ const Store = () => {
   }, [data]);
 
   const handleBuyProduct = async (product, buyFunction) => {
-    const result = await buyFunction(product._id);
+    try {
+      const newBalance = await buyFunction(product._id);
 
-    if (result) {
-      toast.success('Compra realizada con éxito');
-      updateUser();
-    } else {
-      toast.error('Error al comprar el producto');
+      if (newBalance) {
+        toast.success(`Compra realizada con éxito: ${product.name}`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+
+        updateUser(newBalance);
+      } else {
+        toast.error(`No se pudo completar la compra de ${product.name}.`, {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      toast.error("Error en la transacción. Inténtalo de nuevo.", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
     }
   };
 
   return (
     <>
+      <ToastContainer />
+      
       <BalanceBar balance={{ pixelcoins: data?.pixelcoins, pixelgems: data?.pixelgems }} />
       <div className={styles.storeContainer}>
         {/* Borrar quan canviem de lloc l'OrderHistory*/}
