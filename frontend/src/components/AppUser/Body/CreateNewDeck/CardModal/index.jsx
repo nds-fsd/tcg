@@ -4,7 +4,7 @@ import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-ico
 import { effectDescriptions } from '../../../../../lib/utils/effectGlossary';
 import styles from './cardmodal.module.css';
 import level1 from '/assets/CardImg/1.png';
-import level2 from '/assets/CardImg/2.png'
+import level2 from '/assets/CardImg/2.png';
 import level3 from '/assets/CardImg/3.png';
 import level4 from '/assets/CardImg/4.png';
 import level5 from '/assets/CardImg/5.png';
@@ -78,7 +78,6 @@ const CardModal = ({ card, onClose }) => {
 
   return (
     <div className={styles.modalBackground} onClick={onClose}>
-
       <div className={styles.modalWrapper}>
         <div
           className={styles.modalContent}

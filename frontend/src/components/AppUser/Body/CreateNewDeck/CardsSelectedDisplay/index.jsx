@@ -44,11 +44,8 @@ const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
         </div>
       </div>
 
-
       {/* Contador total de cartas */}
-      <div className={styles.cardCounter}>
-        {totalCards}/50 Cartas Totales
-      </div>
+      <div className={styles.cardCounter}>{totalCards}/50 Cartas Totales</div>
       {selectedCard && <CardModal card={selectedCard} onClose={handleCloseModal} />}
     </div>
   );
