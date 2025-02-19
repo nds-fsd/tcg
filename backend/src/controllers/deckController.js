@@ -7,7 +7,6 @@ const getDecksUser = async (req, res) => {
 
     res.status(200).json(decks);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: 'Error al obtener los mazos' });
   }
 };
@@ -23,14 +22,16 @@ const getDeckById = async (req, res) => {
 
     res.status(200).json(deck);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: 'Error al obtener el mazo' });
   }
 };
 
 const createDeck = async (req, res) => {
   try {
-    const { jwtPayload } = req;
+    if (!req.jwtPayload || !req.jwtPayload.id) {
+      return res.status(401).json({ error: 'Usuario no autenticado o token inválido' });
+    }
+
     const { deckTitle, cards = [], fusionCards = [] } = req.body;
 
     if (!deckTitle || deckTitle.trim() === '') {
@@ -48,21 +49,35 @@ const createDeck = async (req, res) => {
       return res.status(400).json({ error: 'No puedes añadir más de 10 cartas de fusión al mazo' });
     }
 
+    const mongoose = require('mongoose');
+    const formattedCards = cards.map((c) => ({
+      card: mongoose.Types.ObjectId(c.card),
+      amount: c.amount,
+    }));
+
+    const formattedFusionCards = fusionCards.map((c) => ({
+      card: mongoose.Types.ObjectId(c.card),
+      amount: c.amount,
+    }));
+
     const newDeck = new Deck({
       deckTitle,
-      owner: jwtPayload.userId,
-      cards,
-      fusionCards,
+      owner: req.jwtPayload.id,
+      cards: formattedCards,
+      fusionCards: formattedFusionCards,
     });
 
     const savedDeck = await newDeck.save();
     const id = savedDeck._id;
 
-    const deckToReturn = await Deck.findById(id).populate('owner').populate('cards.card').populate('fusionCards.card');
+    const deckToReturn = await Deck.findById(id)
+      .populate('owner')
+      .populate('cards.card')
+      .populate('fusionCards.card');
 
     res.status(201).json(deckToReturn);
   } catch (error) {
-    res.status(400).json([{ error: 'Error al crear un mazo' }]);
+    res.status(400).json({ error: 'Error al crear un mazo' });
   }
 };
 

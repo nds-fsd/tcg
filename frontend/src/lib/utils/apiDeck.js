@@ -4,6 +4,16 @@ const API = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_API_URL + '/deck',
 });
 
+export const getUserDecks = async (userId) => {
+  try {
+    const response = await API.get(`/user/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener los mazos del usuario:', error);
+    throw error;
+  }
+};
+
 export const createDeck = async (deckData, token) => {
   try {
     const response = await API.post('/', deckData, {
