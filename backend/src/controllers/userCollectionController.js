@@ -20,7 +20,6 @@ const cardsObtainedFromChests = async (req, res) => {
     const { userId, chest } = req.body;
 
     const allCards = await Card.find();
-
     const chestCards = allCards.filter((card) => card.expansion === chest);
 
     const chestData = {
@@ -32,8 +31,7 @@ const cardsObtainedFromChests = async (req, res) => {
 
     const getRandomCard = (cardList) => {
       if (cardList.length === 0) return null;
-      const selectedCard = cardList[Math.floor(Math.random() * cardList.length)];
-      return selectedCard._id;
+      return cardList[Math.floor(Math.random() * cardList.length)]._id;
     };
 
     let selectedCards = [];
@@ -53,12 +51,14 @@ const cardsObtainedFromChests = async (req, res) => {
     selectedCards = selectedCards.filter((card) => card.cardId !== null);
 
     let userCollection = await UserCollection.findOne({ userId });
+
     if (!userCollection) {
       userCollection = new UserCollection({ userId, cards: [] });
     }
 
     selectedCards.forEach(({ cardId }) => {
-      const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId);
+      const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId.toString());
+
       if (existingCard) {
         existingCard.amount += 1;
       } else {
@@ -66,10 +66,13 @@ const cardsObtainedFromChests = async (req, res) => {
       }
     });
 
+    userCollection.markModified('cards');
+
     await userCollection.save();
+
     res.status(201).json(userCollection);
   } catch (e) {
-    res.status(500).json({ error: 'Error al agregar cartas al usuario' });
+    res.status(500).json({ error: "Error al agregar cartas al usuario" });
   }
 };
 
