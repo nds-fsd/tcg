@@ -1,8 +1,10 @@
 import styles from './editUser.module.css';
 import { useState } from 'react';
-import { updateUser } from '../../../../../lib/utils/apiUser';
-import EditButton from '../../Generic/EditButton';
 import { useUser } from '../../../../../context/userContext';
+import { updateUser } from '../../../../../lib/utils/apiUser';
+import { toast, ToastContainer } from 'react-toastify';
+import EditButton from '../../Generic/EditButton';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditUser = ({ user, handleUpdate }) => {
   const { data } = useUser();
@@ -22,8 +24,9 @@ const EditUser = ({ user, handleUpdate }) => {
       const { data: updatedUser } = await updateUser(user._id, form, data);
       handleUpdate(updatedUser);
       setIsModalOpen(false);
+      toast.success('Usuario actualizado correctamente');
     } catch (e) {
-      alert(`Error al editar el usuario: ${e.message}`);
+      toast.error('Error al editar el usuario');
     }
   };
 
@@ -73,6 +76,8 @@ const EditUser = ({ user, handleUpdate }) => {
           </div>
         </div>
       )}
+
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
     </>
   );
 };

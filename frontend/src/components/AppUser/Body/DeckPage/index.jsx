@@ -1,13 +1,16 @@
 import styles from './deckPage.module.css';
 import { BsPlusCircleDotted } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import PageTitle from '../Generic/PageTitle';
 
 const DeckPage = () => {
   return (
     <div className={styles.deckPageContainer}>
-      <header className={styles.deckPageTitle}>
-        <h1>Mazos</h1>
-      </header>
+      <PageTitle
+        title='Mazos'
+        showAddIcon={false}
+        showSercher={false}
+      />
       <div className={styles.deckPageDeck}>
         <div className={styles.deckPlusContainer}>
           <Link to='/controldeck' className={styles.navLink}>

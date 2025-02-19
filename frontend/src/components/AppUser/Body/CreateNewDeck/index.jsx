@@ -132,7 +132,10 @@ const CreateNewDeck = () => {
       <DeckTitle onTitleChange={handleTitleChange} />
       <div className={styles.deckContent}>
         <div className={styles.cardsCollectedWrapper}>
-          <CardsCollectedDisplay cards={Array.isArray(userCards) ? userCards : []} onAddCard={handleAddCard} />
+          <CardsCollectedDisplay
+            cards={Array.isArray(userCards) ? userCards : []}
+            addCard={true}
+            onAddCard={handleAddCard} />
         </div>
         <div className={styles.cardsSelectedWrapper}>
           <CardsSelectedDisplay

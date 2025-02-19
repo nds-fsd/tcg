@@ -1,16 +1,17 @@
 import '@fontsource/metamorphous';
 import styles from './userPage.module.css';
 import { useState, useEffect, useMemo } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import { fetchUsers, createUser, deleteUser } from '../../../../lib/utils/apiUser';
+import { useUser } from '../../../../context/userContext';
 import PageTitle from '../Generic/PageTitle';
 import InfoContainer from './InfoContainer';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
-import { useUser } from '../../../../context/userContext';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserPage = () => {
   const { data } = useUser();
-  console.log(data);
   const [userArray, setuserArray] = useState([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +33,7 @@ const UserPage = () => {
       const response = await fetchUsers();
       setuserArray(response);
     } catch (e) {
-      alert(JSON.stringify({ message: e.message }));
+      toast.error('Error al obtener usuarios');
     }
   };
 
@@ -77,7 +78,7 @@ const UserPage = () => {
       setIsModalOpen(false);
       setForm({ userName: '', email: '', password: '', level: '', admin: false });
     } catch (error) {
-      alert(`Error al crear el usuario: ${error.message}`);
+      toast.error('Error al crear el usuario');
     }
   };
 
@@ -90,7 +91,7 @@ const UserPage = () => {
       await deleteUser(id, data);
       fetchUsersList();
     } catch (e) {
-      alert(JSON.stringify({ message: e.message }));
+      toast.error('Error al eliminar usuario');
     }
   };
 
@@ -100,6 +101,7 @@ const UserPage = () => {
         <PageTitle
           title='Usuarios'
           showAddIcon={true}
+          showSercher={true}
           searchTerm={searchTerm}
           setSearchTerm={setSearchTerm}
           openModal={openModal}
@@ -122,6 +124,8 @@ const UserPage = () => {
       {isModalOpen && (
         <CreateUser form={form} setForm={setForm} handleSubmit={handleSubmit} onClose={() => setIsModalOpen(false)} />
       )}
+
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
     </>
   );
 };

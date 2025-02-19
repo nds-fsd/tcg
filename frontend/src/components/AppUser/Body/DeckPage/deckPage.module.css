@@ -2,19 +2,6 @@
   height: 90vh;
 }
 
-.deckPageTitle {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-  width: 86%;
-  margin: 30px auto 10px auto;
-  padding: 10px 30px;
-  font-family: 'Metamorphous', sans-serif;
-  border-radius: 20px;
-  background-color: #f8edd3;
-}
-
 .deckPageDeck {
   display: flex;
   flex-wrap: wrap;
@@ -24,9 +11,8 @@
   align-items: center;
   align-content: center;
   gap: 2vw;
-  width: 86%;
-  margin: auto;
-  margin: auto;
+  width: 80%;
+  margin: 2rem auto;
   padding: 10px 30px;
   border-radius: 20px;
   background-color: #f8edd3;
@@ -40,12 +26,8 @@
 
 .plus {
   font-size: clamp(4rem, 8vw, 10rem);
-  font-size: clamp(4rem, 8vw, 10rem);
   color: #a87304;
   cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    color 0.3s ease;
   transition:
     transform 0.2s ease,
     color 0.3s ease;
@@ -58,7 +40,6 @@
 
 .plus:active {
   color: #a87304;
-  transform: scale(1.05);
   transform: scale(1.05);
 }
 
@@ -92,6 +73,7 @@
 }
 
 @media (max-width: 480px) {
+
   .deckPlusContainer,
   .deckContainer {
     width: 50%;

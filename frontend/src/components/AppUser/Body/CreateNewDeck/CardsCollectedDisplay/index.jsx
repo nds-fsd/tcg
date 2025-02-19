@@ -5,7 +5,7 @@ import FilterMenu from '../FilterMenu';
 import CardItem from '../CardItem';
 import styles from './cardscollecteddisplay.module.css';
 
-const CardsCollectedDisplay = ({ cards, onAddCard }) => {
+const CardsCollectedDisplay = ({ cards, addCard, onAddCard }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filtersVisible, setFiltersVisible] = useState(false);
   const [sortVisible, setSortVisible] = useState(false);
@@ -122,7 +122,7 @@ const CardsCollectedDisplay = ({ cards, onAddCard }) => {
         ) : (
           Object.values(groupedCards).map((card) => (
             <div key={card.name} className={styles.cardWrapper}>
-              <CardItem card={card} onAction={() => onAddCard(card)} actionLabel='+ Añadir' />
+              <CardItem card={card} onAction={() => onAddCard(card)} actionLabel='+ Añadir' addCard={addCard} />
               {card.amount > 1 && (
                 <div className={styles.cardAmount}>
                   <span>x{card.amount}</span>
