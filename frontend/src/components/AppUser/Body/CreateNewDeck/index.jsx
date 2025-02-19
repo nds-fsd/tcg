@@ -196,6 +196,7 @@ const CreateNewDeck = () => {
         </div>
       </div>
       <button
+        className={styles.saveDeckButton}
         disabled={deckTitle.trim() === '' || selectedCards.length > MAX_CARDS || selectedFusionCards.length > MAX_FUSION_CARDS}
         onClick={handleSaveDeck}
       >
