@@ -84,7 +84,7 @@ const buyChest = async (req, res) => {
 
   const expansionChest = await StoreProduct.findOne({ _id: productId });
 
-  const obtainedCards = cardsObtainedFromChests(userId, expansionChest);
+  const obtainedCards = await cardsObtainedFromChests(userId, expansionChest);
   console.log('Cartes obtingudes:', obtainedCards);
   // try {
   //   const userId = req.jwtPayload.id;
