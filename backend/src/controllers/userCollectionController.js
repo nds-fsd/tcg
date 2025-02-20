@@ -15,12 +15,10 @@ const getUserCollection = async (req, res) => {
   }
 };
 
-const cardsObtainedFromChests = async (req, res) => {
+const cardsObtainedFromChests = async (userId, expansionChest) => {
   try {
-    const { userId, chest } = req.body;
-
     const allCards = await Card.find();
-    const chestCards = allCards.filter((card) => card.expansion === chest);
+    const chestCards = allCards.filter((card) => card.expansion === expansionChest);
 
     const chestData = {
       common: chestCards.filter((card) => card.rarity === 'Común'),
@@ -70,9 +68,9 @@ const cardsObtainedFromChests = async (req, res) => {
 
     await userCollection.save();
 
-    res.status(201).json(userCollection);
+    return selectedCards;
   } catch (e) {
-    res.status(500).json({ error: "Error al agregar cartas al usuario" });
+    return selectedCards;
   }
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import ProductList from '../Store/ProductList';
 import BalanceBar from '../Store/BalanceBar';
 import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiStore';
@@ -16,7 +16,7 @@ const Store = () => {
   useEffect(() => {
     const fetchStoreData = async () => {
       const fetchedProducts = await getProducts();
-
+      console.log('productes:', fetchedProducts);
       const updatedProducts = fetchedProducts.map((product) => ({
         ...product,
         canAfford:
@@ -24,6 +24,7 @@ const Store = () => {
           (product.price.pixelgems && data?.pixelgems >= product.price.pixelgems),
       }));
 
+      console.log('product:', updatedProducts);
       setProducts(updatedProducts);
     };
 

@@ -6,6 +6,7 @@ import { useUser } from "../../../../../context/userContext";
 const StoreModal = ({ isOpen, onClose, onConfirm, product }) => {
   const { updateUser } = useUser();
 
+  console.log('storemodal:' , product); 
   if (!product) return null;
 
   const handleConfirm = async () => {
