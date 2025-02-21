@@ -16,7 +16,6 @@ const Store = () => {
   useEffect(() => {
     const fetchStoreData = async () => {
       const fetchedProducts = await getProducts();
-      console.log('productes:', fetchedProducts);
       const updatedProducts = fetchedProducts.map((product) => ({
         ...product,
         canAfford:
@@ -45,7 +44,6 @@ const Store = () => {
           progress: undefined,
           theme: 'dark',
         });
-
       } else {
         toast.error(`No se pudo completar la compra de ${product.name}.`, {
           position: 'top-right',

@@ -106,7 +106,7 @@ const buyChest = async (req, res) => {
       user.pixelgems -= pixelgems;
     }
     await user.save();
-    
+
     const newBalance = {
       pixelcoins: user.pixelcoins,
       pixelgems: user.pixelgems,
@@ -137,52 +137,50 @@ const buyChest = async (req, res) => {
 
 const buyCurrency = async (req, res) => {
   const userId = req.jwtPayload.id;
-  console.log('Payload:', req.jwtPayload);
   const productId = req.header;
-  console.log('Header:', req.header);
-  // try {
-  //   const userId = req.jwtPayload.id;
-  //   const { productId } = req.params;
+  try {
+    const userId = req.jwtPayload.id;
+    const { productId } = req.params;
 
-  //   const product = await StoreProduct.findById(productId);
-  //   if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
+    const product = await StoreProduct.findById(productId);
+    if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
 
-  //   if (!product.reward.pixelcoins || product.reward.pixelcoins <= 0) {
-  //     return res.status(400).json({ error: 'Este producto no es un pack de pixelgems válido.' });
-  //   }
+    if (!product.reward.pixelcoins || product.reward.pixelcoins <= 0) {
+      return res.status(400).json({ error: 'Este producto no es un pack de pixelgems válido.' });
+    }
 
-  //   const user = await User.findById(userId);
-  //   if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
 
-  //   const previousBalance = { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems };
+    const previousBalance = { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems };
 
-  //   user.pixelcoins += product.reward.pixelcoins;
+    user.pixelcoins += product.reward.pixelcoins;
 
-  //   await user.save();
+    await user.save();
 
-  //   const newOrder = new Order({
-  //     userId: user._id,
-  //     products: [
-  //       {
-  //         productId: product._id,
-  //         name: product.name,
-  //         price: product.price,
-  //         reward: product.reward,
-  //       },
-  //     ],
-  //     totalPrice: product.price,
-  //     previousBalance,
-  //     newBalance: { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems },
-  //     status: 'completada',
-  //   });
+    const newOrder = new Order({
+      userId: user._id,
+      products: [
+        {
+          productId: product._id,
+          name: product.name,
+          price: product.price,
+          reward: product.reward,
+        },
+      ],
+      totalPrice: product.price,
+      previousBalance,
+      newBalance: { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems },
+      status: 'completada',
+    });
 
-  //   await newOrder.save();
+    await newOrder.save();
 
-  //   res.status(200).json({ message: 'Compra de pixelcoins realizada con éxito', order: newOrder });
-  // } catch (error) {
-  //   console.error('Error al procesar la compra de pixelcoins:', error);
-  //   res.status(500).json({ error: 'Error al procesar la compra de pixelcoins' });
-  // }
+    res.status(200).json({ message: 'Compra de pixelcoins realizada con éxito', order: newOrder });
+  } catch (error) {
+    console.error('Error al procesar la compra de pixelcoins:', error);
+    res.status(500).json({ error: 'Error al procesar la compra de pixelcoins' });
+  }
   return userId;
 };
 

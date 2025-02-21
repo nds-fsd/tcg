@@ -25,14 +25,14 @@ const CreateNewDeck = () => {
         setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, amount })));
       } catch (e) {
         toast.error('Error al cargar las cartas.', {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
+          theme: 'dark',
         });
       }
     };
@@ -58,27 +58,27 @@ const CreateNewDeck = () => {
 
       if (updatedSelection[cardIndex].amount >= MAX_DUPLICATES) {
         toast.error(`No puedes agregar más de ${MAX_DUPLICATES} copias de "${card.name}".`, {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
+          theme: 'dark',
         });
         return;
       }
       if (updatedSelection[cardIndex].amount >= userCardQuantity) {
         toast.error(`No puedes añadir más de ${userCardQuantity} copias de "${card.name}".`, {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
+          theme: 'dark',
         });
         return;
       }
@@ -92,27 +92,27 @@ const CreateNewDeck = () => {
     } else {
       if (isFusionCard && selectedFusionCards.length >= MAX_FUSION_CARDS) {
         toast.error(`No puedes añadir más de ${MAX_FUSION_CARDS} cartas de fusión.`, {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
+          theme: 'dark',
         });
         return;
       }
       if (!isFusionCard && selectedCards.length >= MAX_CARDS) {
         toast.error(`No puedes añadir más de ${MAX_CARDS} cartas.`, {
-          position: "top-right",
+          position: 'top-right',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "dark",
+          theme: 'dark',
         });
         return;
       }
@@ -127,14 +127,14 @@ const CreateNewDeck = () => {
       : setSelectedCards((prev) => prev.filter((c, index) => index !== prev.indexOf(card)));
 
     toast.info(`"${card.name}" eliminada del mazo.`, {
-      position: "top-right",
+      position: 'top-right',
       autoClose: 3000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: 'dark',
     });
   };
 
@@ -153,29 +153,29 @@ const CreateNewDeck = () => {
       const savedDeck = await createDeck(payload, token);
 
       toast.success(`Mazo "${savedDeck.deckTitle}" guardado con éxito.`, {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: 'dark',
       });
       setDeckTitle('');
       setSelectedCards([]);
       setSelectedFusionCards([]);
     } catch (error) {
       toast.error('Error al guardar el mazo. Inténtalo de nuevo.', {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
-      })
+        theme: 'dark',
+      });
     }
   };
 
@@ -197,7 +197,9 @@ const CreateNewDeck = () => {
       </div>
       <button
         className={styles.saveDeckButton}
-        disabled={deckTitle.trim() === '' || selectedCards.length > MAX_CARDS || selectedFusionCards.length > MAX_FUSION_CARDS}
+        disabled={
+          deckTitle.trim() === '' || selectedCards.length > MAX_CARDS || selectedFusionCards.length > MAX_FUSION_CARDS
+        }
         onClick={handleSaveDeck}
       >
         Guardar Mazo

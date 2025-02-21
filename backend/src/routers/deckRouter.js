@@ -9,7 +9,7 @@ const deckRouter = Router();
 // protegido para sabes si eres el usuario que dices ser o admin
 // deckRouter.get('/user', getAllUserDecks);
 deckRouter.get('user/:deckId', getDeckById);
-deckRouter.post('/create',jwtMiddleware, createDeck);
+deckRouter.post('/create', jwtMiddleware, createDeck);
 deckRouter.put('/:id', updateDeck);
 deckRouter.delete('/:id', deleteDeck);
 

@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './balancebar.module.css';
 
 const BalanceBar = ({ balance }) => {
-  console.log('Balance: ', balance)
   return (
     <div className={styles.balancebar}>
       <div className={styles.balanceitem}>

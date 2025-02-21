@@ -6,7 +6,7 @@ const {
   updateProduct,
   buyChest,
   buyCurrency,
-  deleteProduct
+  deleteProduct,
 } = require('../controllers/storeProductController');
 const { jwtMiddleware } = require('../security/jwt');
 

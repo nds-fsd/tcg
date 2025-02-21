@@ -34,7 +34,7 @@ export const buyProduct = async (productId) => {
 
 export const buyChest = async (productId) => {
   const token = getUserToken();
-  console.log('Product chest:', productId);
+
   if (!token) {
     return null;
   }
@@ -46,14 +46,11 @@ export const buyChest = async (productId) => {
       headers: { Authorization: `Bearer ${token}` },
     },
   );
-  console.log('Resposta 1:', response);
   return response;
-  
 };
 
 export const buyCurrency = async (productId) => {
   const token = getUserToken();
-  console.log('Product gemas:', productId);
   if (!token) {
     return null;
   }
@@ -65,7 +62,5 @@ export const buyCurrency = async (productId) => {
       headers: { Authorization: `Bearer ${token}` },
     },
   );
-
-  console.log('Resposta 2:', response);
   return response;
 };

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { useQuery, useQueryClient} from 'react-query';
+import { useQuery, useQueryClient } from 'react-query';
 import { fetchCurrentUser } from '../lib/utils/apiUser';
 import { getUserToken } from '../lib/utils/localStorage.utils';
 
@@ -14,9 +14,9 @@ export const UserContextProvider = ({ children }) => {
   const { data } = useQuery('user', () => fetchCurrentUser(storedToken), {
     enabled: !!storedToken,
   });
-  
+
   const updateUser = () => {
-    queryClient.invalidateQueries('user'); 
+    queryClient.invalidateQueries('user');
   };
 
   return <UserContext.Provider value={{ data }}>{children}</UserContext.Provider>;

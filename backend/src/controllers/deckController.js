@@ -70,10 +70,7 @@ const createDeck = async (req, res) => {
     const savedDeck = await newDeck.save();
     const id = savedDeck._id;
 
-    const deckToReturn = await Deck.findById(id)
-      .populate('owner')
-      .populate('cards.card')
-      .populate('fusionCards.card');
+    const deckToReturn = await Deck.findById(id).populate('owner').populate('cards.card').populate('fusionCards.card');
 
     res.status(201).json(deckToReturn);
   } catch (error) {

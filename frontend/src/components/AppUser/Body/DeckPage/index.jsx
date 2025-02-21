@@ -22,7 +22,7 @@ const DeckPage = () => {
 
     fetchDecks();
   }, [data]);
-  
+
   return (
     <div className={styles.deckPageContainer}>
       <header className={styles.deckPageTitle}>
