@@ -19,5 +19,5 @@ export const UserContextProvider = ({ children }) => {
     queryClient.invalidateQueries('user');
   };
 
-  return <UserContext.Provider value={{ data }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ data, updateUser }}>{children}</UserContext.Provider>;
 };

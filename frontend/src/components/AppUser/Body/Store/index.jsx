@@ -9,7 +9,7 @@ import { useUser } from '../../../../context/userContext';
 import OrderHistory from '../User/Profile/OrderHistory'; //Borrar quan canviem de lloc l'OrderHistory
 
 const Store = () => {
-  const { data } = useUser();
+  const { data, updateUser } = useUser();
   const [products, setProducts] = useState([]);
   const [showOrderHistory, setShowOrderHistory] = useState(false); //Borrar quan canviem de lloc l'OrderHistory
 
@@ -35,37 +35,39 @@ const Store = () => {
 
       if (newBalance) {
         toast.success(`Compra realizada con éxito: ${product.name}`, {
-          position: 'top-right',
+          position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: 'dark',
+          theme: "dark",
         });
+
+        updateUser(newBalance);
       } else {
         toast.error(`No se pudo completar la compra de ${product.name}.`, {
-          position: 'top-right',
+          position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: 'dark',
+          theme: "dark",
         });
       }
     } catch (error) {
-      toast.error('Error en la transacción. Inténtalo de nuevo.', {
-        position: 'top-right',
+      toast.error("Error en la transacción. Inténtalo de nuevo.", {
+        position: "top-right",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: 'dark',
+        theme: "dark",
       });
     }
   };
@@ -73,7 +75,7 @@ const Store = () => {
   return (
     <>
       <ToastContainer />
-
+      
       <BalanceBar balance={{ pixelcoins: data?.pixelcoins, pixelgems: data?.pixelgems }} />
       <div className={styles.storeContainer}>
         {/* Borrar quan canviem de lloc l'OrderHistory*/}
