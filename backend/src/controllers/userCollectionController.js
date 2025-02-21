@@ -15,12 +15,11 @@ const getUserCollection = async (req, res) => {
   }
 };
 
-const cardsObtainedFromChests = async (userId, expansionChest) => {
+const cardsObtainedFromChests = async (userId, chestData) => {
   try {
     const allCards = await Card.find();
-    const chestCards = allCards.filter((card) => card.expansion === expansionChest);
-
-    const chestData = {
+    const chestCards = allCards.filter((card) => card.expansion === chestData.expansion);
+    const cardsRarityInChest = {
       common: chestCards.filter((card) => card.rarity === 'Común'),
       rare: chestCards.filter((card) => card.rarity === 'Rara'),
       epic: chestCards.filter((card) => card.rarity === 'Épica'),
@@ -35,16 +34,16 @@ const cardsObtainedFromChests = async (userId, expansionChest) => {
     let selectedCards = [];
 
     for (let i = 0; i < 3; i++) {
-      selectedCards.push({ cardId: getRandomCard(chestData.common), rarity: 'common' });
+      selectedCards.push({ cardId: getRandomCard(cardsRarityInChest.common), rarity: 'common' });
     }
 
     for (let i = 0; i < 2; i++) {
       let rarity = Math.random() < 0.1 ? 'epic' : 'rare';
-      selectedCards.push({ cardId: getRandomCard(chestData[rarity]), rarity });
+      selectedCards.push({ cardId: getRandomCard(cardsRarityInChest[rarity]), rarity });
     }
 
     let finalRarity = Math.random() < 0.02 ? 'legendary' : 'epic';
-    selectedCards.push({ cardId: getRandomCard(chestData[finalRarity]), rarity: finalRarity });
+    selectedCards.push({ cardId: getRandomCard(cardsRarityInChest[finalRarity]), rarity: finalRarity });
 
     selectedCards = selectedCards.filter((card) => card.cardId !== null);
 
