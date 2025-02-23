@@ -83,10 +83,15 @@ const buyChest = async (req, res) => {
 
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+    
     const chestData = await StoreProduct.findOne({ _id: productId });
     if (!chestData) return res.status(404).json({ error: 'Cofre no encontrado' });
 
     const obtainedCards = await cardsObtainedFromChests(userId, chestData);
+
+    if (obtainedCards.length !== chestData.reward.cards) {
+      return res.status(400).json({ error: 'Error en la cantidad de cartas obtenidas del cofre' });
+    }
 
     const { pixelcoins, pixelgems } = chestData.price;
 
