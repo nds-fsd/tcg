@@ -65,7 +65,6 @@ const updateProduct = async (req, res) => {
 
     res.status(200).json({ message: 'Producto actualizado con éxito', product: updatedProduct });
   } catch (error) {
-    console.error('Error al actualizar el producto:', error);
     res.status(500).json({ error: 'Error al actualizar el producto' });
   }
 };
@@ -142,7 +141,7 @@ const buyChest = async (req, res) => {
 
 const buyCurrency = async (req, res) => {
   const userId = req.jwtPayload.id;
-  const productId = req.header;
+  const productId = req.body;
   try {
     const userId = req.jwtPayload.id;
     const { productId } = req.params;
@@ -183,7 +182,6 @@ const buyCurrency = async (req, res) => {
 
     res.status(200).json({ message: 'Compra de pixelcoins realizada con éxito', order: newOrder });
   } catch (error) {
-    console.error('Error al procesar la compra de pixelcoins:', error);
     res.status(500).json({ error: 'Error al procesar la compra de pixelcoins' });
   }
   return userId;
@@ -201,7 +199,6 @@ const deleteProduct = async (req, res) => {
 
     res.status(200).json({ message: 'Producto eliminado con éxito', product: deletedProduct });
   } catch (error) {
-    console.error('Error al eliminar el producto:', error);
     res.status(500).json({ error: 'Error al eliminar el producto' });
   }
 };

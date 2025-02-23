@@ -9,10 +9,17 @@ const StoreModal = ({ isOpen, onClose, onConfirm, product }) => {
   if (!product) return null;
 
   const handleConfirm = async () => {
-    const newBalance = await onConfirm(product);
-    if (newBalance) {
-      updateUser(newBalance);
+    if (typeof onConfirm !== "function") {
+      return;
+    }
+
+    try {
+      const response = await onConfirm(product);
+      if (response?.data?.newBalance) {
+        updateUser(response.data.newBalance);
+      }
       onClose();
+    } catch (error) {
     }
   };
 

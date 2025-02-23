@@ -28,22 +28,23 @@ const cardsObtainedFromChests = async (userId, chestData) => {
 
     const getRandomCard = (cardList) => {
       if (cardList.length === 0) return null;
-      return cardList[Math.floor(Math.random() * cardList.length)]._id;
+      const selectedCard = cardList[Math.floor(Math.random() * cardList.length)];
+      return { cardId: selectedCard._id, name: selectedCard.name };
     };
 
     let selectedCards = [];
 
     for (let i = 0; i < 3; i++) {
-      selectedCards.push({ cardId: getRandomCard(cardsRarityInChest.common), rarity: 'common' });
+      selectedCards.push({ ...getRandomCard(cardsRarityInChest.common), rarity: 'common' });
     }
 
     for (let i = 0; i < 2; i++) {
       let rarity = Math.random() < 0.1 ? 'epic' : 'rare';
-      selectedCards.push({ cardId: getRandomCard(cardsRarityInChest[rarity]), rarity });
+      selectedCards.push({ ...getRandomCard(cardsRarityInChest[rarity]), rarity });
     }
 
     let finalRarity = Math.random() < 0.02 ? 'legendary' : 'epic';
-    selectedCards.push({ cardId: getRandomCard(cardsRarityInChest[finalRarity]), rarity: finalRarity });
+    selectedCards.push({ ...getRandomCard(cardsRarityInChest[finalRarity]), rarity: finalRarity });
 
     selectedCards = selectedCards.filter((card) => card.cardId !== null);
 

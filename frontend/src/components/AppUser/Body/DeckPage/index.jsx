@@ -16,7 +16,6 @@ const DeckPage = () => {
         const userDecks = await getUserDecks(data.id);
         setDecks(userDecks);
       } catch (error) {
-        console.error('Error al obtener los mazos:', error);
       }
     };
 
