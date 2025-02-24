@@ -122,10 +122,15 @@ const CreateNewDeck = () => {
 
   const handleRemoveCard = (card) => {
     const isFusionCard = card.category.toLowerCase() === 'fusion';
-    isFusionCard
-      ? setSelectedFusionCards((prev) => prev.filter((c, index) => index !== prev.indexOf(card)))
-      : setSelectedCards((prev) => prev.filter((c, index) => index !== prev.indexOf(card)));
-
+    const selectedArray = isFusionCard ? selectedFusionCards : selectedCards;
+    const setSelectedArray = isFusionCard ? setSelectedFusionCards : setSelectedCards;
+  
+    const updatedSelection = selectedArray.map((c) =>
+      c.id === card.id ? { ...c, amount: c.amount - 1 } : c
+    ).filter((c) => c.amount > 0);
+  
+    setSelectedArray(updatedSelection);
+  
     toast.info(`"${card.name}" eliminada del mazo.`, {
       position: "top-right",
       autoClose: 3000,
@@ -136,7 +141,7 @@ const CreateNewDeck = () => {
       progress: undefined,
       theme: "dark",
     });
-  };
+  };  
 
   const handleSaveDeck = async () => {
     const formattedCards = selectedCards.map((card) => ({ cardId: card.id, amount: card.amount }));

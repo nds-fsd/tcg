@@ -1,16 +1,26 @@
 import axios from 'axios';
+import { getUserToken } from './localStorage.utils';
 
 const API = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_API_URL + '/deck',
 });
 
-export const getUserDecks = async (userId) => {
+export const getUserDecks = async () => {
   try {
-    const response = await API.get(`/user/${userId}`);
+    const token = getUserToken();
+    console.warn("⚠️ No hay token disponible para la solicitud.");
+    if (!token) return [];
+
+    console.log("📌 Enviando solicitud para obtener mazos...");
+    const response = await API.get('/user', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    console.log("📌 Respuesta de la API:", response.data);
     return response.data;
   } catch (error) {
-    console.error('Error al obtener los mazos del usuario:', error);
-    throw error;
+    console.error('❌ Error al obtener los mazos del usuario:', error);
+    return [];
   }
 };
 

@@ -51,6 +51,7 @@ const App = () => {
             <Route index element={<HomePage />} />
             <Route path='deck' element={<Deck />} />
             <Route path='controldeck' element={<CreateNewDeck />} />
+            <Route path="/deck/:deckId" element={<CreateNewDeck />} />
             <Route path='store' element={<Store />} />
             <Route path='user' element={<User />} />
             <Route path='collection' element={<UserCollection />} />
