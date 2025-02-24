@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './deckPage.module.css';
 import { BsPlusCircleDotted } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import { getUserDecks } from '../../../../lib/utils/apiDeck';
-import { useUser } from '../../../../context/userContext';
+import PageTitle from '../Generic/PageTitle';
 
 const DeckPage = () => {
   const { data } = useUser();
@@ -24,9 +23,11 @@ const DeckPage = () => {
 
   return (
     <div className={styles.deckPageContainer}>
-      <header className={styles.deckPageTitle}>
-        <h1>Mazos</h1>
-      </header>
+      <PageTitle
+        title='Mazos'
+        showAddIcon={false}
+        showSercher={false}
+      />
       <div className={styles.deckPageDeck}>
         <div className={styles.deckPlusContainer}>
           <Link to='/controldeck' className={styles.navLink}>

@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { fetchCurrentUser } from '../lib/utils/apiUser';
 import { getUserToken } from '../lib/utils/localStorage.utils';
 
