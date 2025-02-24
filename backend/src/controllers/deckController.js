@@ -16,6 +16,10 @@ const getDecksUser = async (req, res) => {
 const getDeckById = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ error: 'ID del mazo no proporcionado' });
+    }
+    
     const deck = await Deck.findById(id).populate('owner').populate('cards.card').populate('fusionCards.card');
 
     if (!deck) {
@@ -103,6 +107,10 @@ const createDeck = async (req, res) => {
 
 const updateDeck = async (req, res) => {
   try {
+    const { id } = req.params;
+    console.log("📌 Recibida petición para actualizar el mazo con ID:", id);
+    console.log("📌 Datos recibidos en el backend:", JSON.stringify(req.body, null, 2));
+
     const { deckTitle, cards, fusionCards } = req.body;
 
     if (!deckTitle || deckTitle.trim() === '') {
@@ -121,7 +129,7 @@ const updateDeck = async (req, res) => {
     }
 
     const updatedDeck = await Deck.findByIdAndUpdate(
-      req.params.id,
+      id,
       { deckTitle: deckTitle.trim(), cards, fusionCards },
       { new: true, runValidators: true },
     )
@@ -132,8 +140,10 @@ const updateDeck = async (req, res) => {
     if (!updatedDeck) {
       return res.status(404).json({ error: 'No se ha podido encontrar el mazo' });
     }
+    console.log("✅ Mazo actualizado correctamente en el backend:", updatedDeck);
     res.status(200).json(updatedDeck);
   } catch (error) {
+    console.error("❌ Error en la actualización del mazo:", error);
     res.status(400).json([{ error: 'Error al actualizar el mazo' }]);
   }
 };
