@@ -11,19 +11,15 @@ const getUserCollection = async (req, res) => {
     }
     res.status(200).json(userCollection);
   } catch (e) {
-    res.status(500).json([{ e: 'Error en la recoleccion de Cartas del usuario' }]);
+    res.status(500).json([{ e: 'Error en la recolección de cartas del usuario' }]);
   }
 };
 
-const cardsObtainedFromChests = async (req, res) => {
+const cardsObtainedFromChests = async (userId, chestData) => {
   try {
-    const { userId, chest } = req.body;
-
     const allCards = await Card.find();
-
-    const chestCards = allCards.filter((card) => card.expansion === chest);
-
-    const chestData = {
+    const chestCards = allCards.filter((card) => card.expansion === chestData.expansion);
+    const cardsRarityInChest = {
       common: chestCards.filter((card) => card.rarity === 'Común'),
       rare: chestCards.filter((card) => card.rarity === 'Rara'),
       epic: chestCards.filter((card) => card.rarity === 'Épica'),
@@ -33,32 +29,34 @@ const cardsObtainedFromChests = async (req, res) => {
     const getRandomCard = (cardList) => {
       if (cardList.length === 0) return null;
       const selectedCard = cardList[Math.floor(Math.random() * cardList.length)];
-      return selectedCard._id;
+      return { cardId: selectedCard._id, name: selectedCard.name };
     };
 
     let selectedCards = [];
 
     for (let i = 0; i < 3; i++) {
-      selectedCards.push({ cardId: getRandomCard(chestData.common), rarity: 'common' });
+      selectedCards.push({ ...getRandomCard(cardsRarityInChest.common), rarity: 'common' });
     }
 
     for (let i = 0; i < 2; i++) {
       let rarity = Math.random() < 0.1 ? 'epic' : 'rare';
-      selectedCards.push({ cardId: getRandomCard(chestData[rarity]), rarity });
+      selectedCards.push({ ...getRandomCard(cardsRarityInChest[rarity]), rarity });
     }
 
     let finalRarity = Math.random() < 0.02 ? 'legendary' : 'epic';
-    selectedCards.push({ cardId: getRandomCard(chestData[finalRarity]), rarity: finalRarity });
+    selectedCards.push({ ...getRandomCard(cardsRarityInChest[finalRarity]), rarity: finalRarity });
 
     selectedCards = selectedCards.filter((card) => card.cardId !== null);
 
     let userCollection = await UserCollection.findOne({ userId });
+
     if (!userCollection) {
       userCollection = new UserCollection({ userId, cards: [] });
     }
 
     selectedCards.forEach(({ cardId }) => {
-      const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId);
+      const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId.toString());
+
       if (existingCard) {
         existingCard.amount += 1;
       } else {
@@ -66,10 +64,13 @@ const cardsObtainedFromChests = async (req, res) => {
       }
     });
 
+    userCollection.markModified('cards');
+
     await userCollection.save();
-    res.status(201).json(userCollection);
+
+    return selectedCards;
   } catch (e) {
-    res.status(500).json({ error: 'Error al agregar cartas al usuario' });
+    return selectedCards;
   }
 };
 

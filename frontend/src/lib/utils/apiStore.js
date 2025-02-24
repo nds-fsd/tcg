@@ -14,6 +14,24 @@ export const getProducts = async () => {
   }
 };
 
+export const buyProduct = async (productId) => {
+  const token = getUserToken();
+
+  if (!token) {
+    return null;
+  }
+
+  const response = await API.post(
+    '/products/rewards',
+    { productId },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+
+  return response.data.newBalance;
+};
+
 export const buyChest = async (productId) => {
   const token = getUserToken();
 
@@ -21,43 +39,28 @@ export const buyChest = async (productId) => {
     return null;
   }
 
-  try {
-    const response = await API.post(
-      `/buy/chest/${productId}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
-
-    return response.data;
-  } catch (error) {
-    return null;
-  }
+  const response = await API.post(
+    `/products/${productId}/buy-chest`,
+    { productId },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+  return response;
 };
 
 export const buyCurrency = async (productId) => {
   const token = getUserToken();
-
   if (!token) {
     return null;
   }
 
-  try {
-    const response = await API.post(
-      `/buy/currency/${productId}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
-
-    return response.data;
-  } catch (error) {
-    return null;
-  }
+  const response = await API.post(
+    `/products/${productId}/buy-currency`,
+    { productId },
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    },
+  );
+  return response;
 };

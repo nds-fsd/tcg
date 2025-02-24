@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import StoreModal from '../StoreModal';
 import styles from './productcard.module.css';
 
@@ -46,10 +46,7 @@ const ProductCard = ({ product, onBuy }) => {
       <StoreModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onConfirm={() => {
-          onBuy(product);
-          setIsModalOpen(false);
-        }}
+        onConfirm={(product) => onBuy(product, () => setIsModalOpen(false))}
         product={product}
       />
     </div>

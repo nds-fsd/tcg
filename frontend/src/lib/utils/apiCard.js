@@ -10,12 +10,10 @@ export const fetchCards = async () => {
     const response = await API.get('/');
     const data = response.data;
     if (!Array.isArray(data)) {
-      console.error('El backend no devolvió un array:', data);
       return [];
     }
     return data;
   } catch (error) {
-    console.error('Error al obtener las cartas:', error);
     return [];
   }
 };
@@ -23,7 +21,6 @@ export const fetchCards = async () => {
 export const createCard = async (card) => {
   const token = getUserToken();
   if (!token) {
-    console.errorconsole.error('Error: Usuario no autenticado. No se puede crear la carta.');
     return null;
   }
 
@@ -33,7 +30,6 @@ export const createCard = async (card) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error al crear la carta:', error);
     return null;
   }
 };
@@ -41,7 +37,6 @@ export const createCard = async (card) => {
 export const updateCard = async (id, card) => {
   const token = getUserToken();
   if (!token) {
-    console.error('Error: Usuario no autenticado. No se puede actualizar la carta.');
     return null;
   }
 
@@ -51,7 +46,6 @@ export const updateCard = async (id, card) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error al actualizar la carta:', error);
     return null;
   }
 };
@@ -59,7 +53,6 @@ export const updateCard = async (id, card) => {
 export const deleteCard = async (id) => {
   const token = getUserToken();
   if (!token) {
-    console.error('Error: Usuario no autenticado. No se puede eliminar la carta.');
     return null;
   }
 
@@ -69,7 +62,6 @@ export const deleteCard = async (id) => {
     });
     return response.data;
   } catch (error) {
-    console.error('Error al eliminar la carta:', error);
     return null;
   }
 };
