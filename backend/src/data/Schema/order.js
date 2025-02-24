@@ -22,7 +22,7 @@ const OrderSchema = new Schema(
         },
         reward: {
           cards: { type: Number, default: 0 },
-          pixelcoins: { type: Number, default: 0 },
+          pixelgems: { type: Number, default: 0 },
         },
       },
     ],

@@ -5,11 +5,17 @@
   text-align: center;
 }
 
-.productsgrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  justify-content: center;
+.productsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  width: 100%;
+}
+
+.productsContainer > * {
+  width: 100%;
+  max-width: 800px;
 }
 
 /* Borrar quan passem de lloc el OrderHistory */
@@ -44,13 +50,13 @@
 /* Borrar quan passem de lloc el OrderHistory */
 
 @media (max-width: 768px) {
-  .productsGrid {
-    grid-template-columns: repeat(2, 1fr);
+  .productsContainer > * {
+    max-width: 90%;
   }
 }
 
 @media (max-width: 480px) {
-  .productsGrid {
-    grid-template-columns: repeat(1, 1fr);
+  .productsContainer > * {
+    max-width: 100%;
   }
 }

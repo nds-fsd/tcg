@@ -77,6 +77,35 @@ const rarityDistribution = {
   'Cofre mágico': { rare: 1, epic: 2, legendary: 2 },
 };
 
+const getChestRewards = async (chestType) => {
+  const rarities = rarityDistribution[chestType];
+  if (!rarities) return null;
+
+  let newCards = [];
+  for (const [rarity, amount] of Object.entries(rarities)) {
+    if (rarity !== 'random') {
+      const availableCards = await Card.find({ rarity });
+      for (let i = 0; i < amount; i++) {
+        if (availableCards.length > 0) {
+          const randomIndex = Math.floor(Math.random() * availableCards.length);
+          newCards.push(availableCards[randomIndex]._id);
+        }
+      }
+    }
+  }
+
+  if (rarities.random) {
+    const randomRarity = rarities.random[Math.floor(Math.random() * rarities.random.length)];
+    const availableCards = await Card.find({ rarity: randomRarity });
+    if (availableCards.length > 0) {
+      const randomIndex = Math.floor(Math.random() * availableCards.length);
+      newCards.push(availableCards[randomIndex]._id);
+    }
+  }
+
+  return newCards;
+};
+
 const buyChest = async (req, res) => {
   try {
     const userId = req.jwtPayload.id;
@@ -91,68 +120,38 @@ const buyChest = async (req, res) => {
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
 
     const { pixelcoins, pixelgems } = product.price;
-    const canPayWithPixelcoins = pixelcoins && user.pixelcoins >= pixelcoins;
-    const canPayWithPixelgems = pixelgems && user.pixelgems >= pixelgems;
+    const canAffordWithPixelcoins = pixelcoins && user.pixelcoins >= pixelcoins;
+    const canAffordWithPixelgems = pixelgems && user.pixelgems >= pixelgems;
 
-    if (!canPayWithPixelcoins && !canPayWithPixelgems) {
+    if (!canAffordWithPixelcoins && !canAffordWithPixelgems) {
       return res.status(400).json({ error: 'No tienes suficiente saldo para comprar este cofre' });
     }
 
     const previousBalance = { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems };
 
-    if (canPayWithPixelcoins) {
+    if (canAffordWithPixelcoins) {
       user.pixelcoins -= pixelcoins;
     } else {
       user.pixelgems -= pixelgems;
     }
 
     let userCollection = await UserCollection.findOne({ userId });
-
     if (!userCollection) {
       userCollection = new UserCollection({ userId, cards: [] });
       await userCollection.save();
     }
 
-    let newCards = [];
-    if (product.reward.cards) {
-      const chestType = product.name;
-      const rarities = rarityDistribution[chestType];
-
-      if (!rarities) return res.status(400).json({ error: 'Este cofre no es válido.' });
-
-      for (const [rarity, amount] of Object.entries(rarities)) {
-        if (rarity !== 'random') {
-          const availableCards = await Card.find({ rarity });
-          for (let i = 0; i < amount; i++) {
-            if (availableCards.length > 0) {
-              const randomIndex = Math.floor(Math.random() * availableCards.length);
-              newCards.push(availableCards[randomIndex]._id);
-            }
-          }
-        }
-      }
-
-      if (rarities.random) {
-        const randomRarity = rarities.random[Math.floor(Math.random() * rarities.random.length)];
-        const availableCards = await Card.find({ rarity: randomRarity });
-        if (availableCards.length > 0) {
-          const randomIndex = Math.floor(Math.random() * availableCards.length);
-          newCards.push(availableCards[randomIndex]._id);
-        }
-      }
-
-      let cardsModified = false;
-      for (const cardId of newCards) {
+    const newCards = await getChestRewards(product.name);
+    if (newCards) {
+      newCards.forEach((cardId) => {
         const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId.toString());
         if (existingCard) {
           existingCard.amount += 1;
         } else {
           userCollection.cards.push({ cardId, amount: 1 });
-          cardsModified = true;
         }
-      }
-
-      if (cardsModified) await userCollection.save();
+      });
+      await userCollection.save();
     }
 
     await user.save();
@@ -175,9 +174,8 @@ const buyChest = async (req, res) => {
 
     await newOrder.save();
 
-    res.status(200).json({ message: 'Compra realizada con éxito', order: newOrder });
+    res.status(200).json({ message: 'Compra realizada con éxito', order: newOrder, newBalance: {pixelcoins: user.pixelcoins, pixelgems: user.pixelgems} });
   } catch (error) {
-    console.error('Error al procesar la compra:', error);
     res.status(500).json({ error: 'Error al procesar la compra' });
   }
 };
@@ -191,7 +189,7 @@ const buyCurrency = async (req, res) => {
     if (!product) return res.status(404).json({ error: 'Producto no encontrado' });
 
     if (!product.reward.pixelcoins || product.reward.pixelcoins <= 0) {
-      return res.status(400).json({ error: 'Este producto no es un pack de pixelcoins válido.' });
+      return res.status(400).json({ error: 'Este producto no es un pack de pixelgems válido.' });
     }
 
     const user = await User.findById(userId);

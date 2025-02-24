@@ -14,7 +14,7 @@ export const getProducts = async () => {
   }
 };
 
-export const buyChest = async (productId) => {
+const buyProduct = async (endpoint, productId) => {
   const token = getUserToken();
 
   if (!token) {
@@ -23,41 +23,18 @@ export const buyChest = async (productId) => {
 
   try {
     const response = await API.post(
-      `/buy/chest/${productId}`,
+      `/products/${productId}/${endpoint}`,
       {},
       {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+        headers: { Authorization: `Bearer ${token}` },
+      }
     );
 
-    return response.data;
+    return response.data.newBalance;
   } catch (error) {
     return null;
   }
 };
 
-export const buyCurrency = async (productId) => {
-  const token = getUserToken();
-
-  if (!token) {
-    return null;
-  }
-
-  try {
-    const response = await API.post(
-      `/buy/currency/${productId}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
-    );
-
-    return response.data;
-  } catch (error) {
-    return null;
-  }
-};
+export const buyChest = (productId) => buyProduct('buy-chest', productId);
+export const buyCurrency = (productId) => buyProduct('buy-currency', productId);
