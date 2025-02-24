@@ -1,8 +1,27 @@
+import React, { useState, useEffect } from 'react';
 import styles from './deckPage.module.css';
 import { BsPlusCircleDotted } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { getUserDecks } from '../../../../lib/utils/apiDeck';
+import { useUser } from '../../../../context/userContext';
 
 const DeckPage = () => {
+  const { data } = useUser();
+  const [decks, setDecks] = useState([]);
+
+  useEffect(() => {
+    const fetchDecks = async () => {
+      if (!data?.id) return;
+      try {
+        const userDecks = await getUserDecks(data.id);
+        setDecks(userDecks);
+      } catch (error) {
+      }
+    };
+
+    fetchDecks();
+  }, [data]);
+
   return (
     <div className={styles.deckPageContainer}>
       <header className={styles.deckPageTitle}>

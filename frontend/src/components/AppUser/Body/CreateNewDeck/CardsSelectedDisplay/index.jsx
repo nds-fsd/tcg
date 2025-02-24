@@ -10,15 +10,26 @@ const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
   const handleCardClick = (card) => setSelectedCard(card);
   const handleCloseModal = () => setSelectedCard(null);
 
-  const totalCards = normalCards.length + fusionCards.length;
+  const totalNormalCards = normalCards.reduce((total, card) => total + (card.amount || 1), 0);
+  const totalFusionCards = fusionCards.reduce((total, card) => total + (card.amount || 1), 0);
+  const totalCards = totalNormalCards + totalFusionCards;
+
+  const expandCards = (cards) => {
+    return cards.flatMap((card) =>
+      Array.from({ length: card.amount || 1 }).map((_, i) => ({
+        ...card,
+        keyId: `${card.id}-${i}`,
+      })),
+    );
+  };
 
   return (
     <div className={styles.cardsSelected}>
       <div className={styles.normalCardsContainer}>
-        <h3 className={styles.sectionTitle}>Monstruos y Apoyos ({normalCards.length}/40)</h3>
+        <h3 className={styles.sectionTitle}>Monstruos y Apoyos ({totalNormalCards}/40)</h3>
         <div className={styles.cardsList}>
-          {normalCards.map((card, index) => (
-            <div key={`${card.name}-${index}`} className={styles.cardWrapper}>
+          {expandCards(normalCards).map((card) => (
+            <div key={card.keyId} className={styles.cardWrapper}>
               <CardItem
                 card={card}
                 onAction={() => onRemoveCard(card)}
@@ -30,10 +41,10 @@ const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
       </div>
 
       <div className={styles.fusionCardsContainer}>
-        <h3 className={styles.sectionTitle}>Fusión ({fusionCards.length}/10)</h3>
+        <h3 className={styles.sectionTitle}>Fusión ({totalFusionCards}/10)</h3>
         <div className={styles.cardsList}>
-          {fusionCards.map((card, index) => (
-            <div key={`${card.name}-${index}`} className={styles.cardWrapper}>
+          {expandCards(fusionCards).map((card) => (
+            <div key={card.keyId} className={styles.cardWrapper}>
               <CardItem
                 card={card}
                 onAction={() => onRemoveCard(card)}
@@ -44,11 +55,8 @@ const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
         </div>
       </div>
 
+      <div className={styles.cardCounter}>{totalCards}/50 Cartas Totales</div>
 
-      {/* Contador total de cartas */}
-      <div className={styles.cardCounter}>
-        {totalCards}/50 Cartas Totales
-      </div>
       {selectedCard && <CardModal card={selectedCard} onClose={handleCloseModal} />}
     </div>
   );

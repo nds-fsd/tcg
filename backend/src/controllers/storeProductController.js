@@ -3,6 +3,7 @@ const { User } = require('../data/Schema/user');
 const { UserCollection } = require('../data/Schema/userCollection');
 const { Card } = require('../data/Schema/card');
 const { Order } = require('../data/Schema/order');
+const { cardsObtainedFromChests } = require('./userCollectionController');
 
 const getProducts = async (req, res) => {
   try {
@@ -16,7 +17,6 @@ const getProducts = async (req, res) => {
 const getUserOrders = async (req, res) => {
   try {
     const userId = req.jwtPayload.id;
-
     const orders = await Order.find({ userId }).sort({ createdAt: -1 });
 
     res.status(200).json(orders);
@@ -44,7 +44,6 @@ const createProduct = async (req, res) => {
     const savedProduct = await newProduct.save();
     res.status(201).json({ message: 'Producto creado con éxito', product: savedProduct });
   } catch (error) {
-    console.error('Error al crear el producto:', error);
     res.status(500).json({ error: 'Error al crear el producto' });
   }
 };
@@ -66,7 +65,6 @@ const updateProduct = async (req, res) => {
 
     res.status(200).json({ message: 'Producto actualizado con éxito', product: updatedProduct });
   } catch (error) {
-    console.error('Error al actualizar el producto:', error);
     res.status(500).json({ error: 'Error al actualizar el producto' });
   }
 };
@@ -80,109 +78,70 @@ const rarityDistribution = {
 const buyChest = async (req, res) => {
   try {
     const userId = req.jwtPayload.id;
-    const { productId } = req.params;
-
-    if (!userId) return res.status(401).json({ error: 'Usuario no autenticado' });
-
-    const product = await StoreProduct.findById(productId);
-    if (!product) return res.status(404).json({ error: 'Cofre no encontrado' });
+    const productId = req.body.productId;
 
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ error: 'Usuario no encontrado' });
+    
+    const chestData = await StoreProduct.findOne({ _id: productId });
+    if (!chestData) return res.status(404).json({ error: 'Cofre no encontrado' });
 
-    const { pixelcoins, pixelgems } = product.price;
-    const canPayWithPixelcoins = pixelcoins && user.pixelcoins >= pixelcoins;
-    const canPayWithPixelgems = pixelgems && user.pixelgems >= pixelgems;
+    const obtainedCards = await cardsObtainedFromChests(userId, chestData);
 
-    if (!canPayWithPixelcoins && !canPayWithPixelgems) {
-      return res.status(400).json({ error: 'No tienes suficiente saldo para comprar este cofre' });
+    if (obtainedCards.length !== chestData.reward.cards) {
+      return res.status(400).json({ error: 'Error en la cantidad de cartas obtenidas del cofre' });
+    }
+
+    const { pixelcoins, pixelgems } = chestData.price;
+
+    const canAffordWithPixelcoins = user.pixelcoins >= pixelcoins;
+    const canAffordWithPixelgems = user.pixelgems >= pixelgems;
+    if (!canAffordWithPixelcoins && !canAffordWithPixelgems) {
+      return res.status(400).json({ error: 'No dispones de suficiente saldo para comprar este cofre' });
     }
 
     const previousBalance = { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems };
 
-    if (canPayWithPixelcoins) {
+    if (canAffordWithPixelcoins) {
       user.pixelcoins -= pixelcoins;
-    } else {
+    }
+
+    if (canAffordWithPixelgems) {
       user.pixelgems -= pixelgems;
     }
-
-    let userCollection = await UserCollection.findOne({ userId });
-
-    if (!userCollection) {
-      userCollection = new UserCollection({ userId, cards: [] });
-      await userCollection.save();
-    }
-
-    let newCards = [];
-    if (product.reward.cards) {
-      const chestType = product.name;
-      const rarities = rarityDistribution[chestType];
-
-      if (!rarities) return res.status(400).json({ error: 'Este cofre no es válido.' });
-
-      for (const [rarity, amount] of Object.entries(rarities)) {
-        if (rarity !== 'random') {
-          const availableCards = await Card.find({ rarity });
-          for (let i = 0; i < amount; i++) {
-            if (availableCards.length > 0) {
-              const randomIndex = Math.floor(Math.random() * availableCards.length);
-              newCards.push(availableCards[randomIndex]._id);
-            }
-          }
-        }
-      }
-
-      if (rarities.random) {
-        const randomRarity = rarities.random[Math.floor(Math.random() * rarities.random.length)];
-        const availableCards = await Card.find({ rarity: randomRarity });
-        if (availableCards.length > 0) {
-          const randomIndex = Math.floor(Math.random() * availableCards.length);
-          newCards.push(availableCards[randomIndex]._id);
-        }
-      }
-
-      let cardsModified = false;
-      for (const cardId of newCards) {
-        const existingCard = userCollection.cards.find((card) => card.cardId.toString() === cardId.toString());
-        if (existingCard) {
-          existingCard.amount += 1;
-        } else {
-          userCollection.cards.push({ cardId, amount: 1 });
-          cardsModified = true;
-        }
-      }
-
-      if (cardsModified) await userCollection.save();
-    }
-
     await user.save();
+
+    const newBalance = {
+      pixelcoins: user.pixelcoins,
+      pixelgems: user.pixelgems,
+    };
 
     const newOrder = new Order({
       userId: user._id,
       products: [
         {
-          productId: product._id,
-          name: product.name,
-          price: product.price,
-          reward: product.reward,
+          productId: chestData._id,
+          name: chestData.name,
+          price: chestData.price,
+          reward: chestData.reward,
         },
       ],
-      totalPrice: product.price,
+      totalPrice: chestData.price,
       previousBalance,
-      newBalance: { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems },
+      newBalance,
       status: 'completada',
     });
 
     await newOrder.save();
-
-    res.status(200).json({ message: 'Compra realizada con éxito', order: newOrder });
+    res.status(200).json(obtainedCards);
   } catch (error) {
-    console.error('Error al procesar la compra:', error);
     res.status(500).json({ error: 'Error al procesar la compra' });
   }
 };
 
 const buyCurrency = async (req, res) => {
+  const userId = req.jwtPayload.id;
+  const productId = req.body;
   try {
     const userId = req.jwtPayload.id;
     const { productId } = req.params;
@@ -223,9 +182,9 @@ const buyCurrency = async (req, res) => {
 
     res.status(200).json({ message: 'Compra de pixelcoins realizada con éxito', order: newOrder });
   } catch (error) {
-    console.error('Error al procesar la compra de pixelcoins:', error);
     res.status(500).json({ error: 'Error al procesar la compra de pixelcoins' });
   }
+  return userId;
 };
 
 const deleteProduct = async (req, res) => {
@@ -240,9 +199,16 @@ const deleteProduct = async (req, res) => {
 
     res.status(200).json({ message: 'Producto eliminado con éxito', product: deletedProduct });
   } catch (error) {
-    console.error('Error al eliminar el producto:', error);
     res.status(500).json({ error: 'Error al eliminar el producto' });
   }
 };
 
-module.exports = { getProducts, getUserOrders, createProduct, updateProduct, buyChest, buyCurrency, deleteProduct };
+module.exports = {
+  getProducts,
+  getUserOrders,
+  createProduct,
+  updateProduct,
+  buyChest,
+  buyCurrency,
+  deleteProduct,
+};
