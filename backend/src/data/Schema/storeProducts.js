@@ -13,6 +13,7 @@ const StoreProductSchema = new Schema({
     pixelgems: { type: Number, default: 0 },
   },
   imageUrl: { type: String, required: true },
+  expansion: { type: String },
 });
 
 const StoreProduct = model('StoreProduct', StoreProductSchema);

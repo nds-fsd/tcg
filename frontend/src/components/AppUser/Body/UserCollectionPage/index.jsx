@@ -1,8 +1,10 @@
 import styles from './userCollectionPage.module.css';
 import PageTitle from '../Generic/PageTitle';
-import CardItem from '../CreateNewDeck/CardItem';
 import { useEffect, useState } from 'react';
 import { fetchUserCollection } from '../../../../lib/utils/apiUserCollection';
+import { toast, ToastContainer } from 'react-toastify';
+import CardsCollectedDisplay from '../CreateNewDeck/CardsCollectedDisplay';
+import 'react-toastify/dist/ReactToastify.css';
 
 const UserCollectionPage = () => {
   const [userCards, setUserCards] = useState([]);
@@ -14,7 +16,7 @@ const UserCollectionPage = () => {
         const response = await fetchUserCollection();
         setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, amount: amount })));
       } catch (e) {
-        setError('Error al cargar las cartas');
+        toast.error('Error al cargar las cartas');
       }
     };
 
@@ -25,24 +27,19 @@ const UserCollectionPage = () => {
 
   return (
     <div className={styles.bodyUserCollectionPageContainer}>
-      <PageTitle title='Tu Colección' showAddIcon={false} placeholder='Escribe el nombre de la carta ...' />
-
-      <div className={styles.cardsList}>
-        {Object.values(userCards).length === 0 ? (
-          <p>No tienes cartas en tu colección</p>
-        ) : (
-          Object.values(userCards).map((card) => (
-            <div key={card.name} className={styles.cardWrapper}>
-              <CardItem card={card} onAction={() => onAddCard(card)} actionLabel='+ Añadir' />
-              {card.amount > 1 && (
-                <div className={styles.cardAmount}>
-                  <span>x{card.amount}</span>
-                </div>
-              )}
-            </div>
-          ))
-        )}
+      <PageTitle
+        title='Tu Colección'
+        showAddIcon={false}
+        showSercher={false}
+      />
+      <div className={styles.cardsCollectedWrapper}>
+        <CardsCollectedDisplay
+          cards={Array.isArray(userCards) ? userCards : []}
+          addCard={false}
+        />
       </div>
+
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
     </div>
   );
 };

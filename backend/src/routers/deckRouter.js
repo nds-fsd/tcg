@@ -5,6 +5,7 @@ const deckRouter = Router();
 
 // protegido para sabes si eres el usuario que dices ser o admin
 // deckRouter.get('/user', getAllUserDecks);
+
 deckRouter.get('/user', jwtMiddleware, getDecksUser);
 deckRouter.get('/user/:id', getDeckById);
 deckRouter.post('/', jwtMiddleware, createDeck);
