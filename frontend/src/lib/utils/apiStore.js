@@ -27,7 +27,7 @@ const buyProduct = async (endpoint, productId) => {
       {},
       {
         headers: { Authorization: `Bearer ${token}` },
-      }
+      },
     );
 
     return response.data.newBalance;

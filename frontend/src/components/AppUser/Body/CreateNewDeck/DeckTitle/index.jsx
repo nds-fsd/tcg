@@ -14,15 +14,15 @@ function DeckTitle({ value, onTitleChange }) {
     const newTitle = event.target.value;
     if (newTitle.length > 20) {
       toast.error('El título no puede superar los 20 caracteres.', {
-              position: "top-right",
-              autoClose: 3000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "dark",
-            });
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
     } else {
       setTitle(newTitle);
     }
@@ -31,29 +31,29 @@ function DeckTitle({ value, onTitleChange }) {
   const handleSave = () => {
     if (title.trim() === '') {
       toast.error('El título no puede estar vacío.', {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: 'dark',
       });
       return;
     }
     onTitleChange(title.trim());
     setIsEditing(false);
     toast.success('Título guardado con éxito.', {
-            position: "top-right",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    });
   };
 
   const handleKeyDown = (event) => {

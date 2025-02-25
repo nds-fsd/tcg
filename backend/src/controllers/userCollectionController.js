@@ -72,7 +72,7 @@ const cardsObtainedFromChests = async (req, res) => {
 
     res.status(201).json(userCollection);
   } catch (e) {
-    res.status(500).json({ error: "Error al agregar cartas al usuario" });
+    res.status(500).json({ error: 'Error al agregar cartas al usuario' });
   }
 };
 

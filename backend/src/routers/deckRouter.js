@@ -7,7 +7,7 @@ const deckRouter = Router();
 // deckRouter.get('/user', getAllUserDecks);
 deckRouter.get('/user', jwtMiddleware, getDecksUser);
 deckRouter.get('/user/:id', getDeckById);
-deckRouter.post('/create',jwtMiddleware, createDeck);
+deckRouter.post('/', jwtMiddleware, createDeck);
 deckRouter.put('/update/:id', jwtMiddleware, updateDeck);
 deckRouter.delete('/:id', deleteDeck);
 

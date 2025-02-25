@@ -1,7 +1,7 @@
-import React from "react";
-import Modal from "react-modal";
-import styles from "./storemodal.module.css";
-import { useUser } from "../../../../../context/userContext";
+import React from 'react';
+import Modal from 'react-modal';
+import styles from './storemodal.module.css';
+import { useUser } from '../../../../../context/userContext';
 
 const StoreModal = ({ isOpen, onClose, onConfirm, product }) => {
   const { updateUser } = useUser();

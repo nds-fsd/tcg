@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import StoreModal from '../StoreModal';
 import styles from './productcard.module.css';
 

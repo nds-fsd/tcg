@@ -44,7 +44,6 @@ const createProduct = async (req, res) => {
     const savedProduct = await newProduct.save();
     res.status(201).json({ message: 'Producto creado con éxito', product: savedProduct });
   } catch (error) {
-    console.error('Error al crear el producto:', error);
     res.status(500).json({ error: 'Error al crear el producto' });
   }
 };
@@ -66,7 +65,6 @@ const updateProduct = async (req, res) => {
 
     res.status(200).json({ message: 'Producto actualizado con éxito', product: updatedProduct });
   } catch (error) {
-    console.error('Error al actualizar el producto:', error);
     res.status(500).json({ error: 'Error al actualizar el producto' });
   }
 };
@@ -174,7 +172,11 @@ const buyChest = async (req, res) => {
 
     await newOrder.save();
 
-    res.status(200).json({ message: 'Compra realizada con éxito', order: newOrder, newBalance: {pixelcoins: user.pixelcoins, pixelgems: user.pixelgems} });
+    res.status(200).json({
+      message: 'Compra realizada con éxito',
+      order: newOrder,
+      newBalance: { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems },
+    });
   } catch (error) {
     res.status(500).json({ error: 'Error al procesar la compra' });
   }
@@ -221,7 +223,6 @@ const buyCurrency = async (req, res) => {
 
     res.status(200).json({ message: 'Compra de pixelcoins realizada con éxito', order: newOrder });
   } catch (error) {
-    console.error('Error al procesar la compra de pixelcoins:', error);
     res.status(500).json({ error: 'Error al procesar la compra de pixelcoins' });
   }
 };
@@ -238,7 +239,6 @@ const deleteProduct = async (req, res) => {
 
     res.status(200).json({ message: 'Producto eliminado con éxito', product: deletedProduct });
   } catch (error) {
-    console.error('Error al eliminar el producto:', error);
     res.status(500).json({ error: 'Error al eliminar el producto' });
   }
 };
