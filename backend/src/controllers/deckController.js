@@ -1,9 +1,15 @@
+const mongoose = require('mongoose');
 const { Deck } = require('../data/Schema/deck');
+const { User } = require('../data/Schema/user');
+const { Card } = require('../data/Schema/card');
 
 const getDecksUser = async (req, res) => {
-  const id = req.params.id;
+  const userId = req.jwtPayload.id;
   try {
-    const decks = await Deck.find({ owner: id }).populate('owner').populate('cards.card').populate('fusionCards.card');
+    const decks = await Deck.find({ owner: userId })
+      .populate('owner')
+      .populate('cards.card')
+      .populate('fusionCards.card');
 
     res.status(200).json(decks);
   } catch (error) {
@@ -14,6 +20,10 @@ const getDecksUser = async (req, res) => {
 const getDeckById = async (req, res) => {
   try {
     const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ error: 'ID del mazo no proporcionado' });
+    }
+
     const deck = await Deck.findById(id).populate('owner').populate('cards.card').populate('fusionCards.card');
 
     if (!deck) {
@@ -28,7 +38,9 @@ const getDeckById = async (req, res) => {
 
 const createDeck = async (req, res) => {
   try {
-    if (!req.jwtPayload || !req.jwtPayload.id) {
+    const userId = req.jwtPayload?.id;
+
+    if (!userId) {
       return res.status(401).json({ error: 'Usuario no autenticado o token inválido' });
     }
 
@@ -38,48 +50,69 @@ const createDeck = async (req, res) => {
       return res.status(400).json({ error: 'El título del mazo es obligatorio' });
     }
 
+    const userDecks = await Deck.countDocuments({ owner: userId });
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    if (!user.admin && userDecks >= 5) {
+      return res.status(400).json({ error: 'Límite de mazos alcanzado (5).' });
+    }
+
     const totalNormalCards = cards.reduce((sum, card) => sum + (card.amount || 0), 0);
     const totalFusionCards = fusionCards.reduce((sum, card) => sum + (card.amount || 0), 0);
 
     if (totalNormalCards > 40) {
-      return res.status(400).json({ error: 'No puedes añadir más de 40 cartas de monstruo y apoyo al mazo' });
+      return res.status(400).json({ error: 'No puedes añadir más de 40 cartas de monstruo y apoyo al mazo.' });
     }
 
     if (totalFusionCards > 10) {
-      return res.status(400).json({ error: 'No puedes añadir más de 10 cartas de fusión al mazo' });
+      return res.status(400).json({ error: 'No puedes añadir más de 10 cartas de fusión al mazo.' });
     }
 
-    const mongoose = require('mongoose');
+    const allCardIds = [...cards.map((c) => c.card), ...fusionCards.map((c) => c.card)];
+    const existingCards = await Card.find({ _id: { $in: allCardIds } });
+
+    if (existingCards.length !== allCardIds.length) {
+      return res.status(400).json({ error: 'Algunas cartas no existen en la base de datos.' });
+    }
+
     const formattedCards = cards.map((c) => ({
-      card: mongoose.Types.ObjectId(c.card),
+      card: new mongoose.Types.ObjectId(c.card),
       amount: c.amount,
     }));
 
     const formattedFusionCards = fusionCards.map((c) => ({
-      card: mongoose.Types.ObjectId(c.card),
+      card: new mongoose.Types.ObjectId(c.card),
       amount: c.amount,
     }));
 
     const newDeck = new Deck({
-      deckTitle,
-      owner: req.jwtPayload.id,
+      deckTitle: deckTitle.trim(),
+      owner: userId,
       cards: formattedCards,
       fusionCards: formattedFusionCards,
     });
 
-    const savedDeck = await newDeck.save();
-    const id = savedDeck._id;
+    await newDeck.save();
 
-    const deckToReturn = await Deck.findById(id).populate('owner').populate('cards.card').populate('fusionCards.card');
+    const deckToReturn = await Deck.findById(newDeck._id)
+      .populate('owner')
+      .populate('cards.card')
+      .populate('fusionCards.card');
 
     res.status(201).json(deckToReturn);
   } catch (error) {
-    res.status(400).json({ error: 'Error al crear un mazo' });
+    res.status(500).json({ error: 'Error al crear un mazo' });
   }
 };
 
 const updateDeck = async (req, res) => {
   try {
+    const { id } = req.params;
+
     const { deckTitle, cards, fusionCards } = req.body;
 
     if (!deckTitle || deckTitle.trim() === '') {
@@ -89,8 +122,8 @@ const updateDeck = async (req, res) => {
     const totalNormalCards = cards.reduce((sum, card) => sum + (card.amount || 0), 0);
     const totalFusionCards = fusionCards.reduce((sum, card) => sum + (card.amount || 0), 0);
 
-    if (totalNormalCards > 40) {
-      return res.status(400).json({ error: 'No puedes añadir más de 40 cartas de monstruo y apoyo al mazo' });
+    if (!deckTitle || deckTitle.trim() === '') {
+      return res.status(400).json({ error: 'El título del mazo es obligatorio' });
     }
 
     if (totalFusionCards > 10) {
@@ -98,7 +131,7 @@ const updateDeck = async (req, res) => {
     }
 
     const updatedDeck = await Deck.findByIdAndUpdate(
-      req.params.id,
+      id,
       { deckTitle: deckTitle.trim(), cards, fusionCards },
       { new: true, runValidators: true },
     )
@@ -109,6 +142,7 @@ const updateDeck = async (req, res) => {
     if (!updatedDeck) {
       return res.status(404).json({ error: 'No se ha podido encontrar el mazo' });
     }
+
     res.status(200).json(updatedDeck);
   } catch (error) {
     res.status(400).json([{ error: 'Error al actualizar el mazo' }]);

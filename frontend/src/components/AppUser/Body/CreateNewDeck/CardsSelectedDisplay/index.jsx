@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import CardItem from '../CardItem';
 import CardModal from '../CardModal';

@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DeckTitle from './DeckTitle';
 import { fetchUserCollection } from '../../../../lib/utils/apiUserCollection';
+import { fetchDeck, createDeck, updateDeck } from '../../../../lib/utils/apiDeck';
 import CardsCollectedDisplay from './CardsCollectedDisplay';
 import CardsSelectedDisplay from './CardsSelectedDisplay';
-import { createDeck } from '../../../../lib/utils/apiDeck';
 import styles from './createnewdeck.module.css';
+import { getUserToken } from '../../../../lib/utils/localStorage.utils';
 
 const MAX_CARDS = 40;
 const MAX_FUSION_CARDS = 10;
 const MAX_DUPLICATES = 3;
 
 const CreateNewDeck = () => {
+  const { deckId } = useParams();
   const [deckTitle, setDeckTitle] = useState('');
   const [selectedCards, setSelectedCards] = useState([]);
   const [selectedFusionCards, setSelectedFusionCards] = useState([]);
   const [userCards, setUserCards] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUserCards = async () => {
@@ -40,6 +44,36 @@ const CreateNewDeck = () => {
     getUserCards();
   }, []);
 
+  useEffect(() => {
+    if (!deckId) return setLoading(false);
+
+    const loadDeck = async () => {
+      try {
+        const deckData = await fetchDeck(deckId);
+        if (deckData) {
+          setDeckTitle(deckData.deckTitle);
+          setSelectedCards(deckData.cards.map((c) => ({ id: c.card._id, ...c.card, amount: c.amount })));
+          setSelectedFusionCards(deckData.fusionCards.map((c) => ({ id: c.card._id, ...c.card, amount: c.amount })));
+        }
+      } catch (error) {
+        toast.error('Error al cargar el mazo.', {
+          position: 'top-right',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDeck();
+  }, [deckId]);
+
   const handleTitleChange = (newTitle) => setDeckTitle(newTitle);
 
   const handleAddCard = (card) => {
@@ -50,7 +84,6 @@ const CreateNewDeck = () => {
     const isFusionCard = card.category.toLowerCase() === 'fusion';
     const selectedArray = isFusionCard ? selectedFusionCards : selectedCards;
     const setSelectedArray = isFusionCard ? setSelectedFusionCards : setSelectedCards;
-
     const cardIndex = selectedArray.findIndex((c) => c.id === card.id);
 
     if (cardIndex !== -1) {
@@ -122,9 +155,14 @@ const CreateNewDeck = () => {
 
   const handleRemoveCard = (card) => {
     const isFusionCard = card.category.toLowerCase() === 'fusion';
-    isFusionCard
-      ? setSelectedFusionCards((prev) => prev.filter((c, index) => index !== prev.indexOf(card)))
-      : setSelectedCards((prev) => prev.filter((c, index) => index !== prev.indexOf(card)));
+    const selectedArray = isFusionCard ? selectedFusionCards : selectedCards;
+    const setSelectedArray = isFusionCard ? setSelectedFusionCards : setSelectedCards;
+
+    const updatedSelection = selectedArray
+      .map((c) => (c.id === card.id ? { ...c, amount: c.amount - 1 } : c))
+      .filter((c) => c.amount > 0);
+
+    setSelectedArray(updatedSelection);
 
     toast.info(`"${card.name}" eliminada del mazo.`, {
       position: 'top-right',
@@ -139,20 +177,16 @@ const CreateNewDeck = () => {
   };
 
   const handleSaveDeck = async () => {
-    const formattedCards = selectedCards.map((card) => ({ cardId: card.id, amount: card.amount }));
-    const formattedFusionCards = selectedFusionCards.map((card) => ({ cardId: card.id, amount: card.amount }));
-
-    const payload = {
+    const formattedDeck = {
       deckTitle: deckTitle.trim(),
-      cards: formattedCards,
-      fusionCards: formattedFusionCards,
+      cards: selectedCards.map(({ id, amount }) => ({ card: id, amount })),
+      fusionCards: selectedFusionCards.map(({ id, amount }) => ({ card: id, amount })),
     };
 
-    try {
-      const token = localStorage.getItem('token');
-      const savedDeck = await createDeck(payload, token);
+    const token = getUserToken();
 
-      toast.success(`Mazo "${savedDeck.deckTitle}" guardado con éxito.`, {
+    if (!token) {
+      toast.error('No estás autenticado. Inicia sesión nuevamente.', {
         position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
@@ -162,9 +196,21 @@ const CreateNewDeck = () => {
         progress: undefined,
         theme: 'dark',
       });
-      setDeckTitle('');
-      setSelectedCards([]);
-      setSelectedFusionCards([]);
+      return;
+    }
+
+    try {
+      const savedDeck = deckId ? await updateDeck(deckId, formattedDeck) : await createDeck(formattedDeck);
+      toast.success(`Mazo "${savedDeck.deckTitle}" ${deckId ? 'actualizado' : 'guardado'} con éxito.`, {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
     } catch (error) {
       toast.error('Error al guardar el mazo. Inténtalo de nuevo.', {
         position: 'top-right',
@@ -182,28 +228,37 @@ const CreateNewDeck = () => {
   return (
     <div className={styles.createNewDeck}>
       <ToastContainer theme='dark' />
-      <DeckTitle onTitleChange={handleTitleChange} />
-      <div className={styles.deckContent}>
-        <div className={styles.cardsCollectedWrapper}>
-          <CardsCollectedDisplay cards={userCards} onAddCard={handleAddCard} />
-        </div>
-        <div className={styles.cardsSelectedWrapper}>
-          <CardsSelectedDisplay
-            normalCards={selectedCards}
-            fusionCards={selectedFusionCards}
-            onRemoveCard={handleRemoveCard}
-          />
-        </div>
-      </div>
-      <button
-        className={styles.saveDeckButton}
-        disabled={
-          deckTitle.trim() === '' || selectedCards.length > MAX_CARDS || selectedFusionCards.length > MAX_FUSION_CARDS
-        }
-        onClick={handleSaveDeck}
-      >
-        Guardar Mazo
-      </button>
+
+      {loading ? (
+        <p className={styles.loadingMessage}>Cargando mazo...</p>
+      ) : (
+        <>
+          <DeckTitle value={deckTitle} onTitleChange={handleTitleChange} />
+          <div className={styles.deckContent}>
+            <div className={styles.cardsCollectedWrapper}>
+              <CardsCollectedDisplay cards={userCards} onAddCard={handleAddCard} />
+            </div>
+            <div className={styles.cardsSelectedWrapper}>
+              <CardsSelectedDisplay
+                normalCards={selectedCards}
+                fusionCards={selectedFusionCards}
+                onRemoveCard={handleRemoveCard}
+              />
+            </div>
+          </div>
+          <button
+            className={styles.saveDeckButton}
+            disabled={
+              deckTitle.trim() === '' ||
+              selectedCards.length > MAX_CARDS ||
+              selectedFusionCards.length > MAX_FUSION_CARDS
+            }
+            onClick={handleSaveDeck}
+          >
+            {deckId ? 'Actualizar Mazo' : 'Guardar Mazo'}
+          </button>
+        </>
+      )}
     </div>
   );
 };

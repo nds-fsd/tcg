@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { FaFilter, FaSortAmountDown } from 'react-icons/fa';
 import SearchBar from '../SearchBar';
 import FilterMenu from '../FilterMenu';
