@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import styles from './deckPage.module.css';
+import { useState, useEffect } from 'react';
 import { BsPlusCircleDotted } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import { useUser } from '../../../../context/userContext';
 import PageTitle from '../Generic/PageTitle';
 
 const DeckPage = () => {

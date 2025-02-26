@@ -1,0 +1,81 @@
+.marketPageContainer {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Metamorphous', sans-serif;
+}
+
+.marketInfocontainer {
+    display: flex;
+    gap: 20px;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.marketFilterContainer {
+    width: 25%;
+    background-color: #f4f4f4;
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.marketFilterContainer label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+}
+
+.marketFilterContainer input {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.filterButtons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.applyFilterButton,
+.clearFilterButton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.applyFilterButton {
+    background-color: #28a745;
+    color: white;
+}
+
+.clearFilterButton {
+    background-color: #dc3545;
+    color: white;
+}
+
+.marketListCardsContainer {
+    width: 75%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    justify-content: space-between;
+}
+
+.productCard {
+    padding: 10px;
+
+    width: 100%;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}

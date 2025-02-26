@@ -10,7 +10,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => { }, []);
+  useEffect(() => {}, []);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -38,6 +38,9 @@ const Header = () => {
         </Link>
         <Link to='/store' className={styles.navLink}>
           Tienda
+        </Link>
+        <Link to='/market' className={styles.navLink}>
+          Mercado Libre
         </Link>
 
         {data?.admin && (
