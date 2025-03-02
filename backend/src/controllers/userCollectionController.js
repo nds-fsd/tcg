@@ -39,11 +39,11 @@ const cardsObtainedFromChests = async (userId, chestData) => {
     }
 
     for (let i = 0; i < 2; i++) {
-      let rarity = Math.random() < 0.1 ? 'epic' : 'rare';
+      let rarity = Math.random() < 0.2 ? 'epic' : 'rare';
       selectedCards.push({ ...getRandomCard(cardsRarityInChest[rarity]), rarity });
     }
 
-    let finalRarity = Math.random() < 0.02 ? 'legendary' : 'epic';
+    let finalRarity = Math.random() < 0.1 ? 'legendary' : 'epic';
     selectedCards.push({ ...getRandomCard(cardsRarityInChest[finalRarity]), rarity: finalRarity });
 
     selectedCards = selectedCards.filter((card) => card.cardId !== null);

@@ -67,7 +67,8 @@ const Header = () => {
         {isModalOpen && (
           <div className={styles.modal}>
             <button onClick={() => navigate('/settings')}>Ajustes del usuario</button>
-            <button onClick={() => navigate('/purchase-history')}>Historial de compras</button>
+            <button onClick={() => navigate('/purchase-history')}>Historial de Compras</button>
+            <button onClick={() => navigate('/purchase-history')}>Historial de Mercado Libre</button>
             <button onClick={() => navigate('/stats')}>Trofeos</button>
             <button onClick={() => navigate('/stats')}>Estadisticas</button>
             <button onClick={() => navigate('/friends')}>Amigos</button>

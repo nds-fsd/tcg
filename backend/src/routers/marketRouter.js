@@ -1,7 +1,9 @@
 const { Router } = require('express');
-const { getMarketPlace } = require('../controllers/marketController');
+const { getMarketProducts, createProduct, deleteProduct } = require('../controllers/marketController');
 const marketRouter = Router();
 
-marketRouter.get('/', getMarketPlace);
+marketRouter.get('/:id', getMarketProducts);
+marketRouter.post('/create', createProduct);
+marketRouter.delete('/delete/:productId', deleteProduct);
 
 module.exports = { marketRouter };

@@ -1,81 +1,79 @@
 .marketPageContainer {
     height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Metamorphous', sans-serif;
-}
-
-.marketInfocontainer {
-    display: flex;
-    gap: 20px;
-    width: 80%;
-    margin: 20px auto;
 }
 
 .marketFilterContainer {
-    width: 25%;
-    background-color: #f4f4f4;
-    padding: 15px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.marketFilterContainer label {
-    display: flex;
-    flex-direction: column;
-    font-size: 14px;
-}
-
-.marketFilterContainer input {
-    padding: 5px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.filterButtons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.applyFilterButton,
-.clearFilterButton {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.applyFilterButton {
-    background-color: #28a745;
-    color: white;
-}
-
-.clearFilterButton {
-    background-color: #dc3545;
-    color: white;
-}
-
-.marketListCardsContainer {
-    width: 75%;
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
+    gap: 10px;
+    margin: 0 auto;
+    padding: 15px;
+    width: 80%;
     background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    justify-content: space-between;
+    border-radius: 10px;
+    font-family: 'Metamorphous', sans-serif;
 }
 
-.productCard {
-    padding: 10px;
+.filterSection {
+    flex: 1;
+}
 
+.select {
     width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.clearButton {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #8a2d16;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
     text-align: center;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: 'Metamorphous', sans-serif;
+}
+
+.clearButton:hover {
+    background-color: #b87937;
+}
+
+.marketCardsContainer {
+    margin: 20px auto;
+    width: 80%;
+}
+
+.marketCardsRows {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    list-style: none;
+}
+
+.cardRow {
+    padding: 10px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cardField {
+    padding: 6px 0;
+    text-align: center;
+    font-size: 14px;
+    font-family: 'Metamorphous', sans-serif;
+}
+
+.cardImg {
+    width: 100%;
+    border-radius: 5px;
+}
+
+.emptyMessage {
+    text-align: center;
+    font-size: 18px;
+    color: gray;
 }

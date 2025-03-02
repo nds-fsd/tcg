@@ -8,6 +8,7 @@ import UserCollection from './components/AppUser/Body/UserCollectionPage';
 import CreateNewDeck from './components/AppUser/Body/CreateNewDeck';
 import Store from './components/AppUser/Body/Store';
 import Market from './components/AppUser/Body/Market';
+import CardDetailPage from './components/AppUser/Body/Market/CardDetailPage';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { getUserToken } from './lib/utils/localStorage.utils';
@@ -54,6 +55,7 @@ const App = () => {
             <Route path='controldeck' element={<CreateNewDeck />} />
             <Route path='store' element={<Store />} />
             <Route path='market' element={<Market />} />
+            <Route path='card-detail/:id' element={<CardDetailPage />} />
             <Route path='user' element={<User />} />
             <Route path='collection' element={<UserCollection />} />
           </Route>
