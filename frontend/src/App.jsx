@@ -53,6 +53,7 @@ const App = () => {
             <Route index element={<HomePage />} />
             <Route path='deck' element={<Deck />} />
             <Route path='controldeck' element={<CreateNewDeck />} />
+            <Route path='/deck/:deckId' element={<CreateNewDeck />} />
             <Route path='store' element={<Store />} />
             <Route path='market' element={<Market />} />
             <Route path='card-detail/:id' element={<CardDetailPage />} />
