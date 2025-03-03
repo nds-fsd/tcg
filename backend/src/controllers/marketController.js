@@ -1,6 +1,7 @@
 const { Market } = require('../data/Schema/market');
 const { Card } = require('../data/Schema/card');
 const { User } = require('../data/Schema/user');
+const { UserCollection } = require('../data/Schema/userCollection');
 
 const getMarketProducts = async (req, res) => {
   try {
@@ -15,27 +16,36 @@ const getMarketProducts = async (req, res) => {
 
 const createProduct = async (req, res) => {
   try {
-    const { cardId, foil, price, amount } = req.body.newCard;
+    const { cardId, price, foil, amount } = req.body.newCard;
     const { id } = req.jwtPayload;
 
-    const cardExists = await Card.findById(cardId);
+    const cardExists = await Card.findById(cardId).select('foil');
     if (!cardExists) {
       return res.status(404).json({ error: 'Carta no encontrada' });
     }
 
-    const userExists = await User.findById(id);
+    const userExists = await User.findById(id).select('userName');
     if (!userExists) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
-    const existingProduct = await Market.findOne({ userId: id, cardId, foil });
-    const tipodads = typeof amount;
-    console.log('Tipo de amount: ', tipodads);
-    if (existingProduct) {
-      existingProduct.amount += parseInt(amount, 10);
-      await existingProduct.save();
+    const userCollection = await UserCollection.findOne({ userId: id }).select('cards');
+    if (!userCollection) {
+      return res.status(404).json({ error: 'Colección de usuario no encontrada' });
+    }
 
-      res.status(200).json('Cantidad actualizada en el mercado');
+    const userCard = userCollection.cards.find((card) => card.cardId.toString() === cardId.toString());
+
+    if (!userCard) {
+      return res.status(400).json({ error: 'No tienes esta carta para poner a la venta' });
+    }
+    if (userCard.amount < parseInt(amount, 10)) {
+      return res.status(400).json({ error: 'No tienes suficientes cartas para poner a la venta' });
+    }
+    const existingProduct = await Market.findOne({ userId: id, cardId, foil });
+
+    if (existingProduct) {
+      res.status(400).json({ error: 'Carta ya en vanta, modifica ese input' });
     } else {
       const newMarketProduct = new Market({
         cardId,
@@ -46,18 +56,20 @@ const createProduct = async (req, res) => {
       });
 
       await newMarketProduct.save();
-      res.status(200).json('Carta puesta a la venta con éxito');
     }
+
+    userCard.amount -= parseInt(amount, 10);
+    userCollection.cards = userCollection.cards.filter((card) => card.amount > 0);
+    await userCollection.save();
   } catch (e) {
-    console.error(e);
     res.status(500).json({ error: 'Error al crear el producto en el mercado' });
   }
 };
 
 const deleteProduct = async (req, res) => {
   try {
-    const { productId } = req.params; 
-    const { id: userId } = req.jwtPayload; 
+    const { productId } = req.params;
+    const { id: userId } = req.jwtPayload;
 
     const product = await Market.findById(productId);
 
@@ -69,7 +81,7 @@ const deleteProduct = async (req, res) => {
       return res.status(403).json({ error: 'No tienes permiso para eliminar este producto' });
     }
 
-    await Market.findByIdAndDelete(productId); 
+    await Market.findByIdAndDelete(productId);
 
     res.status(200).json({ message: 'Producto eliminado con éxito' });
   } catch (e) {
