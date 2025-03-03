@@ -51,8 +51,8 @@ const CardDetailPage = () => {
       console.log('Carta puesta a la venta con éxito');
       queryClient.invalidateQueries(['marketCards', card?._id]);
     },
-    onError: () => {
-      console.log('Fallida');
+    onError: (e) => {
+      console.log('Fallida: ', e.response.data);
     },
   });
 
