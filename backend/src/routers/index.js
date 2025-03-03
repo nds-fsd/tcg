@@ -4,6 +4,7 @@ const { userRouter } = require('./userRouter.js');
 const { userCollectionRouter } = require('./userCollectionRouter.js');
 const { deckRouter } = require('./deckRouter.js');
 const { storeRouter } = require('./storeRouter.js');
+const { marketRouter } = require('./marketRouter.js');
 const { authRouter } = require('./auth');
 const { adminRouter } = require('./adminRouter');
 const { jwtMiddleware } = require('../security/jwt.js');
@@ -15,6 +16,7 @@ router.use('/user', userRouter);
 router.use('/userCollection', userCollectionRouter);
 router.use('/deck', deckRouter);
 router.use('/store', storeRouter);
+router.use('/market', jwtMiddleware, marketRouter);
 router.use('/auth', authRouter);
 router.use('/admin', jwtMiddleware, adminRouter);
 

@@ -73,7 +73,6 @@ const cardSchema = new Schema(
     },
   },
   { timestamps: true },
-  { timestamps: true },
 );
 
 const Card = model('Card', cardSchema);
