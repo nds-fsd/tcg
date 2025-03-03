@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import styles from './decktitle.module.css';
 
-function DeckTitle({ onTitleChange }) {
+function DeckTitle({ value, onTitleChange }) {
   const [title, setTitle] = useState('');
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    setTitle(value || '');
+  }, [value]);
 
   const handleTextChange = (event) => {
     const newTitle = event.target.value;
     if (newTitle.length > 20) {
-      toast.error('El título no puede superar los 20 caracteres.');
+      toast.error('El título no puede superar los 20 caracteres.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
     } else {
       setTitle(newTitle);
     }
@@ -17,12 +30,30 @@ function DeckTitle({ onTitleChange }) {
 
   const handleSave = () => {
     if (title.trim() === '') {
-      toast.error('El título no puede estar vacío.');
+      toast.error('El título no puede estar vacío.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
       return;
     }
     onTitleChange(title.trim());
     setIsEditing(false);
-    toast.success('Título guardado con éxito.');
+    toast.success('Título guardado con éxito.', {
+      position: 'top-right',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    });
   };
 
   const handleKeyDown = (event) => {

@@ -59,15 +59,15 @@ const Store = () => {
         theme: "dark",
       });
     } catch (error) {
-      toast.error("Error en la transacción. Inténtalo de nuevo.", {
-        position: "top-right",
+      toast.error('Error en la transacción. Inténtalo de nuevo.', {
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: 'dark',
       });
     }
   };    
@@ -75,7 +75,7 @@ const Store = () => {
   return (
     <>
       <ToastContainer />
-      
+
       <BalanceBar balance={{ pixelcoins: data?.pixelcoins, pixelgems: data?.pixelgems }} />
       <div className={styles.storeContainer}>
         {/* Borrar quan canviem de lloc l'OrderHistory*/}

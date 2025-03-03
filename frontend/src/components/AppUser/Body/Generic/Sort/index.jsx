@@ -1,5 +1,5 @@
 import styles from './sort.module.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaSortAmountDown, FaArrowUp, FaArrowDown } from 'react-icons/fa';
 
 const Sort = ({ onSortChange }) => {
