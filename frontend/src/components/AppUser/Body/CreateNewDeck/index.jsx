@@ -236,7 +236,7 @@ const CreateNewDeck = () => {
           <DeckTitle value={deckTitle} onTitleChange={handleTitleChange} />
           <div className={styles.deckContent}>
             <div className={styles.cardsCollectedWrapper}>
-              <CardsCollectedDisplay cards={userCards} onAddCard={handleAddCard} />
+              <CardsCollectedDisplay cards={userCards} onAddCard={handleAddCard} addCard={true} />
             </div>
             <div className={styles.cardsSelectedWrapper}>
               <CardsSelectedDisplay
