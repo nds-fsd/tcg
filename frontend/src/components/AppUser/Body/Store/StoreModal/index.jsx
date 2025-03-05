@@ -1,7 +1,7 @@
-import React from "react";
-import Modal from "react-modal";
-import styles from "./storemodal.module.css";
-import { useUser } from "../../../../../context/userContext";
+import React from 'react';
+import Modal from 'react-modal';
+import styles from './storemodal.module.css';
+import { useUser } from '../../../../../context/userContext';
 
 const StoreModal = ({ isOpen, onClose, onConfirm, product }) => {
   const { updateUser } = useUser();
@@ -9,10 +9,17 @@ const StoreModal = ({ isOpen, onClose, onConfirm, product }) => {
   if (!product) return null;
 
   const handleConfirm = async () => {
-    const newBalance = await onConfirm(product);
-    if (newBalance) {
-      updateUser(newBalance);
+    if (typeof onConfirm !== "function") {
+      return;
+    }
+
+    try {
+      const response = await onConfirm(product);
+      if (response?.data?.newBalance) {
+        updateUser(response.data.newBalance);
+      }
       onClose();
+    } catch (error) {
     }
   };
 

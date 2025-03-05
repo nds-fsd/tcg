@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaTrashAlt } from 'react-icons/fa';
 import CardItem from '../CardItem';
 import CardModal from '../CardModal';
@@ -19,7 +19,7 @@ const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
       Array.from({ length: card.amount || 1 }).map((_, i) => ({
         ...card,
         keyId: `${card.id}-${i}`,
-      }))
+      })),
     );
   };
 
@@ -55,9 +55,7 @@ const CardsSelectedDisplay = ({ normalCards, fusionCards, onRemoveCard }) => {
         </div>
       </div>
 
-      <div className={styles.cardCounter}>
-        {totalCards}/50 Cartas Totales
-      </div>
+      <div className={styles.cardCounter}>{totalCards}/50 Cartas Totales</div>
 
       {selectedCard && <CardModal card={selectedCard} onClose={handleCloseModal} />}
     </div>

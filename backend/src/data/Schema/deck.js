@@ -5,6 +5,7 @@ const deckSchema = new Schema(
     deckTitle: {
       type: String,
       trim: true,
+      required: true,
     },
     owner: {
       type: Schema.Types.ObjectId,
@@ -40,7 +41,7 @@ const deckSchema = new Schema(
       },
     ],
     public: {
-      type: boolean,
+      type: Boolean,
       default: false,
     },
   },

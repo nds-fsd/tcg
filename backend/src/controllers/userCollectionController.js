@@ -15,14 +15,11 @@ const getUserCollection = async (req, res) => {
   }
 };
 
-const cardsObtainedFromChests = async (req, res) => {
+const cardsObtainedFromChests = async (userId, chestData) => {
   try {
-    const { userId, chest } = req.body;
-
     const allCards = await Card.find();
-    const chestCards = allCards.filter((card) => card.expansion === chest);
-
-    const chestData = {
+    const chestCards = allCards.filter((card) => card.expansion === chestData.expansion);
+    const cardsRarityInChest = {
       common: chestCards.filter((card) => card.rarity === 'Común'),
       rare: chestCards.filter((card) => card.rarity === 'Rara'),
       epic: chestCards.filter((card) => card.rarity === 'Épica'),
@@ -31,22 +28,23 @@ const cardsObtainedFromChests = async (req, res) => {
 
     const getRandomCard = (cardList) => {
       if (cardList.length === 0) return null;
-      return cardList[Math.floor(Math.random() * cardList.length)]._id;
+      const selectedCard = cardList[Math.floor(Math.random() * cardList.length)];
+      return { cardId: selectedCard._id, name: selectedCard.name };
     };
 
     let selectedCards = [];
 
     for (let i = 0; i < 3; i++) {
-      selectedCards.push({ cardId: getRandomCard(chestData.common), rarity: 'common' });
+      selectedCards.push({ ...getRandomCard(cardsRarityInChest.common), rarity: 'common' });
     }
 
     for (let i = 0; i < 2; i++) {
-      let rarity = Math.random() < 0.1 ? 'epic' : 'rare';
-      selectedCards.push({ cardId: getRandomCard(chestData[rarity]), rarity });
+      let rarity = Math.random() < 0.2 ? 'epic' : 'rare';
+      selectedCards.push({ ...getRandomCard(cardsRarityInChest[rarity]), rarity });
     }
 
-    let finalRarity = Math.random() < 0.02 ? 'legendary' : 'epic';
-    selectedCards.push({ cardId: getRandomCard(chestData[finalRarity]), rarity: finalRarity });
+    let finalRarity = Math.random() < 0.1 ? 'legendary' : 'epic';
+    selectedCards.push({ ...getRandomCard(cardsRarityInChest[finalRarity]), rarity: finalRarity });
 
     selectedCards = selectedCards.filter((card) => card.cardId !== null);
 
@@ -70,9 +68,9 @@ const cardsObtainedFromChests = async (req, res) => {
 
     await userCollection.save();
 
-    res.status(201).json(userCollection);
+    return selectedCards;
   } catch (e) {
-    res.status(500).json({ error: "Error al agregar cartas al usuario" });
+    return selectedCards;
   }
 };
 

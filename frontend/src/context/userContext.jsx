@@ -8,24 +8,16 @@ const UserContext = createContext();
 export const useUser = () => useContext(UserContext);
 
 export const UserContextProvider = ({ children }) => {
-  const storedToken = getUserToken();
   const queryClient = useQueryClient();
+  const storedToken = getUserToken();
 
-  const { data, isLoading, isError } = useQuery('user', () => fetchCurrentUser(storedToken), {
+  const { data } = useQuery('user', () => fetchCurrentUser(storedToken), {
     enabled: !!storedToken,
   });
 
-  const updateUser = (newBalance = null) => {
-    if (newBalance) {
-      queryClient.setQueryData('user', (oldData) => ({
-        ...oldData,
-        pixelcoins: newBalance.pixelcoins,
-        pixelgems: newBalance.pixelgems,
-      }));
-    } else {
-      queryClient.invalidateQueries('user');
-    }
+  const updateUser = () => {
+    queryClient.invalidateQueries('user');
   };
 
-  return <UserContext.Provider value={{ data, isLoading, isError, updateUser }}>{children}</UserContext.Provider>;
+  return <UserContext.Provider value={{ data, updateUser }}>{children}</UserContext.Provider>;
 };

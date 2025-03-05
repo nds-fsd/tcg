@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-icons/fa';
 import CardModal from '../CardModal';
@@ -43,7 +43,7 @@ const normalizeValue = (value, translations) => {
   return translations[value] || value.toLowerCase();
 };
 
-const CardItem = ({ card, onAction, actionLabel }) => {
+const CardItem = ({ card, onAction, actionLabel, addCard }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
@@ -100,16 +100,18 @@ const CardItem = ({ card, onAction, actionLabel }) => {
           </div>
         </div>
 
-        <motion.button
-          className={styles.addButton}
-          onClick={(event) => {
-            event.stopPropagation();
-            onAction(card);
-          }}
-          whileHover={{ scale: 1.1 }}
-        >
-          {isSmallScreen ? '+' : actionLabel}
-        </motion.button>
+        {addCard && (
+          <motion.button
+            className={styles.addButton}
+            onClick={(event) => {
+              event.stopPropagation();
+              onAction(card);
+            }}
+            whileHover={{ scale: 1.1 }}
+          >
+            {isSmallScreen ? '+' : actionLabel}
+          </motion.button>
+        )}
       </motion.div>
 
       <AnimatePresence>{isModalOpen && <CardModal card={card} onClose={handleCloseModal} />}</AnimatePresence>
