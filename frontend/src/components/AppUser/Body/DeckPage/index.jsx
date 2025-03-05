@@ -27,7 +27,7 @@ const DeckPage = () => {
       try {
         const userDecks = await getUserDecks(data._id);
         setDecks(userDecks);
-      } catch (err) {
+      } catch (e) {
         toast.error('Error al cargar los mazos. Inténtalo más tarde.', {
           position: 'top-right',
           autoClose: 2000,
