@@ -4,6 +4,8 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
 import { registerUser } from '../../../lib/utils/apiUser';
 import { setUserSession } from '../../../lib/utils/userSession';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -14,7 +16,11 @@ const RegisterForm = () => {
       navigate('/');
     },
     onError: (e) => {
-      alert('Error al registrarse. Revisa la información proporcionada.', e);
+      if (e.status === 400) {
+        errorToast('Solicitud incorrecta');
+      } else {
+        errorToast('Interno del servidor');
+      }
     },
   });
 
@@ -30,6 +36,7 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.registerForm}>
+      <ToastContainer theme='dark' />
       <div className={styles.field}>
         <input
           id='userName'
