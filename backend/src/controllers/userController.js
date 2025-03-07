@@ -1,5 +1,6 @@
 const { default: mongoose } = require('mongoose');
 const { User } = require('../data/Schema/user');
+const cloudinary = require('cloudinary').v2;
 
 const getUsers = async (req, res) => {
   try {
@@ -26,15 +27,26 @@ const getCurrentUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const userId = req.jwtPayload.id;
-  const updateInfo = req.body.userUpdate;
+  const updateInfo = req.body;
+  const { buffer, mimetype } = req.file;
 
   try {
-    const requestingUser = await User.findById(req.jwtPayload.id);
+    const requestingUser = await User.findById(userId);
     if (!requestingUser) {
       return res.status(401).send();
     }
 
-    const updatedUser = await User.findByIdAndUpdate(userId, updateInfo, {
+    const encodedImage = buffer.toString('base64');
+    const imageUrl = `data:${mimetype};base64,${encodedImage}`;
+    const imageUploaded = await cloudinary.uploader.upload(imageUrl);
+    const secureUrl = imageUploaded.secure_url;
+
+    const userUpdated = {
+      ...updateInfo,
+      profilePicture: secureUrl,
+    };
+
+    const updatedUser = await User.findByIdAndUpdate(userId, userUpdated, {
       new: true,
     });
     res.status(200).json(updatedUser);

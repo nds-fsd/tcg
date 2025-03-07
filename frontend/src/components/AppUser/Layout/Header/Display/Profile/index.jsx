@@ -17,6 +17,7 @@ const ProfileEditForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    watch,
   } = useForm();
 
   useEffect(() => {
@@ -33,8 +34,9 @@ const ProfileEditForm = () => {
   const onSubmit = async (formData) => {
     try {
       const response = await updateUser(formData);
-      successToast('Datos actualizados correctamente');
       navigate('/');
+      successToast('Datos actualizados correctamente');
+      
     } catch (e) {
       if (e.status === 400) {
         errorToast('Solicitud incorrecta');
@@ -51,8 +53,10 @@ const ProfileEditForm = () => {
   }
 
   return (
+    <>
+    <ToastContainer theme='dark' />
     <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
-      <ToastContainer theme='dark' />
+     
       <h2 className={styles.formTitle}>Editar Perfil</h2>
 
       <div className={styles.formGroup}>
@@ -83,12 +87,12 @@ const ProfileEditForm = () => {
         {errors.email && <p className={styles.error}>{errors.email.message}</p>}
       </div>
 
-      {/* <div className={styles.formGroup}>
+      <div className={styles.formGroup}>
         <label className={styles.label} htmlFor='profilePicture'>
           Foto de Perfil:
         </label>
         <input className={styles.input} id='profilePicture' type='file' {...register('profilePicture')} />
-      </div> */}
+      </div>
 
       <div className={styles.formGroup}>
         <label className={styles.label} htmlFor='birthDate'>
@@ -116,6 +120,8 @@ const ProfileEditForm = () => {
         Guardar Cambios
       </button>
     </form>
+    </>
+    
   );
 };
 

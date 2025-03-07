@@ -42,15 +42,19 @@ export const createUser = async (newUser, userInfo) => {
 export const updateUser = async (userUpdate) => {
   const token = getUserToken();
 
-  const response = await API.put(
-    '/user/update',
-    { userUpdate },
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  const formData = new FormData();
+  formData.append('userName', userUpdate.userName);
+  formData.append('email', userUpdate.email);
+  formData.append('birthDate', userUpdate.birthDate);
+  formData.append('profilePicture', userUpdate.profilePicture[0]);
+
+  const response = await API.post('/user/update', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: `Bearer ${token}`,
     },
-  );
+  });
+  console.log(response.status);
   return response.status;
 };
 
