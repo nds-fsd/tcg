@@ -30,7 +30,9 @@
   text-decoration: none;
   color: #a8a888;
   font-size: 14px;
-  transition: color 0.3s ease, transform 0.2s ease-in-out;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease-in-out;
 }
 
 .navLink:hover {

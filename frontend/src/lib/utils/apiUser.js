@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getUserToken } from './localStorage.utils';
+import { errorToast } from '../toastify/toast';
 
 const API = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_API_URL,
@@ -23,7 +24,7 @@ export const createUser = async (newUser, userInfo) => {
   const token = getUserToken();
 
   if (!userInfo.admin) {
-    return alert('El usuario no es administrador');
+    return errorToast('El usuario no es administrador.');
   }
 
   const response = await API.post(
@@ -38,14 +39,11 @@ export const createUser = async (newUser, userInfo) => {
   return response;
 };
 
-export const updateUser = async (id, userUpdate, data) => {
+export const updateUser = async (userUpdate) => {
   const token = getUserToken();
-  if (!data.admin) {
-    return alert('El usuario no es administrador');
-  }
 
   const response = await API.put(
-    `/admin/update/${id}`,
+    '/user/update',
     { userUpdate },
     {
       headers: {
@@ -53,7 +51,7 @@ export const updateUser = async (id, userUpdate, data) => {
       },
     },
   );
-  return response;
+  return response.status;
 };
 
 export const deleteUser = async (id, data) => {

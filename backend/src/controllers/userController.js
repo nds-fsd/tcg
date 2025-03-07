@@ -25,27 +25,21 @@ const getCurrentUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).json({ error: 'ID de usuario inválido' });
-  }
+  const userId = req.jwtPayload.id;
+  const updateInfo = req.body.userUpdate;
+
   try {
     const requestingUser = await User.findById(req.jwtPayload.id);
     if (!requestingUser) {
-      return res.status(404).json({ error: 'Usuario que realiza la solicitud no encontrado' });
+      return res.status(401).send();
     }
-    if (!requestingUser.admin) {
-      return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
-    }
-    const updatedUser = await User.findByIdAndUpdate(id, req.body.userUpdate, {
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updateInfo, {
       new: true,
     });
-    if (!updatedUser) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
-    }
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(400).json([{ Error: 'Error al interntar modificar al usuario' }]);
+    res.status(400).send();
   }
 };
 

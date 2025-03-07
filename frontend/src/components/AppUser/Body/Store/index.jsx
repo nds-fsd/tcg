@@ -35,28 +35,28 @@ const Store = () => {
   const handleBuyProduct = async (product, buyFunction, closeModal) => {
     try {
       const response = await buyFunction(product._id);
-  
+
       if (response?.data && Array.isArray(response.data)) {
         setObtainedCards(response.data);
-  
+
         closeModal();
-  
+
         setTimeout(() => setIsRewardModalOpen(true), 300);
       }
-  
+
       if (response.data?.newBalance) {
         updateUser(response.data.newBalance);
       }
-  
+
       toast.success(`Compra realizada con éxito: ${product.name}`, {
-        position: "top-right",
+        position: 'top-right',
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "dark",
+        theme: 'dark',
       });
     } catch (error) {
       toast.error('Error en la transacción. Inténtalo de nuevo.', {
@@ -70,7 +70,7 @@ const Store = () => {
         theme: 'dark',
       });
     }
-  };    
+  };
 
   return (
     <>
@@ -104,7 +104,6 @@ const Store = () => {
         onClose={() => setIsRewardModalOpen(false)}
         obtainedCards={obtainedCards}
       />
-
     </>
   );
 };
