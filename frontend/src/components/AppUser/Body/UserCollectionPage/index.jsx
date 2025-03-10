@@ -27,19 +27,12 @@ const UserCollectionPage = () => {
 
   return (
     <div className={styles.bodyUserCollectionPageContainer}>
-      <PageTitle
-        title='Tu Colección'
-        showAddIcon={false}
-        showSercher={false}
-      />
+      <PageTitle title='Tu Colección' showAddIcon={false} showSercher={false} />
       <div className={styles.cardsCollectedWrapper}>
-        <CardsCollectedDisplay
-          cards={Array.isArray(userCards) ? userCards : []}
-          addCard={false}
-        />
+        <CardsCollectedDisplay cards={Array.isArray(userCards) ? userCards : []} addCard={false} />
       </div>
 
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
+      <ToastContainer position='top-right' autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
     </div>
   );
 };

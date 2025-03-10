@@ -21,7 +21,7 @@ const EditUser = ({ user, handleUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: updatedUser } = await updateUser(user._id, form, data);
+      const { data: updatedUser } = await updateUser(user._id, form);
       handleUpdate(updatedUser);
       setIsModalOpen(false);
       toast.success('Usuario actualizado correctamente');
@@ -77,7 +77,7 @@ const EditUser = ({ user, handleUpdate }) => {
         </div>
       )}
 
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
+      <ToastContainer position='top-right' autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
     </>
   );
 };

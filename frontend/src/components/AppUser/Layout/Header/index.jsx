@@ -1,6 +1,5 @@
 import styles from './header.module.css';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useUser } from '../../../../context/userContext';
 import { removeSession } from '../../../../lib/utils/userSession';
 import { useEffect, useState } from 'react';
@@ -8,12 +7,28 @@ import { useEffect, useState } from 'react';
 const Header = () => {
   const { data } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(`.${styles.modal}`) && !event.target.closest(`.${styles.userIconImage}`)) {
+        setIsModalOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsModalOpen(false);
+  }, [location]);
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsModalOpen((prevState) => !prevState);
   };
 
   const handleLogout = () => {
@@ -66,11 +81,11 @@ const Header = () => {
 
         {isModalOpen && (
           <div className={styles.modal}>
-            <button onClick={() => navigate('/settings')}>Ajustes del usuario</button>
+            <button onClick={() => navigate('/profile')}>Perfil de usuario</button>
             <button onClick={() => navigate('/purchase-history')}>Historial de Compras</button>
             <button onClick={() => navigate('/purchase-history')}>Historial de Mercado Libre</button>
             <button onClick={() => navigate('/stats')}>Trofeos</button>
-            <button onClick={() => navigate('/stats')}>Estadisticas</button>
+            <button onClick={() => navigate('/stats')}>Estadísticas</button>
             <button onClick={() => navigate('/friends')}>Amigos</button>
             <button onClick={handleLogout}>Cerrar Sessión</button>
           </div>

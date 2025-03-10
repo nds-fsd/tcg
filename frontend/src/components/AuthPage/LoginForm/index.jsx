@@ -4,6 +4,9 @@ import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
 import { loginUser } from '../../../lib/utils/apiUser';
 import { setUserSession } from '../../../lib/utils/userSession';
+import { errorToast } from '../../../lib/toastify/toast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -14,7 +17,11 @@ const LoginForm = () => {
       navigate('/');
     },
     onError: (e) => {
-      alert('Error al iniciar sesión. Por favor, revisa tus credenciales.', e);
+      if (e.status === 400) {
+        errorToast('Solicitud incorrecta');
+      } else {
+        errorToast('Interno del servidor');
+      }
     },
   });
 
@@ -30,6 +37,7 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
+      <ToastContainer theme='dark' />
       <div className={styles.field}>
         <input
           type='email'

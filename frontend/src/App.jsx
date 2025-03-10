@@ -1,6 +1,7 @@
 import AuthPage from './components/AuthPage';
 import NotFound from './components/AppUser/Layout/NotFound';
 import Layout from './components/AppUser/Layout';
+import ProfileEditForm from './components/AppUser/Layout/Header/Display/Profile';
 import HomePage from './components/AppUser/Body/HomePage';
 import Deck from './components/AppUser/Body/DeckPage';
 import User from './components/AppUser/Body/UserPage';
@@ -54,11 +55,12 @@ const App = () => {
             <Route path='deck' element={<Deck />} />
             <Route path='controldeck' element={<CreateNewDeck />} />
             <Route path='/deck/:deckId' element={<CreateNewDeck />} />
+            <Route path='card-detail/:id' element={<CardDetailPage />} />
+            <Route path='collection' element={<UserCollection />} />
             <Route path='store' element={<Store />} />
             <Route path='market' element={<Market />} />
-            <Route path='card-detail/:id' element={<CardDetailPage />} />
             <Route path='user' element={<User />} />
-            <Route path='collection' element={<UserCollection />} />
+            <Route path='profile' element={<ProfileEditForm />} />
           </Route>
         </Routes>
       </UserContextProvider>
