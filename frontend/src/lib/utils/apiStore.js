@@ -34,7 +34,7 @@ export const buyProduct = async (productId) => {
 
 export const buyChest = async (productId) => {
   const token = getUserToken();
-
+  
   if (!token) {
     return null;
   }
@@ -46,6 +46,7 @@ export const buyChest = async (productId) => {
       headers: { Authorization: `Bearer ${token}` },
     },
   );
+  console.log('respuesta: ', response)
   return response;
 };
 
