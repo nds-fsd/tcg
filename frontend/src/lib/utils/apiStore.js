@@ -34,7 +34,7 @@ export const buyProduct = async (productId) => {
 
 export const buyChest = async (productId) => {
   const token = getUserToken();
-  
+
   if (!token) {
     return null;
   }
