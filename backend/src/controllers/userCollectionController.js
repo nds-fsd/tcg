@@ -36,7 +36,6 @@ const cardForUserDeleteById = async (req, res) => {
 };
 
 const cardsObtainedFromChests = async (userId, chestData) => {
-  console.log('Segunda parte de la función');
   try {
     const allCards = await Card.find();
     const chestCards = allCards.filter((card) => card.expansion === chestData.expansion);

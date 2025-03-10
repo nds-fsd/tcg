@@ -35,16 +35,14 @@ const Store = () => {
     try {
       const response = await buyFunction(product._id);
 
-      if (response?.data && Array.isArray(response.data)) {
-        setObtainedCards(response.data);
-
+      if (response) {
+        setObtainedCards(response.obtainedCards);
         closeModal();
-
         setTimeout(() => setIsRewardModalOpen(true), 300);
       }
 
-      if (response.data?.newBalance) {
-        updateUser(response.data.newBalance);
+      if (response.newBalance) {
+        updateUser(response.newBalance);
       }
       successToast('Compra realizada con éxito');
     } catch (e) {

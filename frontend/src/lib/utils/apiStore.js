@@ -46,8 +46,7 @@ export const buyChest = async (productId) => {
       headers: { Authorization: `Bearer ${token}` },
     },
   );
-  console.log('respuesta: ', response)
-  return response;
+  return response.data;
 };
 
 export const buyCurrency = async (productId) => {
