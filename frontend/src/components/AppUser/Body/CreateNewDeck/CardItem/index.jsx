@@ -84,8 +84,6 @@ const CardItem = ({ card, onAction, actionLabel, addCard }) => {
         whileHover={{ scale: 1.05 }}
         onClick={handleCardClick}
       >
-
-
         <div className={styles.cardImageContainer}>
           <img src={image || '/assets/CardImg/cardplaceholdertcg.png'} alt={name} className={styles.cardImage} />
         </div>

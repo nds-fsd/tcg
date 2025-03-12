@@ -7,7 +7,7 @@ const getUserCollection = async (req, res) => {
 
     const userCollection = await UserCollection.findOne({ userId }).populate('userId').populate('cards.cardId');
     if (!userCollection) {
-      return res.status(404).json({ e: 'Colección no encontrada para el usuario' });
+      return res.status(404).send();
     }
     res.status(200).json(userCollection);
   } catch (e) {
