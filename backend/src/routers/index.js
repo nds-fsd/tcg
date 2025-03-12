@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { jwtMiddleware } = require('../security/jwt.js');
 const { cardRouter } = require('./cardRouter.js');
 const { userRouter } = require('./userRouter.js');
 const { userCollectionRouter } = require('./userCollectionRouter.js');
@@ -7,7 +8,6 @@ const { storeRouter } = require('./storeRouter.js');
 const { marketRouter } = require('./marketRouter.js');
 const { authRouter } = require('./auth');
 const { adminRouter } = require('./adminRouter');
-const { jwtMiddleware } = require('../security/jwt.js');
 
 const router = Router();
 
