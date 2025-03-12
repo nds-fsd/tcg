@@ -9,7 +9,7 @@ const StoreModal = ({ isOpen, onClose, onConfirm, product }) => {
   if (!product) return null;
 
   const handleConfirm = async () => {
-    if (typeof onConfirm !== 'function') {
+    if (typeof onConfirm !== "function") {
       return;
     }
 
@@ -19,7 +19,8 @@ const StoreModal = ({ isOpen, onClose, onConfirm, product }) => {
         updateUser(response.data.newBalance);
       }
       onClose();
-    } catch (error) {}
+    } catch (error) {
+    }
   };
 
   return (

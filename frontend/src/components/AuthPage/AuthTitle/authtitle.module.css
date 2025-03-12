@@ -1,12 +1,12 @@
 .header {
-  color: var(--color-light);
+  color: rgb(255, 255, 255);
   text-align: center;
   padding: 1rem 0;
-  font-family: var(--font-family);
+  font-family: 'Metamorphous', sans-serif;
 }
 
 .bg-6 {
-  background-color: var(--color-dark);
+  background-color: #664631;
   display: flex;
   justify-content: center;
 }
@@ -15,7 +15,7 @@
   font-size: 1.6rem;
   position: relative;
   margin: 0 auto;
-  font-family: var(--font-family-2);
+  font-family: 'Pixelify Sans', sans-serif;
 }
 
 .glitch:after {
@@ -23,7 +23,7 @@
   position: absolute;
   left: 12vw;
   text-shadow: -2px 0 #8a2d16;
-  background: var(--color-dark);
+  background: #664631;
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
   animation: noise-anim 3s infinite linear alternate-reverse;
@@ -33,8 +33,8 @@
   content: attr(data-text);
   position: absolute;
   left: 16vw;
-  text-shadow: 1px 0 var(--color-primary);
-  background: var(--color-dark);
+  text-shadow: 1px 0 #53612b;
+  background: #664631;
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
   animation: noise-anim-2 3s infinite linear alternate-reverse;

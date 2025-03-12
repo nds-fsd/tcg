@@ -1,11 +1,12 @@
 import styles from './loginform.module.css';
-import AuthButton from '../sendButton/index';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
 import { loginUser } from '../../../lib/utils/apiUser';
 import { setUserSession } from '../../../lib/utils/userSession';
 import { errorToast } from '../../../lib/toastify/toast';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
+      <ToastContainer theme='dark' />
       <div className={styles.field}>
         <input
           type='email'
@@ -69,7 +71,9 @@ const LoginForm = () => {
         {errors.password && <p className={styles.error}>{errors.password.message}</p>}
       </div>
 
-      <AuthButton disabled={loginMutation.isLoading} text='Iniciar Sesión' />
+      <button id='login-button' className={styles.loginButton} type='submit' disabled={loginMutation.isLoading}>
+        {loginMutation.isLoading ? 'Cargando...' : 'Logear'}
+      </button>
     </form>
   );
 };

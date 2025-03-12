@@ -7,16 +7,18 @@ const API = axios.create({
 
 export const fetchUserCollection = async () => {
   const token = getUserToken();
-
-  const response = await API.get('/', {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  return response.data.cards;
+  try {
+    const response = await API.get('/', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data.cards || [];
+  } catch (e) {
+    return [];
+  }
 };
 
 export const createCardUser = (idUser, idCard) => {
   const token = getUserToken();
-
   return API.post(
     '/',
     { userId: idUser, cardId: idCard },
@@ -30,7 +32,6 @@ export const createCardUser = (idUser, idCard) => {
 
 export const deleteCardUser = (idUser, idCard) => {
   const token = getUserToken();
-
   return API.delete(`/${idUser}/cards/${idCard}`, {
     headers: {
       Authorization: `Bearer ${token}`,

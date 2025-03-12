@@ -6,8 +6,16 @@ const API = axios.create({
 });
 
 export const fetchCards = async () => {
-  const response = await API.get('/');
-  return response.data;
+  try {
+    const response = await API.get('/');
+    const data = response.data;
+    if (!Array.isArray(data)) {
+      return [];
+    }
+    return data;
+  } catch (error) {
+    return [];
+  }
 };
 
 export const createCard = async (card) => {

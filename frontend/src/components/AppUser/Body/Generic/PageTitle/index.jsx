@@ -9,7 +9,7 @@ const PageTitle = ({ title, showAddIcon, showSercher, searchTerm, setSearchTerm,
         <h1>{title}</h1>
         {showAddIcon && <BsPlusCircleDotted className={styles.plus} onClick={openModal} />}
       </div>
-      {showSercher && (
+      {showSercher &&
         <div className={styles.userPageSercherContainer}>
           <input
             className={styles.userPageSercher}
@@ -18,9 +18,9 @@ const PageTitle = ({ title, showAddIcon, showSercher, searchTerm, setSearchTerm,
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <FaSearch className={styles.searchIcon} onClick={() => {}} />
+          <FaSearch className={styles.searchIcon} onClick={() => { }} />
         </div>
-      )}
+      }
     </div>
   );
 };

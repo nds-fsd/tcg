@@ -2,8 +2,134 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding: 0.5rem 1.2rem;
-  background-color: var(--color-background-header);
-  color: var(--color-light);
-  font-family: var(--font-family);
+  padding: 8px 20px;
+  background-color: #521e00;
+  color: white;
+  font-family: 'Metamorphous', sans-serif;
+}
+
+.gameIcon {
+  width: 60px;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.gameIcon:hover {
+  transform: scale(1.1);
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.navLink {
+  padding: 4px;
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+  color: #a8a888;
+  font-size: 14px;
+  transition: color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.navLink:hover {
+  padding: 4px;
+  color: white;
+  border-bottom: 1px solid #a87304;
+  border-radius: 0 0 10px 10px;
+  transform: translateY(-2px);
+}
+
+.userIcon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.userIconImage img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.2s ease-in-out;
+}
+
+.userIconImage:hover img {
+  transform: scale(1.1);
+}
+
+.modal {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: #3a1c00;
+  border: 1px solid #a87304;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  z-index: 10;
+}
+
+.modal button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: background 0.2s ease-in-out;
+  font-size: 14px;
+}
+
+.modal button:hover {
+  background: #a87304;
+  border-radius: 50px;
+}
+
+@media screen and (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .nav {
+    margin-top: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .userIcon {
+    margin-top: 8px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .gameIcon {
+    width: 80px;
+  }
+
+  .nav {
+    gap: 10px;
+  }
+
+  .navLink {
+    font-size: 12px;
+  }
+
+  .userIconImage img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .modal {
+    width: 160px;
+  }
 }

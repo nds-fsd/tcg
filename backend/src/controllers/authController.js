@@ -39,6 +39,7 @@ const loginFunction = async (req, res) => {
     User.findOne({ email }).then((foundUser) => {
       if (!foundUser) return res.status(400).send();
       if (!foundUser.comparePassword(password)) return res.status(400).send();
+
       return res.status(200).json({
         token: foundUser.generateJWT(),
       });
