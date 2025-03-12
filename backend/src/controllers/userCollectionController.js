@@ -7,31 +7,11 @@ const getUserCollection = async (req, res) => {
 
     const userCollection = await UserCollection.findOne({ userId }).populate('userId').populate('cards.cardId');
     if (!userCollection) {
-      return res.status(404).send();
+      return res.status(404).json({ e: 'Colección no encontrada para el usuario' });
     }
     res.status(200).json(userCollection);
   } catch (e) {
-    res.status(500).send();
-  }
-};
-
-const cardForUserDeleteById = async (req, res) => {
-  const { userId, cardId } = req.params;
-
-  try {
-    const userCollection = await UserCollection.findOneAndUpdate(
-      { userId },
-      { $pull: { cards: { cardId } } },
-      { new: true },
-    );
-
-    if (!userCollection) {
-      return res.status(404).json({ e: 'No se encontró la carta en la colección del usuario' });
-    }
-
-    res.status(200).json({ message: 'Carta eliminada de la colección', userCollection });
-  } catch (e) {
-    res.status(400).json([{ e: 'Error al eliminar la carta del usuario' }]);
+    res.status(500).json([{ e: 'Error en la recolección de cartas del usuario' }]);
   }
 };
 
@@ -40,10 +20,10 @@ const cardsObtainedFromChests = async (userId, chestData) => {
     const allCards = await Card.find();
     const chestCards = allCards.filter((card) => card.expansion === chestData.expansion);
     const cardsRarityInChest = {
-      common: chestCards.filter((card) => card.rarity === 'common'),
-      rare: chestCards.filter((card) => card.rarity === 'rare'),
-      epic: chestCards.filter((card) => card.rarity === 'epic'),
-      legendary: chestCards.filter((card) => card.rarity === 'legendary'),
+      common: chestCards.filter((card) => card.rarity === 'Común'),
+      rare: chestCards.filter((card) => card.rarity === 'Rara'),
+      epic: chestCards.filter((card) => card.rarity === 'Épica'),
+      legendary: chestCards.filter((card) => card.rarity === 'Legendaria'),
     };
 
     const getRandomCard = (cardList) => {
@@ -67,6 +47,7 @@ const cardsObtainedFromChests = async (userId, chestData) => {
     selectedCards.push({ ...getRandomCard(cardsRarityInChest[finalRarity]), rarity: finalRarity });
 
     selectedCards = selectedCards.filter((card) => card.cardId !== null);
+
     let userCollection = await UserCollection.findOne({ userId });
 
     if (!userCollection) {
@@ -84,15 +65,37 @@ const cardsObtainedFromChests = async (userId, chestData) => {
     });
 
     userCollection.markModified('cards');
+
     await userCollection.save();
+
     return selectedCards;
   } catch (e) {
-    return res.status(500).send();
+    return selectedCards;
+  }
+};
+
+const cardForUserDeleteById = async (req, res) => {
+  const { userId, cardId } = req.params;
+
+  try {
+    const userCollection = await UserCollection.findOneAndUpdate(
+      { userId },
+      { $pull: { cards: { cardId } } },
+      { new: true },
+    );
+
+    if (!userCollection) {
+      return res.status(404).json({ e: 'No se encontró la carta en la colección del usuario' });
+    }
+
+    res.status(200).json({ message: 'Carta eliminada de la colección', userCollection });
+  } catch (e) {
+    res.status(400).json([{ e: 'Error al eliminar la carta del usuario' }]);
   }
 };
 
 module.exports = {
   getUserCollection,
-  cardForUserDeleteById,
   cardsObtainedFromChests,
+  cardForUserDeleteById,
 };
