@@ -40,7 +40,7 @@ const Store = () => {
         closeModal();
         setTimeout(() => setIsRewardModalOpen(true), 300);
       }
-
+  
       if (response.data?.newBalance) {
         updateUser(response.data.newBalance);
       }
@@ -57,7 +57,7 @@ const Store = () => {
         errorToast('Interno del servidor');
       }
     }
-  };
+  };    
 
   return (
     <>
@@ -89,6 +89,7 @@ const Store = () => {
         onClose={() => setIsRewardModalOpen(false)}
         obtainedCards={obtainedCards}
       />
+
     </>
   );
 };

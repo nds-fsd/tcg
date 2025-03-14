@@ -93,7 +93,11 @@ const MarketPage = () => {
 
   return (
     <div className={styles.marketPageContainer}>
-      <PageTitle title='Mercado Libre' showAddIcon={false} showSercher={false} />
+      <PageTitle
+        title='Mercado Libre'
+        showAddIcon={false}
+        showSercher={false}
+      />
 
       <div className={styles.marketFilterContainer}>
         {[

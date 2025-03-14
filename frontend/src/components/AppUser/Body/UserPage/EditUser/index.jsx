@@ -20,7 +20,7 @@ const EditUser = ({ user, handleUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: updatedUser } = await updateUser(user._id, form);
+      const { data: updatedUser } = await updateUser(user._id, form, data);
       handleUpdate(updatedUser);
       setIsModalOpen(false);
       toast.success('Usuario actualizado correctamente');
