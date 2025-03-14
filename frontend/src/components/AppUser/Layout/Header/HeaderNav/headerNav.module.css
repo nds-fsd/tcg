@@ -22,3 +22,15 @@
   border-radius: 0 0 8px 8px;
   transform: translateY(-6px);
 }
+
+.navLink:active {
+  color: var(--color-hover);
+}
+
+.navLinkactive {
+  color: var(--color-hover);
+  font-weight: bold;
+  border-bottom: 2px solid var(--color-hover);
+  border-radius: 0 0 8px 8px;
+  transform: translateY(-4px);
+}
