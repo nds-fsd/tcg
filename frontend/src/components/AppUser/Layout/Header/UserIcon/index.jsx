@@ -3,13 +3,21 @@ import { IoNotifications } from 'react-icons/io5';
 import { useUser } from '../../../../../context/userContext';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 import { removeSession } from '../../../../../lib/utils/userSession';
 
 const UserIcon = () => {
-  const { data } = useUser();
+  const { data, updateUser } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
+  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!data) {
+      updateUser();
+    }
+  }, [data, updateUser]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -34,6 +42,7 @@ const UserIcon = () => {
 
   const handleLogout = () => {
     removeSession();
+    queryClient.invalidateQueries('user');
     navigate('/auth');
   };
 
