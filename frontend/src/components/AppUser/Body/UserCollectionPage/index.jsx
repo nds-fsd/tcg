@@ -1,29 +1,29 @@
 import styles from './userCollectionPage.module.css';
 import PageTitle from '../Generic/PageTitle';
+import CardsCollectedDisplay from '../CreateNewDeck/CardsCollectedDisplay';
 import { useEffect, useState } from 'react';
 import { fetchUserCollection } from '../../../../lib/utils/apiUserCollection';
-import { toast, ToastContainer } from 'react-toastify';
-import CardsCollectedDisplay from '../CreateNewDeck/CardsCollectedDisplay';
-import 'react-toastify/dist/ReactToastify.css';
+import { errorToast } from '../../../../lib/toastify/toast';
 
 const UserCollectionPage = () => {
   const [userCards, setUserCards] = useState([]);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getUserCards = async () => {
-      try {
-        const response = await fetchUserCollection();
-        setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, amount: amount })));
-      } catch (e) {
-        toast.error('Error al cargar las cartas');
-      }
-    };
-
     getUserCards();
   }, []);
 
-  if (error) return <p>{error}</p>;
+  const getUserCards = async () => {
+    try {
+      const response = await fetchUserCollection();
+      setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, amount: amount })));
+    } catch (e) {
+      if (e.status === 404) {
+        errorToast('Recurso no existe');
+      } else {
+        errorToast('Error interno del servidor');
+      }
+    }
+  };
 
   return (
     <div className={styles.bodyUserCollectionPageContainer}>
@@ -38,8 +38,6 @@ const UserCollectionPage = () => {
           addCard={false}
         />
       </div>
-
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
     </div>
   );
 };

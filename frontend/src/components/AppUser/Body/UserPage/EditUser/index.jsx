@@ -4,7 +4,6 @@ import { useUser } from '../../../../../context/userContext';
 import { updateUser } from '../../../../../lib/utils/apiUser';
 import { toast, ToastContainer } from 'react-toastify';
 import EditButton from '../../Generic/EditButton';
-import 'react-toastify/dist/ReactToastify.css';
 
 const EditUser = ({ user, handleUpdate }) => {
   const { data } = useUser();
@@ -76,8 +75,6 @@ const EditUser = ({ user, handleUpdate }) => {
           </div>
         </div>
       )}
-
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
     </>
   );
 };
