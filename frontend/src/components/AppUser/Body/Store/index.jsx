@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react';
+import styles from '../Store/store.module.css';
 import ProductList from '../Store/ProductList';
 import BalanceBar from '../Store/BalanceBar';
-import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiStore';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import styles from '../Store/store.module.css';
-import { useUser } from '../../../../context/userContext';
 import ChestRewardModal from './ChestRewardModal';
 import OrderHistory from '../User/Profile/OrderHistory'; //Borrar quan canviem de lloc l'OrderHistory
+import { useState, useEffect } from 'react';
+import { useUser } from '../../../../context/userContext';
+import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiStore';
+import { successToast, errorToast } from '../../../../lib/toastify/toast';
 
 const Store = () => {
   const { data, updateUser } = useUser();
@@ -36,11 +35,9 @@ const Store = () => {
     try {
       const response = await buyFunction(product._id);
 
-      if (response?.data && Array.isArray(response.data)) {
-        setObtainedCards(response.data);
-
+      if (response) {
+        setObtainedCards(response.obtainedCards);
         closeModal();
-
         setTimeout(() => setIsRewardModalOpen(true), 300);
       }
 
@@ -48,34 +45,22 @@ const Store = () => {
         updateUser(response.data.newBalance);
       }
 
-      toast.success(`Compra realizada con éxito: ${product.name}`, {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
-    } catch (error) {
-      toast.error('Error en la transacción. Inténtalo de nuevo.', {
-        position: 'top-right',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
+      successToast('Compra realizada con éxito');
+    } catch (e) {
+      if (e.status === 400) {
+        errorToast('Solicitud incorrecta');
+      } else if (e.status === 404) {
+        errorToast('Algun recurso no se ha encontrado o no esta disponible');
+      } else if (e.status === 410) {
+        errorToast('Saldo insuciciente');
+      } else {
+        errorToast('Interno del servidor');
+      }
     }
   };
 
   return (
     <>
-      <ToastContainer />
-
       <BalanceBar balance={{ pixelcoins: data?.pixelcoins, pixelgems: data?.pixelgems }} />
       <div className={styles.storeContainer}>
         {/* Borrar quan canviem de lloc l'OrderHistory*/}

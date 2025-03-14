@@ -17,7 +17,7 @@ const getCards = async (req, res) => {
     const cards = await Card.find();
     res.status(200).json(cards || []);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).send();
   }
 };
 
