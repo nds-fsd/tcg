@@ -111,7 +111,7 @@ const CardItem = ({ card, onAction, actionLabel, addCard }) => {
           </div>
         </div>
 
-        {addCard && (
+        {actionLabel && onAction && (
           <motion.button
             className={styles.addButton}
             onClick={(event) => {
@@ -120,7 +120,7 @@ const CardItem = ({ card, onAction, actionLabel, addCard }) => {
             }}
             whileHover={{ scale: 1.1 }}
           >
-            {isSmallScreen ? '+' : actionLabel}
+            {addCard && isSmallScreen ? '+' : actionLabel}
           </motion.button>
         )}
       </motion.div>
