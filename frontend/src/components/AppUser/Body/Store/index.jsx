@@ -2,7 +2,6 @@ import styles from '../Store/store.module.css';
 import ProductList from '../Store/ProductList';
 import BalanceBar from '../Store/BalanceBar';
 import ChestRewardModal from './ChestRewardModal';
-import OrderHistory from '../User/Profile/OrderHistory'; //Borrar quan canviem de lloc l'OrderHistory
 import { useState, useEffect } from 'react';
 import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiStore';
 import { useUser } from '../../../../context/userContext';
@@ -13,7 +12,6 @@ const Store = () => {
   const [products, setProducts] = useState([]);
   const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
   const [obtainedCards, setObtainedCards] = useState([]);
-  const [showOrderHistory, setShowOrderHistory] = useState(false); //Borrar quan canviem de lloc l'OrderHistory
 
   useEffect(() => {
     const fetchStoreData = async () => {
@@ -62,13 +60,6 @@ const Store = () => {
     <>
       <BalanceBar balance={{ pixelcoins: data?.pixelcoins, pixelgems: data?.pixelgems }} />
       <div className={styles.storeContainer}>
-        {/* Borrar quan canviem de lloc l'OrderHistory*/}
-        <button className={styles.toggleOrderHistory} onClick={() => setShowOrderHistory((prev) => !prev)}>
-          {showOrderHistory ? 'Ocultar historial de compras' : 'Ver historial de compras'}
-        </button>
-
-        {showOrderHistory && <OrderHistory />}
-        {/* Borrar quan canviem de lloc l'OrderHistory*/}
         <div className={styles.productsContainer}>
           <ProductList
             title='Cofres'

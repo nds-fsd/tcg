@@ -87,7 +87,7 @@ const Header = () => {
             <button onClick={() => navigate('/stats')}>Trofeos</button>
             <button onClick={() => navigate('/stats')}>Estadísticas</button>
             <button onClick={() => navigate('/friends')}>Amigos</button>
-            <button onClick={handleLogout}>Cerrar Sessión</button>
+            <button onClick={handleLogout}>Cerrar Sesión</button>
           </div>
         )}
       </div>
