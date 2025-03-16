@@ -1,41 +1,9 @@
 import styles from './header.module.css';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useUser } from '../../../../context/userContext';
-import { removeSession } from '../../../../lib/utils/userSession';
-import { useEffect, useState } from 'react';
+import HeaderIcon from './HeaderIcon';
+import HeaderNav from './HeaderNav';
+import UserIcon from './UserIcon';
 
 const Header = () => {
-  const { data } = useUser();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.target.closest(`.${styles.modal}`) && !event.target.closest(`.${styles.userIconImage}`)) {
-        setIsModalOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    setIsModalOpen(false);
-  }, [location]);
-
-  const toggleModal = () => {
-    setIsModalOpen((prevState) => !prevState);
-  };
-
-  const handleLogout = () => {
-    removeSession();
-    navigate('/auth');
-  };
-
   return (
     <div className={styles.header}>
       <div>

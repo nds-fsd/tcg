@@ -22,8 +22,8 @@
   min-height: 430px;
   padding: 1rem;
 
-  background-color: #664631;
-  border: 2px solid #b87937;
+  background-color: var(--color-dark);
+  border: 2px solid var(--color-border-1);
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }

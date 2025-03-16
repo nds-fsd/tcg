@@ -84,9 +84,7 @@ const buyChest = async (req, res) => {
     const { pixelcoins, pixelgems } = chestData.price;
     const canAffordWithPixelcoins = user.pixelcoins >= pixelcoins;
     const canAffordWithPixelgems = user.pixelgems >= pixelgems;
-    if (!canAffordWithPixelcoins && !canAffordWithPixelgems) {
-      return res.status(410).send();
-    }
+    if (!canAffordWithPixelcoins && !canAffordWithPixelgems) return res.status(410).send();
 
     const previousBalance = { pixelcoins: user.pixelcoins, pixelgems: user.pixelgems };
 
