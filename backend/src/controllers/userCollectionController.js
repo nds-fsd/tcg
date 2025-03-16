@@ -7,7 +7,7 @@ const getUserCollection = async (req, res) => {
 
     const userCollection = await UserCollection.findOne({ userId }).populate('userId').populate('cards.cardId');
     if (!userCollection) {
-      return res.status(404).json({ e: 'Colección no encontrada para el usuario' });
+      return res.status(404).send();
     }
     res.status(200).json(userCollection);
   } catch (e) {
@@ -65,10 +65,9 @@ const cardsObtainedFromChests = async (userId, chestData) => {
 
     let finalRarity = Math.random() < 0.1 ? 'legendary' : 'epic';
     selectedCards.push({ ...getRandomCard(cardsRarityInChest[finalRarity]), rarity: finalRarity });
-
     selectedCards = selectedCards.filter((card) => card.cardId !== null);
-    let userCollection = await UserCollection.findOne({ userId });
 
+    let userCollection = await UserCollection.findOne({ userId });
     if (!userCollection) {
       userCollection = new UserCollection({ userId, cards: [] });
     }

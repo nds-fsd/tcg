@@ -4,7 +4,6 @@ import { useUser } from '../../../../../context/userContext';
 import { updateUser } from '../../../../../lib/utils/apiUser';
 import { toast, ToastContainer } from 'react-toastify';
 import EditButton from '../../Generic/EditButton';
-import 'react-toastify/dist/ReactToastify.css';
 
 const EditUser = ({ user, handleUpdate }) => {
   const { data } = useUser();
@@ -21,7 +20,7 @@ const EditUser = ({ user, handleUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data: updatedUser } = await updateUser(user._id, form);
+      const { data: updatedUser } = await updateUser(user._id, form, data);
       handleUpdate(updatedUser);
       setIsModalOpen(false);
       toast.success('Usuario actualizado correctamente');
@@ -76,8 +75,6 @@ const EditUser = ({ user, handleUpdate }) => {
           </div>
         </div>
       )}
-
-      <ToastContainer position='top-right' autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover />
     </>
   );
 };

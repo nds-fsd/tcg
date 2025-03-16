@@ -1,11 +1,11 @@
 import styles from './registerform.module.css';
+import AuthButton from '../sendButton/index';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
 import { registerUser } from '../../../lib/utils/apiUser';
 import { setUserSession } from '../../../lib/utils/userSession';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { errorToast } from '../../../lib/toastify/toast';
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -36,7 +36,6 @@ const RegisterForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.registerForm}>
-      <ToastContainer theme='dark' />
       <div className={styles.field}>
         <input
           id='userName'
@@ -93,9 +92,7 @@ const RegisterForm = () => {
         {errors.policy && <p className={styles.error}>{errors.policy.message}</p>}
       </div>
 
-      <button className={styles.registerButton} type='submit' disabled={registerMutation.isLoading}>
-        {registerMutation.isLoading ? 'Procesando...' : 'Registrarse'}
-      </button>
+      <AuthButton disabled={registerMutation.isLoading} text='Registrarse' />
     </form>
   );
 };
