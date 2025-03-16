@@ -6,6 +6,7 @@ import { BsPlusCircleDotted } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { getUserDecks } from '../../../../lib/utils/apiDeck';
 import { useUser } from '../../../../context/userContext';
+import PageTitle from '../Generic/PageTitle';
 
 const deckImages = [
   '/assets/DeckImg/deck1.png',
@@ -49,9 +50,7 @@ const DeckPage = () => {
     <div className={styles.deckPageContainer}>
       <ToastContainer theme='dark' />
 
-      <header className={styles.deckPageTitle}>
-        <h1>Mazos</h1>
-      </header>
+      <PageTitle title='Mazos' />
 
       <div className={styles.deckPageDeck}>
         <div className={styles.deckContainer}>

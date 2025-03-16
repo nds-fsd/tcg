@@ -40,11 +40,7 @@ const Header = () => {
     <div className={styles.header}>
       <div>
         <Link to='/'>
-          <img
-            src='/assets/GameImg/logopixelquest4.png'
-            alt='Logo del juego'
-            className={styles.gameIcon}
-          />
+          <img src='/assets/GameImg/logopixelquest4.png' alt='Logo del juego' className={styles.gameIcon} />
         </Link>
       </div>
 

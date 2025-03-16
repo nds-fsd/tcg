@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-icons/fa';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind, FaInfinity, FaPlusCircle } from 'react-icons/fa';
+import { FaArrowsRotate } from 'react-icons/fa6';
+import { GiFastArrow } from 'react-icons/gi';
+import { FiHexagon } from 'react-icons/fi';
 import CardModal from '../CardModal';
 import styles from './carditem.module.css';
 
@@ -11,6 +14,14 @@ const attributeIcons = {
   darkness: FaMoon,
   light: FaSun,
   wind: FaWind,
+};
+
+const supportTypeIcons = {
+  normal: FiHexagon,
+  continuous: FaInfinity,
+  instant: GiFastArrow,
+  equipment: FaPlusCircle,
+  counter: FaArrowsRotate,
 };
 
 const rarityColors = {
@@ -26,21 +37,23 @@ const categoryColors = {
   fusion: '#543c5a',
 };
 
-const rarityTranslations = {
-  Legendaria: 'legendary',
-  Épica: 'epic',
-  Rara: 'rare',
-  Común: 'common',
-};
-
-const categoryTranslations = {
-  Monstruo: 'monster',
-  Apoyo: 'support',
-  Fusión: 'fusion',
-};
-
-const normalizeValue = (value, translations) => {
-  return translations[value] || value.toLowerCase();
+const typeTranslations = {
+  warrior: 'Guerrero',
+  zombie: 'Zombie',
+  demon: 'Demonio',
+  insect: 'Insecto',
+  fairy: 'Hada',
+  dragon: 'Dragón',
+  beast: 'Bestia',
+  fish: 'Pez',
+  plant: 'Planta',
+  machine: 'Máquina',
+  rock: 'Roca',
+  normal: 'Normal',
+  continuous: 'Continua',
+  instant: 'Rápida',
+  equipment: 'Equipo',
+  counter: 'Contrafecto',
 };
 
 const CardItem = ({ card, onAction, actionLabel, addCard }) => {
@@ -49,12 +62,14 @@ const CardItem = ({ card, onAction, actionLabel, addCard }) => {
 
   const { name, image, category, rarity, attribute, type, amount } = card;
 
-  const normalizedRarity = normalizeValue(rarity, rarityTranslations);
-  const normalizedCategory = normalizeValue(category, categoryTranslations);
+  const rarityColor = rarityColors[rarity] || 'gray';
+  const categoryColor = categoryColors[category] || '#1a1a1a';
+  const translatedType = typeTranslations[type] || type;
 
-  const AttributeIcon = attributeIcons[attribute?.toLowerCase()];
-  const rarityColor = rarityColors[normalizedRarity] || 'gray';
-  const categoryColor = categoryColors[normalizedCategory] || '#1a1a1a';
+  const Icon =
+    category === 'support'
+      ? supportTypeIcons[type?.toLowerCase()] || null
+      : attributeIcons[attribute?.toLowerCase()] || null;
 
   const handleCardClick = () => {
     setIsModalOpen(true);
@@ -84,8 +99,6 @@ const CardItem = ({ card, onAction, actionLabel, addCard }) => {
         whileHover={{ scale: 1.05 }}
         onClick={handleCardClick}
       >
-
-
         <div className={styles.cardImageContainer}>
           <img src={image || '/assets/CardImg/cardplaceholdertcg.png'} alt={name} className={styles.cardImage} />
         </div>
@@ -93,8 +106,8 @@ const CardItem = ({ card, onAction, actionLabel, addCard }) => {
         <div className={styles.cardDetails}>
           <h3 className={styles.cardName}>{name}</h3>
           <div className={styles.cardFooter}>
-            <p className={styles.cardType}>{type}</p>
-            {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
+            <p className={styles.cardType}>{translatedType}</p>
+            {Icon && <Icon className={styles.attributeIcon} />}
           </div>
         </div>
 
