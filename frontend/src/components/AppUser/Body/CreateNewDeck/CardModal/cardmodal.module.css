@@ -198,13 +198,13 @@
 
 .cardText {
   background-color: rgba(255, 255, 255, 0.1);
-  padding: 8px;
+  padding: 12px;
   border-radius: 8px;
   color: #fff;
   font-family: 'Roboto', sans-serif;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  height: 200px;
+  font-size: 1rem;
+  line-height: 1.6;
+  height: 250px;
   margin: 8px 0;
   flex: none;
   overflow-y: auto;
@@ -229,36 +229,6 @@
 
 .cardText::-webkit-scrollbar-thumb:hover {
   background: #373f1c;
-}
-
-.typeAndButtonContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 8px 0;
-}
-
-.modalContent .switchButton {
-  background-color: #54612b;
-  border: none;
-  font-size: 0.8rem;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 10px;
-  text-align: center;
-  width: auto;
-  max-width: 175px;
-  white-space: nowrap;
-  height: auto;
-  max-height: 30px;
-  overflow: hidden;
-  transition:
-    background-color 0.3s ease,
-    transform 0.2s ease;
-}
-
-.modalContent .switchButton:hover {
-  background-color: #373f1c;
 }
 
 .cardFooter {
@@ -333,12 +303,9 @@
   }
 
   .cardText {
-    font-size: 0.8rem;
-  }
-
-  .switchButton {
-    font-size: 0.7rem;
-    padding: 3px 6px;
+    font-size: 0.85rem;
+    padding: 10px;
+    max-height: 200px;
   }
 
   .cardFooter {
@@ -360,6 +327,10 @@
     align-items: center;
     gap: 10px;
     padding-left: 0;
+  }
+
+  .cardText {
+    max-height: 220px;
   }
 
   .cardInfoBox {

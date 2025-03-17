@@ -10,6 +10,7 @@ import CreateNewDeck from './components/AppUser/Body/CreateNewDeck';
 import Store from './components/AppUser/Body/Store';
 import Market from './components/AppUser/Body/Market';
 import CardDetailPage from './components/AppUser/Body/Market/CardDetailPage';
+import PurchaseHistory from './components/AppUser/Layout/Header/Display/PurchaseHistory';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { getUserToken } from './lib/utils/localStorage.utils';
@@ -61,6 +62,7 @@ const App = () => {
             <Route path='market' element={<Market />} />
             <Route path='user' element={<User />} />
             <Route path='profile' element={<ProfileEditForm />} />
+            <Route path='purchase-history' element={<PurchaseHistory />} />
           </Route>
         </Routes>
       </UserContextProvider>

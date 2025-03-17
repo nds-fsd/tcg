@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind } from 'react-icons/fa';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind, FaInfinity } from 'react-icons/fa';
+import { FaArrowsRotate } from 'react-icons/fa6';
+import { GiFastArrow } from 'react-icons/gi';
+import { FiHexagon } from 'react-icons/fi';
+import { GoTools } from 'react-icons/go';
 import { effectDescriptions } from '../../../../../lib/utils/effectGlossary';
 import styles from './cardmodal.module.css';
 import level1 from '/assets/CardImg/1.png';
@@ -23,6 +27,14 @@ const attributeIcons = {
   wind: FaWind,
 };
 
+const supportTypeIcons = {
+  normal: FiHexagon,
+  continuous: FaInfinity,
+  instant: GiFastArrow,
+  equipment: GoTools,
+  counter: FaArrowsRotate,
+};
+
 const rarityColors = {
   legendary: '#ae8d0b',
   epic: 'purple',
@@ -37,20 +49,35 @@ const categoryColors = {
 };
 
 const rarityTranslations = {
-  Legendaria: 'legendary',
-  Épica: 'epic',
-  Rara: 'rare',
-  Común: 'common',
+  legendary: 'Legendaria',
+  epic: 'Épica',
+  rare: 'Rara',
+  common: 'Común',
 };
 
 const categoryTranslations = {
-  Monstruo: 'monster',
-  Apoyo: 'support',
-  Fusión: 'fusion',
+  monster: 'Monstruo',
+  support: 'Apoyo',
+  fusion: 'Fusión',
 };
 
-const normalizeValue = (value, translations) => {
-  return translations[value] || value.toLowerCase();
+const typeTranslations = {
+  warrior: 'Guerrero',
+  zombie: 'Zombie',
+  demon: 'Demonio',
+  insect: 'Insecto',
+  fairy: 'Hada',
+  dragon: 'Dragón',
+  beast: 'Bestia',
+  fish: 'Pez',
+  plant: 'Planta',
+  machine: 'Máquina',
+  rock: 'Roca',
+  normal: 'Normal',
+  continuous: 'Continua',
+  instant: 'Rápida',
+  equipment: 'Equipo',
+  counter: 'Contrafecto',
 };
 
 const EffectDisplay = ({ effect }) => {
@@ -62,17 +89,18 @@ const EffectDisplay = ({ effect }) => {
 };
 
 const CardModal = ({ card, onClose }) => {
-  const [showEffect, setShowEffect] = useState(false);
-  const toggleView = () => setShowEffect((prev) => !prev);
-
   const { name, image, type, rarity, attribute, description, category, expansion, atk, def, effect, level } = card;
 
-  const normalizedRarity = normalizeValue(rarity, rarityTranslations);
-  const normalizedCategory = normalizeValue(category, categoryTranslations);
+  const rarityColor = rarityColors[rarity] || 'gray';
+  const categoryColor = categoryColors[category] || '#1a1a1a';
+  const translatedRarity = rarityTranslations[rarity] || rarity;
+  const translatedCategory = categoryTranslations[category] || category;
+  const translatedType = typeTranslations[type] || type;
 
-  const AttributeIcon = attributeIcons[attribute?.toLowerCase()];
-  const rarityColor = rarityColors[normalizedRarity] || 'gray';
-  const categoryColor = categoryColors[normalizedCategory] || '#1a1a1a';
+  const Icon =
+    category === 'support'
+      ? supportTypeIcons[type?.toLowerCase()] || null
+      : attributeIcons[attribute?.toLowerCase()] || null;
 
   const detectedEffects = Object.keys(effectDescriptions).filter((keyword) => effect.includes(`{{${keyword}}}`));
 
@@ -95,7 +123,7 @@ const CardModal = ({ card, onClose }) => {
           )}
           {/* Rareza */}
           <div className={styles.rarityBadge} style={{ backgroundColor: rarityColor }}>
-            {rarity.charAt(0).toUpperCase() + rarity.slice(1)}
+            {translatedRarity}
           </div>
           {/* Imagen */}
           <div className={styles.cardImageContainer}>
@@ -105,20 +133,16 @@ const CardModal = ({ card, onClose }) => {
           <div className={styles.cardDetails}>
             <div className={styles.cardHeader}>
               <h2 className={styles.cardName}>{name}</h2>
-              {AttributeIcon && <AttributeIcon className={styles.attributeIcon} />}
+              {Icon && <Icon className={styles.attributeIcon} />}
             </div>
-            {/* Type y Botón */}
-            <div className={styles.typeAndButtonContainer}>
-              <p className={styles.cardType}>{type}</p>
-              <button className={styles.switchButton} onClick={toggleView}>
-                {showEffect ? 'Mostrar descripción' : 'Mostrar efecto'}
-              </button>
-            </div>
-            {/* Descripción/Efecto */}
+
+            <p className={styles.cardType}>{translatedType}</p>
+
+            {/* Mostrar siempre el efecto */}
             <div className={styles.cardText}>
-              {showEffect ? <EffectDisplay effect={effect} /> : <p>{description}</p>}
+              {effect ? <EffectDisplay effect={effect} /> : <p>Esta carta no tiene efecto.</p>}
             </div>
-            {/* Expansión y ATK/DEF */}
+
             <div className={styles.cardFooter}>
               <p className={styles.expansion}>{expansion}</p>
               {(atk || def) && (
@@ -129,21 +153,23 @@ const CardModal = ({ card, onClose }) => {
             </div>
           </div>
         </div>
+
         {/* Caja de información adicional */}
         <div className={styles.cardInfoBox}>
           <h2 className={styles.cardInfoName}>{name}</h2>
           <div className={styles.infoRow}>
-            <p className={styles.cardInfoCategory}>{category}</p>
-            {AttributeIcon && <AttributeIcon className={styles.attributeInfoIcon} />}
-            <p className={styles.cardInfoType}>{type}</p>
+            <p className={styles.cardInfoCategory}>{translatedCategory}</p>
+            {Icon && <Icon className={styles.attributeInfoIcon} />}
+            <p className={styles.cardInfoType}>{translatedType}</p>
           </div>
           <h3>Descripción</h3>
           <p className={styles.cardDescription}>{description}</p>
           <h3>Efecto</h3>
           <p className={styles.cardDescription}>
-            <EffectDisplay effect={effect} />
+            {effect ? <EffectDisplay effect={effect} /> : 'Esta carta no tiene efecto.'}
           </p>
-          {/* Explicaciones de palabras clave detectadas */}
+
+          {/* Glosario */}
           {detectedEffects.length > 0 && (
             <>
               <h3>Glosario</h3>

@@ -54,6 +54,12 @@
   transition:
     transform 0.3s ease,
     opacity 0.3s ease;
+  z-index: 1;
+}
+
+.cardWrapper:hover {
+  transform: scale(1.01);
+  z-index: 10;
 }
 
 .cardCounter {
