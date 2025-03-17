@@ -1,5 +1,5 @@
 import styles from './loginform.module.css';
-import AuthButton from '../sendButton/index';
+import SendButton from '../SendButton';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
@@ -69,7 +69,7 @@ const LoginForm = () => {
         {errors.password && <p className={styles.error}>{errors.password.message}</p>}
       </div>
 
-      <AuthButton disabled={loginMutation.isLoading} text='Iniciar Sesión' />
+      <SendButton disabled={loginMutation.isLoading} text='Iniciar Sesión' />
     </form>
   );
 };

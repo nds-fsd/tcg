@@ -1,5 +1,5 @@
 import styles from './registerform.module.css';
-import AuthButton from '../sendButton/index';
+import SendButton from '../SendButton';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
@@ -92,7 +92,7 @@ const RegisterForm = () => {
         {errors.policy && <p className={styles.error}>{errors.policy.message}</p>}
       </div>
 
-      <AuthButton disabled={registerMutation.isLoading} text='Registrarse' />
+      <SendButton disabled={registerMutation.isLoading} text='Registrarse' />
     </form>
   );
 };
