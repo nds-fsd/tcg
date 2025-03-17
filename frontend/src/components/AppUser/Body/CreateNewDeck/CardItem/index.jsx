@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind, FaInfinity, FaPlusCircle } from 'react-icons/fa';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind, FaInfinity } from 'react-icons/fa';
 import { FaArrowsRotate } from 'react-icons/fa6';
 import { GiFastArrow } from 'react-icons/gi';
 import { FiHexagon } from 'react-icons/fi';
+import { GoTools } from 'react-icons/go';
 import CardModal from '../CardModal';
 import styles from './carditem.module.css';
 
@@ -20,7 +21,7 @@ const supportTypeIcons = {
   normal: FiHexagon,
   continuous: FaInfinity,
   instant: GiFastArrow,
-  equipment: FaPlusCircle,
+  equipment: GoTools,
   counter: FaArrowsRotate,
 };
 
