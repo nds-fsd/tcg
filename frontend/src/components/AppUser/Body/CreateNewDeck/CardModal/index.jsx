@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind, FaInfinity, FaPlusCircle } from 'react-icons/fa';
+import { FaFireAlt, FaWater, FaMoon, FaMountain, FaSun, FaWind, FaInfinity } from 'react-icons/fa';
 import { FaArrowsRotate } from 'react-icons/fa6';
 import { GiFastArrow } from 'react-icons/gi';
 import { FiHexagon } from 'react-icons/fi';
+import { GoTools } from 'react-icons/go';
 import { effectDescriptions } from '../../../../../lib/utils/effectGlossary';
 import styles from './cardmodal.module.css';
 import level1 from '/assets/CardImg/1.png';
@@ -30,7 +31,7 @@ const supportTypeIcons = {
   normal: FiHexagon,
   continuous: FaInfinity,
   instant: GiFastArrow,
-  equipment: FaPlusCircle,
+  equipment: GoTools,
   counter: FaArrowsRotate,
 };
 

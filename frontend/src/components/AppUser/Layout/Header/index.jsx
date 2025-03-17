@@ -1,9 +1,41 @@
 import styles from './header.module.css';
-import HeaderIcon from './HeaderIcon';
-import HeaderNav from './HeaderNav';
-import UserIcon from './UserIcon';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { useUser } from '../../../../context/userContext';
+import { removeSession } from '../../../../lib/utils/userSession';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
+  const { data } = useUser();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest(`.${styles.modal}`) && !event.target.closest(`.${styles.userIconImage}`)) {
+        setIsModalOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    setIsModalOpen(false);
+  }, [location]);
+
+  const toggleModal = () => {
+    setIsModalOpen((prevState) => !prevState);
+  };
+
+  const handleLogout = () => {
+    removeSession();
+    navigate('/auth');
+  };
+
   return (
     <div className={styles.header}>
       <div>
@@ -55,7 +87,7 @@ const Header = () => {
             <button onClick={() => navigate('/stats')}>Trofeos</button>
             <button onClick={() => navigate('/stats')}>Estadísticas</button>
             <button onClick={() => navigate('/friends')}>Amigos</button>
-            <button onClick={handleLogout}>Cerrar Sessión</button>
+            <button onClick={handleLogout}>Cerrar Sesión</button>
           </div>
         )}
       </div>
