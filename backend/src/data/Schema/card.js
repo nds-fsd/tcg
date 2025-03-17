@@ -57,7 +57,7 @@ const cardSchema = new Schema(
       enum: ['monster', 'support', 'fusion'],
     },
     expansion: {
-      type: String,
+      type: [String],
       required: true,
     },
     atk: { type: Number },
