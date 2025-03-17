@@ -3,8 +3,8 @@ import ProductList from '../Store/ProductList';
 import BalanceBar from '../Store/BalanceBar';
 import ChestRewardModal from './ChestRewardModal';
 import { useState, useEffect } from 'react';
-import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiStore';
 import { useUser } from '../../../../context/userContext';
+import { getProducts, buyChest, buyCurrency } from '../../../../lib/utils/apiStore';
 import { successToast, errorToast } from '../../../../lib/toastify/toast';
 
 const Store = () => {
@@ -39,9 +39,10 @@ const Store = () => {
         setTimeout(() => setIsRewardModalOpen(true), 300);
       }
 
-      if (response.newBalance) {
-        updateUser(response.newBalance);
+      if (response.data?.newBalance) {
+        updateUser(response.data.newBalance);
       }
+
       successToast('Compra realizada con éxito');
     } catch (e) {
       if (e.status === 400) {
