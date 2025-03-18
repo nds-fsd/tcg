@@ -14,6 +14,11 @@ const StoreProductSchema = new Schema({
   },
   imageUrl: { type: String, required: true },
   expansion: { type: String },
+  category: {
+    type: String,
+    required: true,
+    enum: ['chest', 'structure', 'pixelgems'],
+  },
 });
 
 const StoreProduct = model('StoreProduct', StoreProductSchema);
