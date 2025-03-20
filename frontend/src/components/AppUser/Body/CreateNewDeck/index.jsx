@@ -1,14 +1,14 @@
+import styles from './createnewdeck.module.css';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import DeckTitle from './DeckTitle';
 import { fetchUserCollection } from '../../../../lib/utils/apiUserCollection';
 import { fetchDeck, createDeck, updateDeck } from '../../../../lib/utils/apiDeck';
+import { getUserToken } from '../../../../lib/utils/localStorage.utils';
 import CardsCollectedDisplay from './CardsCollectedDisplay';
 import CardsSelectedDisplay from './CardsSelectedDisplay';
-import styles from './createnewdeck.module.css';
-import { getUserToken } from '../../../../lib/utils/localStorage.utils';
 
 const MAX_CARDS = 40;
 const MAX_FUSION_CARDS = 10;
@@ -24,21 +24,8 @@ const CreateNewDeck = () => {
 
   useEffect(() => {
     const getUserCards = async () => {
-      try {
-        const response = await fetchUserCollection();
-        setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, amount })));
-      } catch (e) {
-        toast.error('Error al cargar las cartas.', {
-          position: 'top-right',
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: 'dark',
-        });
-      }
+      const response = await fetchUserCollection();
+      setUserCards(response.map(({ cardId, amount }) => ({ ...cardId, id: cardId._id, amount })));
     };
 
     getUserCards();
@@ -227,8 +214,6 @@ const CreateNewDeck = () => {
 
   return (
     <div className={styles.createNewDeck}>
-      <ToastContainer theme='dark' />
-
       {loading ? (
         <p className={styles.loadingMessage}>Cargando mazo...</p>
       ) : (

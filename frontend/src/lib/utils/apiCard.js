@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getUserToken } from './localStorage.utils';
 
 const API = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_API_URL + '/card',
+  baseURL: import.meta.env.VITE_BACKEND_API_URL + 'card',
 });
 
 export const fetchCards = async () => {

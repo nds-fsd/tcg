@@ -1,5 +1,5 @@
 import styles from './registerform.module.css';
-import AuthButton from '../sendButton/index';
+import AuthButton from '../sendButton';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';

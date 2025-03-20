@@ -4,7 +4,6 @@ import HeaderNav from './HeaderNav';
 import UserIcon from './UserIcon';
 
 const Header = () => {
-
   return (
     <div className={styles.header}>
       <HeaderIcon />

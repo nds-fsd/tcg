@@ -5,6 +5,7 @@
   padding: 0;
   margin: 0;
   font-synthesis: none;
+  font-family: var(--font-family);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -13,7 +14,7 @@
 
 body {
   min-height: 100dvh;
-  background-color: #664631;
+  background-color: var(--color-dark);
 }
 
 h1,
@@ -33,13 +34,18 @@ p {
   --color-primary-hover: #373f1c;
   --color-light: #ffffff;
   --color-dark: #664631;
+  --color-form-edit: #866539;
   --color-text-light: #f5f5f5;
   --color-border-1: #b87937;
   --color-button-bg: #f8edd3;
   --color-button-send: #9fb033;
   --color-hover: #a87304;
+  --color-hover-friend: #fcf6e7;
   --color-active: #c6a65f;
   --color-error: #d9534f;
   --font-family: 'Metamorphous', sans-serif;
   --font-family-2: 'Pixelify Sans', sans-serif;
+}
+
+@media screen and (min-width: 1800px) {
 }

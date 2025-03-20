@@ -42,7 +42,8 @@ const UserIcon = () => {
 
   const handleLogout = () => {
     removeSession();
-    queryClient.invalidateQueries('user');
+    updateUser(null);
+    queryClient.clear();
     navigate('/auth');
   };
 
@@ -65,6 +66,7 @@ const UserIcon = () => {
           <div className={styles.modal}>
             <button onClick={() => navigate('/profile')}>Perfil de usuario</button>
             <button onClick={() => navigate('/purchase-history')}>Historial de Compras</button>
+            <button onClick={() => navigate('/friends')}>Amigos</button>
             <button onClick={handleLogout}>Cerrar Sesión</button>{' '}
           </div>
         )}
