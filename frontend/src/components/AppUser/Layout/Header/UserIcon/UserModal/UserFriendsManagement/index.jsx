@@ -11,7 +11,7 @@ const UserFriendsManagement = () => {
   const [friendRequests, setFriendRequests] = useState([]);
   const [selectedFriend, setSelectedFriend] = useState(null);
 
-  // Usable 
+  // Usable
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [friendName, setFriendName] = useState('');
 
@@ -46,9 +46,9 @@ const UserFriendsManagement = () => {
 
       await sendInvitation(friendName);
 
-      setFriendName("");
+      setFriendName('');
       setIsModalOpen(false);
-      successToast('Solicitud enviada con exito!!')
+      successToast('Solicitud enviada con exito!!');
     } catch (e) {
       setIsModalOpen(false);
       if (e.status === 404) {

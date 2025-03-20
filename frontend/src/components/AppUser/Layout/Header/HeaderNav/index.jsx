@@ -20,7 +20,7 @@ const HeaderNav = () => {
         Tienda
       </Link>
       <Link to='/market' className={`${styles.navLink} ${location.pathname === '/market' ? styles.navLinkactive : ''}`}>
-        Mercado Libre
+        Mercado Comunidad
       </Link>
 
       <HeaderNavAdmin />

@@ -1,79 +1,57 @@
-.marketPageContainer {
-  height: 100vh;
-}
-
 .marketFilterContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--gap-medium);
   margin: 0 auto;
-  padding: 15px;
+  padding: 1rem;
   width: 80%;
-  background-color: #fff;
-  border-radius: 10px;
-  font-family: 'Metamorphous', sans-serif;
+  background-color: #f5f5f5;
+  border-radius: var(--radius-medium);
 }
 
 .filterSection {
   flex: 1;
 }
 
+.filterSection h5 {
+  font-size: 1rem;
+}
+
 .select {
   width: 100%;
   padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  border-radius: var(--radius-low);
+  border: 1px solid var(--color-border-2);
+  font-size: 0.8rem;
+}
+
+.select:focus {
+  border-color: var(--color-primary-hover);
+  box-shadow: 0 0 5px var(--color-primary);
+}
+
+.select option {
+  padding: 10px;
+  background-color: var(--color-button-bg);
+  color: var(--color-text-grey);
+}
+
+.select option:hover {
+  background-color: var(--color-hover-filter);
+  color: var(--color-text-light);
 }
 
 .clearButton {
   width: 100%;
-  padding: 10px;
+  padding: var(--padding-low);
   border: none;
-  background-color: #8a2d16;
-  color: white;
-  border-radius: 5px;
+  border-radius: var(--radius-low);
+  background-color: var(--color-button-background-red);
+  color: var(--color-light);
   cursor: pointer;
   text-align: center;
-  font-family: 'Metamorphous', sans-serif;
 }
 
 .clearButton:hover {
-  background-color: #b87937;
-}
-
-.marketCardsContainer {
-  margin: 20px auto;
-  width: 80%;
-}
-
-.marketCardsRows {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-  list-style: none;
-}
-
-.cardRow {
-  padding: 10px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.cardField {
-  padding: 6px 0;
-  text-align: center;
-  font-size: 14px;
-  font-family: 'Metamorphous', sans-serif;
-}
-
-.cardImg {
-  width: 100%;
-  border-radius: 5px;
-}
-
-.emptyMessage {
-  text-align: center;
-  font-size: 18px;
-  color: gray;
+  background-color: var(--color-button-background-red-hover);
 }
