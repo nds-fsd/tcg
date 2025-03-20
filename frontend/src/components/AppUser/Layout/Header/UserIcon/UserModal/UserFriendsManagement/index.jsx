@@ -30,7 +30,7 @@ const UserFriendsManagement = () => {
       console.log('Message', message);
     };
 
-    socket.on('ping', Pong);
+    socket.on('invitation', Pong);
     return () => {
       socket.off('ping', Pong);
     };
@@ -46,11 +46,11 @@ const UserFriendsManagement = () => {
 
       await sendInvitation(friendName);
 
-      setFriendName('');
-      setIsModalOpen(false);
+      // setFriendName('');
+      // setIsModalOpen(false);
       successToast('Solicitud enviada con exito!!');
     } catch (e) {
-      setIsModalOpen(false);
+      // setIsModalOpen(false);
       if (e.status === 404) {
         errorToast('Usuario no existe');
       } else {

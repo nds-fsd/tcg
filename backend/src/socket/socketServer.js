@@ -1,7 +1,9 @@
 const { Server } = require('socket.io');
 
+let io; // scope global
+
 const CreateSocketServer = (server) => {
-  const io = new Server(server, {
+  io = new Server(server, {
     cors: {
       origin: 'http://localhost:3000',
     },
@@ -26,6 +28,14 @@ const CreateSocketServer = (server) => {
   return io;
 };
 
+function getIo() {
+  if (!io) {
+    throw new Error('Socket io no esta disponible');
+  }
+  return io;
+}
+
 module.exports = {
   CreateSocketServer,
+  getIo,
 };

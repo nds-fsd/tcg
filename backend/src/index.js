@@ -4,7 +4,6 @@ const cors = require('cors');
 const app = express();
 const { connectDB } = require('./mongo/connection');
 const { CreateSocketServer } = require('./socket/socketServer');
-
 const router = require('./routers');
 
 app.use(cors());
@@ -16,10 +15,10 @@ connectDB().then(() => console.log('Connected to database!'));
 
 const port = process.env.PORT || 3001;
 
-const server = app.listen(port, () => {
-  console.log('Server is up and running ⚡');
+const server = app.listen(3001, () => {
+  console.log(`Server is up and running on port ${port}`);
 });
 
-const io = CreateSocketServer(server);
+CreateSocketServer(server);
 
-module.exports = { app, server, io };
+module.exports = { app, server };
