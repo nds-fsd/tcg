@@ -1,8 +1,10 @@
 require('dotenv').config();
 const express = require('express');
-const { connectDB } = require('./mongo/connection');
 const cors = require('cors');
 const app = express();
+const { connectDB } = require('./mongo/connection');
+const { CreateSocketServer } = require('./socket/socketServer');
+
 const router = require('./routers');
 
 app.use(cors());
@@ -18,4 +20,6 @@ const server = app.listen(port, () => {
   console.log('Server is up and running ⚡');
 });
 
-module.exports = { app, server };
+const io = CreateSocketServer(server);
+
+module.exports = { app, server, io };

@@ -15,7 +15,6 @@ const ProfileEditForm = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-    watch,
   } = useForm();
 
   useEffect(() => {
@@ -32,6 +31,7 @@ const ProfileEditForm = () => {
   const onSubmit = async (formData) => {
     try {
       const response = await updateUser(formData);
+      console.log(response);
       navigate('/');
       successToast('Datos actualizados correctamente');
     } catch (e) {
@@ -51,15 +51,12 @@ const ProfileEditForm = () => {
 
   return (
     <>
-      <form className={styles.formContainer} onSubmit={handleSubmit(onSubmit)}>
+      <form className={styles.profileUserForm} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={styles.formTitle}>Editar Perfil</h2>
 
-        <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor='userName'>
-            Nombre de Usuario:
-          </label>
+        <div className={styles.field}>
+          <label htmlFor='userName'>Nombre de Usuario:</label>
           <input
-            className={styles.input}
             id='userName'
             type='text'
             placeholder='Nombre de usuario'
@@ -68,12 +65,9 @@ const ProfileEditForm = () => {
           {errors.userName && <p className={styles.error}>{errors.userName.message}</p>}
         </div>
 
-        <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor='email'>
-            Correo Electrónico:
-          </label>
+        <div className={styles.field}>
+          <label htmlFor='email'>Correo Electrónico:</label>
           <input
-            className={styles.input}
             id='email'
             type='email'
             placeholder='Correo electrónico'
@@ -82,19 +76,14 @@ const ProfileEditForm = () => {
           {errors.email && <p className={styles.error}>{errors.email.message}</p>}
         </div>
 
-        <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor='profilePicture'>
-            Foto de Perfil:
-          </label>
-          <input className={styles.input} id='profilePicture' type='file' {...register('profilePicture')} />
+        <div className={styles.field}>
+          <label htmlFor='profilePicture'>Foto de Perfil:</label>
+          <input id='profilePicture' type='file' {...register('profilePicture')} />
         </div>
 
-        <div className={styles.formGroup}>
-          <label className={styles.label} htmlFor='birthDate'>
-            Fecha de Nacimiento:
-          </label>
+        <div className={styles.field}>
+          <label htmlFor='birthDate'>Fecha de Nacimiento:</label>
           <input
-            className={styles.input}
             id='birthDate'
             type='date'
             {...register('birthDate', {
@@ -111,7 +100,7 @@ const ProfileEditForm = () => {
           {errors.birthDate && <p className={styles.error}>{errors.birthDate.message}</p>}
         </div>
 
-        <button className={styles.button} type='submit'>
+        <button className={styles.sendButton} type='submit'>
           Guardar Cambios
         </button>
       </form>

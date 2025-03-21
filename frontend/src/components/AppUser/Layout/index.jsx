@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const Layout = () => (
   <>
     <Header />
-    <ToastContainer />
     <main>
+      <ToastContainer />
       <Outlet />
     </main>
   </>

@@ -6,8 +6,8 @@ const getUsers = async (req, res) => {
     const queryStrings = req.query || {};
     const allUsers = await User.find(queryStrings);
     res.status(200).json(allUsers);
-  } catch (error) {
-    res.status(500).json([{ Error: 'Error al cargar la lista de Usuarios' }]);
+  } catch (e) {
+    res.status(500).send();
   }
 };
 

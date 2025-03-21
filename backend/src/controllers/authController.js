@@ -13,7 +13,7 @@ const registerFunction = async (req, res) => {
       return res.status(400).send();
     }
 
-    const newUser = new User({ userName, email, password });
+    const newUser = new User({ userName, email, password, pixelcoins: 1000 });
     const createdUser = await newUser.save();
 
     const newUserCollection = new UserCollection({ userId: createdUser._id, cards: [] });
@@ -37,7 +37,7 @@ const loginFunction = async (req, res) => {
     if (!email || !password) return res.status(400).send();
 
     User.findOne({ email }).then((foundUser) => {
-      if (!foundUser) return res.status(400).send();
+      if (!foundUser) return res.status(410).send();
       if (!foundUser.comparePassword(password)) return res.status(400).send();
       return res.status(200).json({
         token: foundUser.generateJWT(),

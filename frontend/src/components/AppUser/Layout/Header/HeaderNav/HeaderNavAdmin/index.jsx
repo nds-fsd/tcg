@@ -13,12 +13,12 @@ const HeaderNavAdmin = () => {
           <Link to='/user' className={`${styles.navLink} ${location.pathname === '/user' ? styles.navLinkactive : ''}`}>
             Usuarios
           </Link>
-          <Link
+          {/* <Link
             to='/createCards'
             className={`${styles.navLink} ${location.pathname === '/createCards' ? styles.navLinkactive : ''}`}
           >
             Crear Cartas
-          </Link>
+          </Link> */}
         </>
       )}
     </>

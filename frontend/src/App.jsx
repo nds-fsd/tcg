@@ -2,6 +2,8 @@ import AuthPage from './components/AuthPage';
 import NotFound from './components/AppUser/Layout/NotFound';
 import Layout from './components/AppUser/Layout';
 import ProfileEditForm from './components/AppUser/Layout/Header/UserIcon/UserModal/Profile';
+import PurchaseHistory from './components/AppUser/Layout/Header/UserIcon/UserModal/PurchaseHistory';
+import UserFriendsManagement from './components/AppUser/Layout/Header/UserIcon/UserModal/UserFriendsManagement';
 import HomePage from './components/AppUser/Body/HomePage';
 import Deck from './components/AppUser/Body/DeckPage';
 import User from './components/AppUser/Body/UserPage';
@@ -10,7 +12,6 @@ import CreateNewDeck from './components/AppUser/Body/CreateNewDeck';
 import Store from './components/AppUser/Body/Store';
 import Market from './components/AppUser/Body/Market';
 import CardDetailPage from './components/AppUser/Body/Market/CardDetailPage';
-import PurchaseHistory from './components/AppUser/Layout/Header/Display/PurchaseHistory';
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate } from 'react-router-dom';
 import { getUserToken } from './lib/utils/localStorage.utils';
@@ -63,6 +64,7 @@ const App = () => {
             <Route path='user' element={<User />} />
             <Route path='profile' element={<ProfileEditForm />} />
             <Route path='purchase-history' element={<PurchaseHistory />} />
+            <Route path='friends' element={<UserFriendsManagement />} />
           </Route>
         </Routes>
       </UserContextProvider>
