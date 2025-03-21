@@ -33,7 +33,7 @@
   content: attr(data-text);
   position: absolute;
   left: 16vw;
-  text-shadow: 1px 0 var(--color-primary);
+  text-shadow: 2px 0 var(--color-primary);
   background: var(--color-dark);
   overflow: hidden;
   clip: rect(0, 900px, 0, 0);
@@ -46,66 +46,20 @@
   margin-top: 0.4rem;
 }
 
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 1800px) {
   .glitch {
-    font-size: 2.2rem;
-  }
-
-  .glitch:after {
-    left: 12vw;
-  }
-
-  .glitch:before {
-    left: 13vw;
-  }
-
-  .header h3 {
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .glitch {
-    font-size: 2.2rem;
-  }
-
-  .glitch:after {
-    left: 8.5vw;
-  }
-
-  .glitch:before {
-    left: 9vw;
-  }
-}
-
-@media screen and (min-width: 992px) {
-  .glitch {
-    font-size: 2.5rem;
+    font-size: 2.4rem;
+    position: relative;
+    margin: 0 auto;
+    font-family: var(--font-family-2);
   }
 
   .glitch:after {
     left: 6vw;
   }
-}
-
-@media screen and (min-width: 1200px) {
-  .glitch:after {
-    left: 4vw;
-  }
-}
-
-@media screen and (min-width: 1800px) {
-  .glitch {
-    font-size: 2.4rem;
-  }
-
-  .glitch:after {
-    left: 5vw;
-  }
 
   .glitch:before {
-    left: 4.8vw;
+    left: 5.8vw;
   }
 
   .header h3 {

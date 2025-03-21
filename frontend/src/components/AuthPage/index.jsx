@@ -4,15 +4,12 @@ import AuthFormSelector from './AuthFormSelector';
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import { useState } from 'react';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const AuthPage = ({ forceUpdate, setForceUpdate }) => {
   const [showLogin, setShowLogin] = useState(true);
 
   return (
     <div className={styles.container}>
-      <ToastContainer />
       <div className={styles.authContent}>
         <AuthTitle />
         <AuthFormSelector showLogin={showLogin} setShowLogin={setShowLogin} />

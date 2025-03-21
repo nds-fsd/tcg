@@ -15,7 +15,8 @@ export const UserContextProvider = ({ children }) => {
     enabled: !!storedToken,
   });
 
-  const updateUser = () => {
+  const updateUser = (userData = null) => {
+    queryClient.setQueryData('user', userData);
     queryClient.invalidateQueries('user');
   };
 
