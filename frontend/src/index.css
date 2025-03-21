@@ -65,7 +65,7 @@ p {
 
   --radius-low: 8px;
   --radius-medium: 15px;
-  --radius-big: 25px;
+  --radius-big: 20px;
 
   --padding-low: 8px;
   --padding-medium: 10px;
@@ -77,5 +77,4 @@ p {
   --gap-big: 15px;
 }
 
-@media screen and (min-width: 1800px) {
-}
+@media screen and (min-width: 1800px) {}

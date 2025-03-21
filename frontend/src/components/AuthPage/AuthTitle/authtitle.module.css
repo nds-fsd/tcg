@@ -2,7 +2,6 @@
   color: var(--color-light);
   text-align: center;
   padding: 1rem 0;
-  font-family: var(--font-family);
 }
 
 .bg-6 {
@@ -40,20 +39,31 @@
   animation: noise-anim-2 3s infinite linear alternate-reverse;
 }
 
-.header h3 {
+.authInfo {
   color: #838a8b;
   font-size: 0.6rem;
   margin-top: 0.4rem;
 }
 
-@media screen and (min-width: 1800px) {
+@media screen and (min-width: 1350px) {
   .glitch {
     font-size: 2.4rem;
-    position: relative;
-    margin: 0 auto;
-    font-family: var(--font-family-2);
   }
 
+  .glitch:after {
+    left: 3.6vw;
+  }
+
+  .glitch:before {
+    left: 3.2vw;
+  }
+
+  .authInfo {
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (min-width: 1800px) {
   .glitch:after {
     left: 6vw;
   }
@@ -62,7 +72,7 @@
     left: 5.8vw;
   }
 
-  .header h3 {
+  .authInfo {
     font-size: 0.9rem;
   }
 }

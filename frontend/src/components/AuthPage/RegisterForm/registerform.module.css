@@ -1,23 +1,22 @@
 .registerForm {
   display: flex;
   flex-direction: column;
-  gap: 0.8rem;
+  gap: 1rem;
   width: 100%;
-  max-width: 14vw;
   margin: 5px auto;
-  padding: 0.5rem;
+  padding: 0.2rem;
 }
 
 .field {
   display: flex;
   flex-direction: column;
-  color: rgb(255, 255, 255);
+  color: var(--color-text-light);
 }
 
 .field input {
-  padding: 8px;
+  padding: var(--padding-low);
   border: 1px solid var(--color-button-bg);
-  border-radius: 10px;
+  border-radius: var(--radius-low);
   background-color: var(--color-button-bg);
   font-size: 10px;
   transition: border-color 0.3s ease-in-out;
@@ -47,6 +46,22 @@
   font-size: 0.7rem;
   margin-top: 0.2rem;
   margin-left: 0.2rem;
+}
+
+@media screen and (min-width: 1350px) {
+  .registerForm {
+    margin: 10px auto;
+    padding: 0.2rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .field input {
+    font-size: 12px;
+  }
 }
 
 @media screen and (min-width: 1800px) {
