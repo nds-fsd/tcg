@@ -1,7 +1,9 @@
 import AuthPage from './components/AuthPage';
 import NotFound from './components/AppUser/Layout/NotFound';
 import Layout from './components/AppUser/Layout';
-import ProfileEditForm from './components/AppUser/Layout/Header/Display/Profile';
+import ProfileEditForm from './components/AppUser/Layout/Header/UserIcon/UserModal/Profile';
+import PurchaseHistory from './components/AppUser/Layout/Header/UserIcon/UserModal/PurchaseHistory';
+import UserFriendsManagement from './components/AppUser/Layout/Header/UserIcon/UserModal/UserFriendsManagement';
 import HomePage from './components/AppUser/Body/HomePage';
 import Deck from './components/AppUser/Body/DeckPage';
 import User from './components/AppUser/Body/UserPage';
@@ -61,6 +63,8 @@ const App = () => {
             <Route path='market' element={<Market />} />
             <Route path='user' element={<User />} />
             <Route path='profile' element={<ProfileEditForm />} />
+            <Route path='purchase-history' element={<PurchaseHistory />} />
+            <Route path='friends' element={<UserFriendsManagement />} />
           </Route>
         </Routes>
       </UserContextProvider>

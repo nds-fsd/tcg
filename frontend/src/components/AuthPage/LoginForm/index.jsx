@@ -1,12 +1,11 @@
 import styles from './loginform.module.css';
+import SendButton from '../SendButton';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router';
 import { loginUser } from '../../../lib/utils/apiUser';
 import { setUserSession } from '../../../lib/utils/userSession';
 import { errorToast } from '../../../lib/toastify/toast';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -19,8 +18,10 @@ const LoginForm = () => {
     onError: (e) => {
       if (e.status === 400) {
         errorToast('Solicitud incorrecta');
+      } else if (e.status === 410) {
+        errorToast('Usuario ya Registrado');
       } else {
-        errorToast('Interno del servidor');
+        errorToast('Error Interno del Servidor');
       }
     },
   });
@@ -37,7 +38,6 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
-      <ToastContainer theme='dark' />
       <div className={styles.field}>
         <input
           type='email'
@@ -61,19 +61,18 @@ const LoginForm = () => {
           placeholder='Contraseña'
           {...register('password', {
             required: 'La contraseña es obligatoria',
-            minLength: {
+            pattern: {
               value:
                 /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]{8,}$/,
-              message: 'Debe tener al menos 8 caracteres',
+              message:
+                'Debe tener al menos 8 caracteres, una letra mayúscula, una minúscula, un número y un carácter especial',
             },
           })}
         />
         {errors.password && <p className={styles.error}>{errors.password.message}</p>}
       </div>
 
-      <button id='login-button' className={styles.loginButton} type='submit' disabled={loginMutation.isLoading}>
-        {loginMutation.isLoading ? 'Cargando...' : 'Logear'}
-      </button>
+      <SendButton disabled={loginMutation.isLoading} text='Iniciar Sesión' />
     </form>
   );
 };

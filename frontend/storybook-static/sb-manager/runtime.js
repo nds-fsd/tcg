@@ -10863,13 +10863,7 @@ y to select.'
 }
 a(oy, 'getA11yStatusMessage');
 function ep(e, t) {
-  return (
-    (e = Array.isArray(e)
-      ? /* istanbul ignore next (preact) */
-        e[0]
-      : e),
-    !e && t ? t : e
-  );
+  return (e = Array.isArray(e) ? /* istanbul ignore next (preact) */ e[0] : e), !e && t ? t : e;
 }
 a(ep, 'unwrapArray');
 function ry(e) {
@@ -11504,11 +11498,7 @@ var up = 0,
             S.onPress;
             var k = S.index,
               w = S.item,
-              O =
-                w === void 0
-                  ? /* istanbul ignore next */
-                    void 0
-                  : w,
+              O = w === void 0 ? /* istanbul ignore next */ void 0 : w,
               P = ke(S, fy);
             k === void 0 ? (r.items.push(O), (k = r.items.indexOf(O))) : (r.items[k] = O);
             var D = 'onClick',

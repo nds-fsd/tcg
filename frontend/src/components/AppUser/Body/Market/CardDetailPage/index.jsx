@@ -39,7 +39,7 @@ const CardDetailPage = () => {
   const deleteMutation = useMutation(deleteProductMarket, {
     onSuccess: () => {
       console.log('Carta eliminada con éxito');
-      queryClient.invalidateQueries(['marketCards', card?._id]); // Refrescar datos
+      queryClient.invalidateQueries(['marketCards', card?._id]);
     },
     onError: () => {
       console.log('Error al eliminar carta');

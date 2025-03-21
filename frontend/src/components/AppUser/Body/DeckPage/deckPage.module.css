@@ -5,22 +5,12 @@
   align-items: center;
 }
 
-.deckPageTitle {
-  width: 86%;
-  margin: 30px auto 10px auto;
-  padding: 10px 30px;
-  font-family: 'Metamorphous', sans-serif;
-  border-radius: 20px;
-  background-color: #f8edd3;
-  text-align: center;
-}
-
 .deckPageDeck {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
-  width: 86%;
+  width: 80%;
   margin: 1rem;
   padding: 20px;
   border-radius: 20px;
@@ -28,10 +18,12 @@
 }
 
 .plusContainer {
+  all: unset;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
+  cursor: pointer;
 }
 
 .plus {
@@ -58,15 +50,19 @@
   0% {
     transform: translateX(0);
   }
+
   25% {
     transform: translateX(-2px);
   }
+
   50% {
     transform: translateX(2px);
   }
+
   75% {
     transform: translateX(-2px);
   }
+
   100% {
     transform: translateX(0);
   }
@@ -111,6 +107,7 @@
   .deckPageDeck {
     justify-content: center;
   }
+
   .deckContainer {
     width: 30%;
   }

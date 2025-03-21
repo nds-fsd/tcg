@@ -15,5 +15,8 @@
     "dotenv-cli": "^7.0.0",
     "prettier": "^3.4.2",
     "turbo": "^1.13.3"
+  },
+  "dependencies": {
+    "react-icons": "^5.5.0"
   }
 }

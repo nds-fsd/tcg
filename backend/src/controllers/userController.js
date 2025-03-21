@@ -1,14 +1,13 @@
 const { default: mongoose } = require('mongoose');
 const { User } = require('../data/Schema/user');
-const cloudinary = require('cloudinary').v2;
 
 const getUsers = async (req, res) => {
   try {
     const queryStrings = req.query || {};
     const allUsers = await User.find(queryStrings);
     res.status(200).json(allUsers);
-  } catch (error) {
-    res.status(500).json([{ Error: 'Error al cargar la lista de Usuarios' }]);
+  } catch (e) {
+    res.status(500).send();
   }
 };
 
@@ -26,32 +25,27 @@ const getCurrentUser = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const userId = req.jwtPayload.id;
-  const updateInfo = req.body;
-  const { buffer, mimetype } = req.file;
-
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'ID de usuario inválido' });
+  }
   try {
-    const requestingUser = await User.findById(userId);
+    const requestingUser = await User.findById(req.jwtPayload.id);
     if (!requestingUser) {
-      return res.status(401).send();
+      return res.status(404).json({ error: 'Usuario que realiza la solicitud no encontrado' });
     }
-
-    const encodedImage = buffer.toString('base64');
-    const imageUrl = `data:${mimetype};base64,${encodedImage}`;
-    const imageUploaded = await cloudinary.uploader.upload(imageUrl);
-    const secureUrl = imageUploaded.secure_url;
-
-    const userUpdated = {
-      ...updateInfo,
-      profilePicture: secureUrl,
-    };
-
-    const updatedUser = await User.findByIdAndUpdate(userId, userUpdated, {
+    if (!requestingUser.admin) {
+      return res.status(403).json({ error: 'Permiso denegado. Sólo los administradores pueden eliminar usuarios.' });
+    }
+    const updatedUser = await User.findByIdAndUpdate(id, req.body.userUpdate, {
       new: true,
     });
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
     res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(400).send();
+    res.status(400).json([{ Error: 'Error al interntar modificar al usuario' }]);
   }
 };
 

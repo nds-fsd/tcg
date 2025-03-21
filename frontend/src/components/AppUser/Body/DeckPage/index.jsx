@@ -3,9 +3,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import styles from './deckPage.module.css';
 import { BsPlusCircleDotted } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
-import { getUserDecks } from '../../../../lib/utils/apiDeck';
+import { Link, useNavigate } from 'react-router-dom';
+import { getUserDecks, createDeck } from '../../../../lib/utils/apiDeck';
 import { useUser } from '../../../../context/userContext';
+import PageTitle from '../Generic/PageTitle';
 
 const deckImages = [
   '/assets/DeckImg/deck1.png',
@@ -19,6 +20,7 @@ const DeckPage = () => {
   const { data } = useUser();
   const [decks, setDecks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchDecks = async () => {
@@ -30,7 +32,7 @@ const DeckPage = () => {
         toast.error('Error al cargar los mazos. Inténtalo más tarde.', {
           position: 'top-right',
           autoClose: 2000,
-          hideProgressBar: false,
+          hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
@@ -45,19 +47,39 @@ const DeckPage = () => {
     fetchDecks();
   }, [data]);
 
+  const handleCreateDeck = () => {
+    if (decks.length >= 6) {
+      toast.error('No puedes crear más de 6 mazos.', {
+        position: 'top-right',
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+      return;
+    }
+    navigate('/controldeck');
+  };
+
   return (
     <div className={styles.deckPageContainer}>
       <ToastContainer theme='dark' />
 
-      <header className={styles.deckPageTitle}>
-        <h1>Mazos</h1>
-      </header>
+      <PageTitle title='Mazos' />
 
       <div className={styles.deckPageDeck}>
         <div className={styles.deckContainer}>
-          <Link to='/controldeck' className={styles.plusContainer}>
+          <button
+            type='button'
+            className={styles.plusContainer}
+            onClick={handleCreateDeck}
+            aria-label='Crear nuevo mazo'
+          >
             <BsPlusCircleDotted className={styles.plus} />
-          </Link>
+          </button>
         </div>
 
         {loading ? (

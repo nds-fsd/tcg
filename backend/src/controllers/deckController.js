@@ -57,8 +57,8 @@ const createDeck = async (req, res) => {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
-    if (!user.admin && userDecks >= 5) {
-      return res.status(400).json({ error: 'Límite de mazos alcanzado (5).' });
+    if (!user.admin && userDecks >= 6) {
+      return res.status(400).json({ error: 'Límite de mazos alcanzado (6).' });
     }
 
     const totalNormalCards = cards.reduce((sum, card) => sum + (card.amount || 0), 0);

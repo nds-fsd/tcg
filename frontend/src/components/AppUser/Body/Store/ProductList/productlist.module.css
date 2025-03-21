@@ -4,11 +4,11 @@
 }
 
 .title {
-  font-size: 2rem;
-  font-weight: bold;
   font-family: 'Metamorphous', sans-serif;
-  color: white;
-  margin-bottom: 15px;
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .grid {
@@ -16,13 +16,15 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
   justify-content: center;
-  max-width: 1000px;
+  width: 100%;
+  max-width: unset;
   margin: 0 auto;
 }
 
 .noProducts {
   font-size: 1.2rem;
-  color: #888;
+  color: #f8edd3;
+  font-family: 'Metamorphous', sans-serif;
 }
 
 @media (max-width: 768px) {

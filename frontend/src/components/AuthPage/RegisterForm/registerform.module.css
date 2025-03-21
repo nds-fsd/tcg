@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-
   width: 100%;
+  max-width: 14vw;
   margin: 5px auto;
   padding: 0.5rem;
 }
@@ -11,18 +11,14 @@
 .field {
   display: flex;
   flex-direction: column;
-
   color: rgb(255, 255, 255);
 }
 
 .field input {
   padding: 8px;
-
-  border: 1px solid #f8edd3;
-  border-radius: 6px;
-  background-color: #f8edd3;
-
-  font-family: 'Metamorphous', sans-serif;
+  border: 1px solid var(--color-button-bg);
+  border-radius: 10px;
+  background-color: var(--color-button-bg);
   font-size: 10px;
   transition: border-color 0.3s ease-in-out;
 }
@@ -31,7 +27,6 @@
   display: flex;
   align-items: center;
   gap: 10px;
-
   width: 100%;
   margin: 5px auto;
   padding: 0.5rem;
@@ -45,72 +40,13 @@
 .field span {
   flex: 0.75;
   font-size: 10px;
-  font-family: 'Metamorphous', sans-serif;
 }
 
 .error {
-  color: #d9534f;
-  font-size: 0.6rem;
-  margin-top: 0.4rem;
-  margin-left: 0.4rem;
-}
-
-.registerButton {
-  flex: 1;
-  padding: 6px;
-  font-weight: bold;
-
-  border: none;
-  border-bottom: 2px solid #f8edd3;
-  border-radius: 0 0 20px 20px;
-  background-color: transparent;
-
-  color: #9fb033;
-  font-size: 12px;
-  font-family: 'Metamorphous', sans-serif;
-  cursor: pointer;
-  transition:
-    transform 0.2s ease,
-    background-color 0.3s ease-in-out;
-}
-
-.registerButton:hover {
-  transform: translateY(-4px);
-}
-
-.registerButton:active {
-  transform: translateY(0);
-}
-
-@media screen and (min-width: 576px) {
-  .registerButton {
-    margin-top: 12px;
-    font-size: 14px;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .registerForm {
-    gap: 0.5rem;
-  }
-
-  .field input {
-    font-size: 12px;
-  }
-
-  .field span {
-    font-size: 11px;
-  }
-
-  .registerButton {
-    font-size: 14px;
-  }
-}
-
-@media screen and (min-width: 992px) {
-}
-
-@media screen and (min-width: 1200px) {
+  color: var(--color-error);
+  font-size: 0.7rem;
+  margin-top: 0.2rem;
+  margin-left: 0.2rem;
 }
 
 @media screen and (min-width: 1800px) {
@@ -119,10 +55,6 @@
   }
 
   .field span {
-    font-size: 12px;
-  }
-
-  .registerButton {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
